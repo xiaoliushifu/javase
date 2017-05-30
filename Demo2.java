@@ -1,27 +1,32 @@
 
 
+//导入某些包
+import java.io.*;
 public class Demo2
 {
-	public static void main(String arg[])
+	public static void main(String arg[]) throws Exception
 	{
-		char c='a';
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		switch(c)
+		int a = Integer.parseInt(br.readLine());
+		switch(a)
 		{
-			case 'a':
-				System.out.println("今天星期一，猴子穿新衣"); //注意，这里得是双引号，单引号会报错哟
-				int a=1; int b=4;
-				int d=a+b;
-				System.out.println(d);
-				break;//跳出switch
-			case 'b':
-				System.out.println("今天星期二，猴子当小二");
+			//编译不通过。报错原因：需要整型，找到布尔型。
+			//switch里的a是整型，而case后的逻辑表达式计算后是布尔型。类型不一致。
+			  //也就是说，switch里面的数据类型，要和case 后的数据类型一致才可以。
+			case a<=100 && a>=90:
+
+				System.out.println("优秀");
 				break;
-			case 'c':
-				System.out.println("今天星期三，猴子爬雪山");
+			case a<=89 && a>=80:
+				System.out.println("良好");
+				break;
+			case a<=79 && a>=60:
+				System.out.println("及格");
 				break;
 			default:
-				System.out.println("不知道了");
+				System.out.println("不行啊，孩子，要努力呀！");
 		}
 	}
 }
