@@ -13,7 +13,10 @@ public class Demo3
 			}
 
 			//每一层里打多少个*号
-			for(int j=1;j<=i;j++){
+			//第一行打印1个*;
+			//第二行打印3个*;
+			// 3---5    4---7
+			for(int j=1;j<=2*i-1;j++){
 				System.out.print("*");
 			}
 			//打出一个换行
