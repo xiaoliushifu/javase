@@ -7,16 +7,15 @@ public class Demo2
 	public static void main(String arg[]) throws Exception
 	{
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		//BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		int a = Integer.parseInt(br.readLine());
+		//int a = Integer.parseInt(br.readLine());
+		double a=3.4;
 		switch(a)
 		{
-			//编译不通过。报错原因：需要整型，找到布尔型。
-			//switch里的a是整型，而case后的逻辑表达式计算后是布尔型。类型不一致。
-			  //也就是说，switch里面的数据类型，要和case 后的数据类型一致才可以。
+			//switch里的数据类型是有限制的，不是随便都能的，允许的数据类型有：
+			//byte,short,int,char,enum等。  float,double是不行的。
 			case a<=100 && a>=90:
-
 				System.out.println("优秀");
 				break;
 			case a<=89 && a>=80:
