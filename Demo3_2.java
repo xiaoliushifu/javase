@@ -33,13 +33,44 @@ public class Demo3_2
 	*/
 
 	//创建一个学生
-	Stu stu1 = new Stu(29,"aa",340);
+/*	Stu stu1 = new Stu(29,"aa",340);
 
 	Stu stu2 = new Stu(38,"bb",240);
-	System.out.println(stu1.getTotalFee());
+	System.out.println(stu1.getTotalFee());*/
 
+	Clerk clerk1=new Clerk("小花",24,4567.6f);
+	//访问公有成员
+	System.out.println("名字是"+clerk1.name);
+	//访问私有成员,是不行的
+	//private就是类封装成员的实现方式
+	//封装是动词
+	//System.out.println("年龄是"+clerk1.age);
+
+	System.out.println("薪水是"+clerk1.getSal());
 	}
 }
+
+class Clerk
+{
+	public String name;
+	//private 私有的
+	private int age;
+	private float salary;
+
+	public Clerk(String name,int age,float sal)
+	{
+		this.name=name;
+		this.age=age;
+		this.salary=sal;
+	}
+
+	//通过公共方法来访问私有成员
+	public float getSal()
+	{
+		return this.salary;
+	}
+}
+
 
 class Stu
 {
@@ -71,6 +102,7 @@ class Stu
 			//age++;
 		return totalFee;
 	}
+
 }
 /*
 	加上static关键字的就是类变量或者静态变量
