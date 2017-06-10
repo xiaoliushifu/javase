@@ -9,6 +9,8 @@ nbproject
 .project
 .settings
 
+#在Eclipse中有见到
+.metadata
 # windows thumbnail cache
 Thumbs.db
 
