@@ -11,6 +11,7 @@ nbproject
 
 #在Eclipse中有见到
 .metadata
+.recommenders
 # windows thumbnail cache
 Thumbs.db
 
