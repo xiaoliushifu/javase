@@ -76,10 +76,12 @@ class Select
 					index=j;
 				}
 			}
-			//本轮比较结束，此时temp就是本轮里最小的数,它的位置由tempindex标记。和本轮的基准数交互
-			change = a[i];
-			a[i] = a[index];
-			a[index] = change;
+			//优化，如果i和index不相等，就说明本轮比较过程中发现了比基准数还小的数，必须交互
+			if (i != index) {
+				change = a[i];
+				a[i] = a[index];
+				a[index] = change;
+			}
 			//继续开始下一轮
 		}
 	}
