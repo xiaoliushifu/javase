@@ -20,13 +20,25 @@
  */
 package com.test1;
 
+import java.util.*;
+
 public class Demo5_3 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		int b[]=new int[4];
-		int a[]={10,2,8,1,-3,6};
+		//
+		//int a[]={10,2,8,1,-3,6};
+		
+		//产生len个元素的数组
+		int len = 100000;
+		int[] a=new int[len];
+		for(int i=0;i<len;i++) {
+			//产生随机的0--10000的数
+			//Math也是java.util包里的类，无需new直接使用即可
+			a[i]=(int)Math.random()*10000;
+		}
 		//排序 (selection)选择排序
 		//比冒泡排序略好一点，在复杂度和性能上略胜一筹
 		/**
@@ -45,13 +57,18 @@ public class Demo5_3 {
 		 */
 		
 		Select sel = new Select();
-		//注意传递数组是引用传值，而非赋值传值。故无需返回数组，也可在方法结束后使用
+		//标记一个时间
+		Calendar c = Calendar.getInstance();
+		System.out.println("排序前"+c.getTime());
 		sel.sort(a);
+		//需要重新获得一次实例
+		 c = Calendar.getInstance();
+		System.out.println("排序后"+c.getTime());
 		
 		//比较完 了，输出即可
-		for(int i=0;i<a.length;i++) {
-			System.out.print(a[i]+" ");
-		} 
+//		for(int i=0;i<a.length;i++) {
+//			System.out.print(a[i]+" ");
+//		} 
 	}
 
 }
