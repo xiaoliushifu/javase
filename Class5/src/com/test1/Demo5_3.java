@@ -29,16 +29,16 @@ public class Demo5_3 {
 		
 		int b[]=new int[4];
 		//
-		//int a[]={10,2,8,1,-3,6};
+		int a[]={10,2,8,1,-3,6};
 		
 		//产生len个元素的数组
-		int len = 100000;
-		int[] a=new int[len];
-		for(int i=0;i<len;i++) {
+		//int len = 100000;
+		//int[] a=new int[len];
+		/*for(int i=0;i<len;i++) {
 			//产生随机的0--10000的数
 			//Math也是java.util包里的类，无需new直接使用即可
 			a[i]=(int)Math.random()*10000;
-		}
+		}*/
 		//排序 (selection)选择排序
 		//比冒泡排序略好一点，在复杂度和性能上略胜一筹
 		/**
@@ -56,7 +56,8 @@ public class Demo5_3 {
 		 * 下面代码实现
 		 */
 		
-		Select sel = new Select();
+		//Select sel = new Select();
+		Insertsort sel = new Insertsort();
 		//标记一个时间
 		Calendar c = Calendar.getInstance();
 		System.out.println("排序前"+c.getTime());
@@ -66,9 +67,9 @@ public class Demo5_3 {
 		System.out.println("排序后"+c.getTime());
 		
 		//比较完 了，输出即可
-//		for(int i=0;i<a.length;i++) {
-//			System.out.print(a[i]+" ");
-//		} 
+		for(int i=0;i<a.length;i++) {
+			System.out.print(a[i]+" ");
+		} 
 	}
 
 }
@@ -100,6 +101,44 @@ class Select
 				a[index] = change;
 			}
 			//继续开始下一轮
+		}
+	}
+}
+
+//插入排序
+/*思想：把一些待排序的元素看成是无序区和有序区两个部分。每次从无序区里取出第一个元素和有序区的元素们一一比较
+ * 直到找到合适的位置,把这个元素插入到有序区。使得有序区的元素加1，无序区的元素减1。
+ * 如何一一比较？
+ * 首先无需区元素A和有序区最右边元素B比较，如果A大于等于B,则说明A比有序区所有的元素都大，A放到B的右边下一位置即可（也就是A最初的位置）；
+ * 如果A小于B,则B向右移（说明比较完成，不符合条件，当然第一次就是覆盖A最初的位置，或者称为占据），同时有序区的下标继续左移，A继续和有序区右数第二个比较。比较情况和B一样。
+ * A大于B2,则A放到B2的前面,否则下标继续左移，比较过的B2右移。
+ * 
+ * 循环上述的步骤，直到无序区的元素为0时，也就是有序区的元素数达到N时结束。
+ * 刚开始的时候，有序区的元素数是1，无序区的元素数是N-1。从无序区第一个元素开始和有序区的元素数比。所以无序区下标j的选取范围是[1,N)，
+ * 有序区要从右往走看，有序区最右边的一个和无序区最左边的一个是紧挨着的。故有序区最右边下标i是j-1。
+*/
+class Insertsort
+{
+	public void sort(int a[])
+	{
+		int i,insertVal;
+		for (int j=1;j<a.length;j++) {
+			//有序区最右边的元素下标
+			i=j-1;
+			//临时保存从无序区中取得的第一个元素，准备插入到有序区的值,基准元素
+			insertVal = a[j];
+			//使用while循环来实现无序区第一个元素依次和有序区元素从右往左的比较。
+			//这时体现出while比for的优势来了啊
+			while (i>=0 && a[i] > insertVal) {
+				//有序区比较过的数,不符合条件，右移
+				a[i+1]=a[i];
+				//下标左移，继续和左边的兄弟再比较
+				i--;
+			}
+			//当循环走完后，有两种可能：1i>=0不满足条件了，i<=-1了，说明走到有序区的最左边了，有序区里任何一个都大于当前这个元素，
+			//这时，基准元素放到i+1的位置即可
+			//2 在有序区里找到了一个比当前元素小的。及a[i]<=a[j]了。还是，把基准元素放到i+1的位置
+			a[i+1]=insertVal;
 		}
 	}
 }
