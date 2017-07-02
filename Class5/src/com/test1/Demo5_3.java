@@ -159,33 +159,24 @@ class Insertsort
 class QuikSort
 {
 	//暂时没有实现，因为一时找不到java中数组动态添加元素的办法
-	public void sort(int l, int r,int a[])
+	public void sort(int a[])
 	{
-		int right[],left[];
+		int right[] = new int[5];
+		int left[] = new int[5];
 		int tag = a[0];
+		int r=0;
+		int l=0;
 		for(int i=1;i<a.length;i++) {
 			if (a[i] > tag) {
-				right[]=a[i];
-			} else if(a[i] < tag) {
-				left[]=a[i];
-			} else {
-				
+				right[r]=a[i];
+				r++;
+			} else  {
+				left[l]=a[i];
+				l++;
 			}
 		}
-		//首先选取中间数作为基准数（可任意）
-		int index = (l+r)/2;
-		while(a[r] > a[index]){
-			r--;
-		}
-		while(a[l] < a[index]){
-			l++;
-		}
-		//只要左边下标和右边下标不相等，说明没有越界交叉
-		if (r != l) {
-			int temp = a[l];
-			a[l] = a[r];
-			a[r] = temp;
-		}
-		int val = a[(l+r)/2];
+		//larr = this.sort(left);
+		//rarr = this.sort(right);
+		//return larr+rarr;
 	}
 }
