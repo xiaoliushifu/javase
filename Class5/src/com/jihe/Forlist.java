@@ -2,6 +2,13 @@
  * java中的集合类
  * ArrayList,Map,Set,Queue四大类必须学会。
  * 今天先看ArrayList
+ * List结构的集合类
+ * 		ArrayList,LinkedList,Vector,Stack
+ * Set结构的集合类
+ * 	
+ * Map结构的集合类
+ * 		hashMap,hashtable
+ * 
  */
 package com.jihe;
 
