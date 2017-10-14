@@ -43,8 +43,22 @@ class MyPanel extends JPanel
 		
 		//画填充矩形
 		//首先设置填充色（默认是黑色）
-		g.setColor(Color.blue);
-		g.fillRect(10, 10, 40, 60);
+		//g.setColor(Color.blue);
+		//g.fillRect(10, 10, 40, 60);
+		
+		//读入图片,注意，图片是放在src目录的
+		//Image im=Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/pic.png"));
+		//显示出来
+		//g.drawImage(im, 90, 90, 150,135,this);
+		
+		//画出字符串
+		//设置颜色
+		g.setColor(Color.red);
+		//设置大小与字体
+		g.setFont(new Font("宋体",Font.BOLD,30));
+		g.drawString("祖国万岁", 100, 100);
+		
+		
 		System.out.println("Paint调用了");
 	}
 	//还有一个重要的方法repaint。刷新外观
