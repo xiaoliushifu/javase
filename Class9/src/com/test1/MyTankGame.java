@@ -34,7 +34,7 @@ class MyPanel extends JPanel
 	public MyPanel()
 	{
 		//初始化我的坦克
-		hero = new Hero(10,10);
+		hero = new Hero(20,20);
 	}
 	
 	
@@ -44,19 +44,40 @@ class MyPanel extends JPanel
 		super.paint(g);
 		//首先把整个面板使用默认颜色
 		g.fillRect(0, 0, 400, 300);
-		//画出我的坦克(需要先在纸上画出，左轮，右轮，坦克矩形，坦克头，坦克炮头五个小组件）
-		g.setColor(Color.cyan);
-		//1 画出左边的矩形
-		g.fill3DRect(hero.getX(), hero.getY(), 5, 30,false);
-		// 2 画出右边矩形，往右偏移15公分
-		g.fill3DRect(hero.getX()+15, hero.getY(), 5, 30,false);
-		// 3 画出中间矩形
-		g.fillRect(hero.getX()+5, hero.getY()+5, 10, 20);
-		// 4 画出中间圆形
-		g.setColor(Color.blue);
-		g.fillOval(hero.getX()+5, hero.getY()+10, 8, 8);
-		//5 画出炮筒（直线）
-		g.drawLine(hero.getX()+8, hero.getY()+10, hero.getX()+8, 10);
+		this.drawTank(hero.getX(), hero.getY(), g, 0, 1);
+	}
+	//画出一个坦克
+	public void drawTank(int x,int y,Graphics g,int direction,int type)
+	{
+		//判断敌我坦克的颜色不同
+		switch(type)
+		{
+			case 0:
+				g.setColor(Color.cyan);
+				break;
+			case 1:
+				g.setColor(Color.yellow);
+				break;
+		}
+		
+		//判断坦克方向
+		switch(direction)
+		{
+		//向上
+		case 0:
+			//画出我的坦克(需要先在纸上画出，左轮，右轮，坦克矩形，坦克头，坦克炮头五个小组件）
+			//1 画出左边的矩形
+			g.fill3DRect(x, y, 5, 30,false);
+			// 2 画出右边矩形，往右偏移15公分
+			g.fill3DRect(x+15, y, 5, 30,false);
+			// 3 画出中间矩形
+			g.fillRect(x+5, y+5, 10, 20);
+			// 4 画出中间圆形
+			g.setColor(Color.blue);
+			g.fillOval(x+5, y+10, 8, 8);
+			//5 画出炮筒（直线）
+			g.drawLine(x+8, y+10, x+8, 15);
+		}
 	}
 }
 
