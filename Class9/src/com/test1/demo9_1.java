@@ -57,6 +57,8 @@ class MyPanel1 extends JPanel
 		//设置大小与字体
 		g.setFont(new Font("宋体",Font.BOLD,30));
 		g.drawString("祖国万岁", 100, 100);
+		//画个弯曲，有弧度的线，咋整？
+		g.drawArc(100, 100, 120, 300, 100, 100);
 		
 		
 		System.out.println("Paint调用了");

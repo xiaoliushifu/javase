@@ -11,11 +11,13 @@ public class MyTankGame extends JFrame{
 	MyPanel mp=null;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		//在这里写启动代码
 		MyTankGame mtg = new MyTankGame();
 	}
-	//构造函数
+	//公共类的构造函数
 	public MyTankGame()
 	{
+		//在构造函数里，调用其他的类代码，其他类一般都是业务代码
 		//调用自定义Mypanel类，启动时会自动调用器paint方法
 		mp = new MyPanel();
 		this.add(mp);
