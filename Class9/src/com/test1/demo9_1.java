@@ -10,7 +10,7 @@ public class demo9_1 extends JFrame{
 		public demo9_1()
 		{
 			//只是实例化Panel子类MyPanel,并没有调用paint()方法。页面显示出圆圈，可见是系统自动调用的
-			MyPanel mp = new MyPanel();
+			MyPanel1 mp = new MyPanel1();
 			this.add(mp);
 			this.setSize(400,300);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -18,7 +18,7 @@ public class demo9_1 extends JFrame{
 		}
 }
 
-class MyPanel extends JPanel
+class MyPanel1 extends JPanel
 {
 	//覆盖JPanel的paint方法
 	//Graphics 是绘图的重要类，就是一个画笔
