@@ -2,7 +2,7 @@
  * 功能： 坦克游戏 1.0
  * 说明，先把坦克画出来
  */
-package com.test1;
+
 import javax.swing.*;
 import java.awt.*;
 

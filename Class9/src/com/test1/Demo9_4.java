@@ -18,7 +18,7 @@ public class Demo9_4 extends JFrame{
 	public Demo9_4()
 	{
 		//实例化面板对象，并添加到窗体对象里
-		MyPanel2 mp = new MyPanel2();
+		MyPanel4 mp = new MyPanel4();
 		this.add(mp);
 		
 		//为当前绘图窗体对象this添加一个事件监听对象
@@ -31,7 +31,7 @@ public class Demo9_4 extends JFrame{
 
 }
 //一个面板类
-class MyPanel2 extends JPanel implements KeyListener
+class MyPanel4 extends JPanel implements KeyListener
 {
 	//初始化小球的初始化位置坐标，后期可动态变化的基础
 	int x=10;

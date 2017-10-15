@@ -18,7 +18,7 @@ public class Demo9_6 extends JFrame{
 	public Demo9_6()
 	{
 		//实例化面板对象，并添加到窗体对象里
-		MyPanel3 mp = new MyPanel3();
+		MyPanel6 mp = new MyPanel6();
 		this.add(mp);
 		
 		//为当前绘图窗体对象this添加一个事件监听对象
@@ -36,7 +36,7 @@ public class Demo9_6 extends JFrame{
 //一个面板里，知道鼠标按下，并且鼠标按下的位置（x,y）MouseListener
 //进入面板后，鼠标的移动 与拖拽，MouseMotionListener
 //键盘的几个事件（按下，松开，键入字符） KeyListener
-class MyPanel3 extends JPanel implements MouseListener,KeyListener,MouseMotionListener,WindowListener
+class MyPanel6 extends JPanel implements MouseListener,KeyListener,MouseMotionListener,WindowListener
 {
 	//初始化小球的初始化位置坐标，后期可动态变化的基础
 	int x=10;
