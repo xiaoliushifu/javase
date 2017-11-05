@@ -23,6 +23,8 @@
  *  
  * 继续开发，这次加入了子弹对象 ，子弹是坦克对象的子对象，也是通过按键监听来产生的，按键就是通俗地发射子弹呗
  * 子弹的位置也需要考虑一下，跟坦克炮筒的位置有关。
+ * 重要的思索：子弹也是进程，也需要渲染，子弹如何渲染呢？子弹在面板里画出的。故仍然需要面板来渲染
+ * 			这里所以也让面板实现了Runnable接口，使之脱离了只靠事件监听者来触发，然后repaint的限制。
  */
 package com.test2;
 import javax.swing.*;
@@ -99,7 +101,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		this.drawTank(hero.getX(), hero.getY(), g, hero.direct, 1);
 		
 		//画出子弹
-		if(hero.s != null) {
+		if(hero.s != null && hero.s.isLive) {
 			g.draw3DRect(hero.s.x,hero.s.y,1,1,false);
 		}
 		

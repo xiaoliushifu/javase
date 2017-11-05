@@ -192,7 +192,8 @@ class Shot implements Runnable
 	int x = 0;  //初始子弹x坐标
 	int y = 0;  //初始子弹y坐标
 	int direct =0 ; //子弹移动方向
-	int speed = 1; //子弹的移动速度
+	int speed = 3; //子弹的移动速度
+	Boolean isLive = true;//子弹是否还在
 	public Shot(int x,int y,int direct)
 	{
 		this.x = x;
@@ -229,6 +230,12 @@ class Shot implements Runnable
 			}
 			//有一个问题，子弹对象何时消失退出内存呢？
 			System.out.println("X坐标是"+x+" Y坐标是"+y);
+			
+			//判断该子弹是否到达面板的边缘
+			if (x<0 || x>400 ||y<0 || y>300) {
+				isLive = false;
+				break;
+			}
 		}
 	}
 }
