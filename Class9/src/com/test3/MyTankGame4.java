@@ -29,6 +29,12 @@
  * 子弹可以发出来了，本次要实现的是子弹连发。
  * 这个也简单，坦克对象使用一个集合来存储子弹对象。然后在paint方法里画子弹的位置
  * 修改为遍历集合里的子弹对象，然后分别画出自己的x,y坐标及朝向即可。其他无需大改。
+ * 
+ * 子弹可以连发了，不能太霸道，目前限制为最多5发。
+ * 实现击中坦克的效果，击中的原理，就是子弹的坐标，在坦克的坐标范围内就行。为此单独写一个方法hitTank()传入两个
+ * 对象，一个是子弹，一个是敌人坦克。
+ * 什么时候判断击中？或者何时调用hitTank()?。当然是无时不刻地判断了。所以，写在面板对象的run()方法里最合适。
+ * 目前的笨方法，就是取出子弹，每个子弹与现有的敌军坦克遍历比较。NxM乘法原理
  */
 package com.test3;
 import javax.swing.*;
@@ -83,7 +89,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 	public MyPanel2()
 	{
 		//初始化我的坦克，就一辆，直接new一次完事
-		hero = new Hero(20,20);
+		hero = new Hero(60,100);
 		
 		//敌军坦克不少，需要循环new出来，放到集合对象里
 		for(int i=0;i<enSize;i++) {
@@ -91,6 +97,35 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			Enemy enemy = new Enemy((i+1)*50,0);
 			//加入
 			ves.add(enemy);
+		}
+	}
+	
+	//写一个方法，判断子弹是否击中敌人坦克
+	//原理就是，只要子弹的坐标，在敌人坦克坐标的范围内，即为击中坦克。
+	//但是，坦克始终是左上角为参考点，且坦克的坐标范围，随方向的不同，计算不同，故先需判断方向
+	public void hitTank(Shot s,Enemy et)
+	{
+		//判断方向
+		switch(et.direct)
+		{
+			case 0://上，下朝向的
+			case 2:
+				if(s.x>et.x && s.x<et.x+20 && s.y>et.y && s.y<et.y+30) {
+					//击中
+					//子弹消失
+					s.isLive = false;
+					//敌人坦克消失
+					et.isLive = false;
+				}
+				break;
+			case 1://左右朝向的
+			case 3:
+				if(s.x>et.x && s.x<et.x+30 && s.y>et.y && s.y<et.y+20) {
+					//击中
+					s.isLive = false;
+					//敌人坦克消失
+					et.isLive = false;
+				}
 		}
 	}
 	
@@ -110,10 +145,21 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			if(myshot != null && myshot.isLive) {
 				g.draw3DRect(myshot.x,myshot.y,1,1,false);
 			}
+			if(myshot.isLive == false) {
+				//从vs中删除该子弹
+				//注意，不要使用i而应该使用myshot。
+				hero.vs.remove(myshot);
+			}
 		}
 		//循环画出敌人坦克
 		for(int i=0;i<ves.size();i++) {
-			this.drawTank(ves.get(i).getX(), ves.get(i).getY(), g, ves.get(i).direct, 0);
+			//判断是否这个坦克还活着
+			Enemy et=ves.get(i);
+			if(et.isLive) {
+				this.drawTank(et.getX(), et.getY(), g, et.direct, 0);
+			} /*else {
+				ves.remove(et);
+			}*/
 		}
 	}
 	//画出一个坦克的方法
@@ -228,7 +274,10 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		
 		//单独拿个分支来判断子弹
 		if (e.getKeyCode() == KeyEvent.VK_J) {
-			this.hero.shotEnemy();
+			//子弹如果连续发射就太霸道了，所以我们可以只让它最多五发子弹
+			if(hero.vs.size()<=4) {
+				this.hero.shotEnemy();
+			}
 		}
 		
 		//在更新了面板的元素位置，大小，颜色等后，重新渲染
@@ -266,6 +315,23 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 				Thread.sleep(100);
 			} catch(Exception e) {
 				e.printStackTrace();
+			}
+			//在这里，时时刻刻判断，面板里的子弹是否击中了坦克
+			//遍历子弹，每个子弹再遍历敌人坦克
+			for (int i=0;i<hero.vs.size();i++) {
+				//取出子弹
+				Shot myShot = hero.vs.get(i);
+				//子弹是否有效（想到上次线程完全的问题，子弹本身就是资源）
+				if (myShot.isLive) {
+					//再循环敌人坦克
+					for (int j=0;j<ves.size();j++) {
+						//取出子弹
+						Enemy et = ves.get(j);
+						if (et.isLive) {
+							this.hitTank(myShot,et);
+						}
+					}
+				}
 			}
 			this.repaint();
 		}

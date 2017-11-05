@@ -111,6 +111,8 @@ class Tank
  */
 class Enemy extends Tank
 {
+	//敌人坦克是否还活着
+	boolean isLive = true;
 	public Enemy(int x, int y)
 	{
 		super(x,y);
