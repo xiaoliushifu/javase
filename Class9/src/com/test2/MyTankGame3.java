@@ -43,6 +43,11 @@ public class MyTankGame3 extends JFrame{
 		//在构造函数里，调用其他的类代码，其他类一般都是业务代码
 		//调用自定义MyPanel2类，启动时会自动调用其paint方法
 		mp = new MyPanel2();
+		
+		//启动面板进程
+		Thread t = new Thread(mp);
+		t.start();
+		
 		//为当前窗体添加面板
 		this.add(mp);
 		
@@ -58,7 +63,7 @@ public class MyTankGame3 extends JFrame{
 }
 
 //面板类 在其中画很多的坦克对象
-class MyPanel2 extends JPanel implements KeyListener
+class MyPanel2 extends JPanel implements KeyListener ,Runnable
 {
 	//面板里，定义一个坦克
 	Hero hero = null;
@@ -235,5 +240,26 @@ class MyPanel2 extends JPanel implements KeyListener
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		//每隔100毫秒，去重新渲染。
+		//最初的渲染，是通过事件监听者来实现的，在事件监听者方法的最后，通过this.repaint()来重新渲染的
+		//这种渲染，只有触发了按键才能渲染，不触发就不渲染。
+		//而这里使用进程方式让面板渲染，使之脱离了事件触发的限制
+		//一旦启动面板进程，就一直渲染，无论事件是否触发。
+		while(true)
+		{
+			
+			try {
+				Thread.sleep(100);
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			this.repaint();
+		}
 	}
 }

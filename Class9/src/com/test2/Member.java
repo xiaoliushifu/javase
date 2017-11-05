@@ -202,15 +202,16 @@ class Shot implements Runnable
 	
 	public void run()
 	{
-		try {
-			Thread.sleep(50);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		//子弹一旦创建，就按照既定的方向，直线运动下去
 		while(true)
 		{
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			switch(direct)
 			{
 			case 0://上
