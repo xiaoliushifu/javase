@@ -143,19 +143,21 @@ class Hero extends Tank
 		switch(this.direct)
 		{
 		case 0://上（注意，x坐标是坦克的坐上角）
-			s = new Shot(x+10,y);
+			s = new Shot(x+10,y,0);
 			break;
 		case 1://右
-			s = new Shot(x+30,y+10);
+			s = new Shot(x+30,y+10,1);
 			break;
 		case 2://下
-			s = new Shot(x+10,y+30);
+			s = new Shot(x+10,y+30,2);
 			break;
 		case 3://左
-			s = new Shot(x,y+10);
+			s = new Shot(x,y+10,3);
 			break;
 		}
-		
+		//启动子弹线程
+		Thread t = new Thread(s);
+		t.start();
 	}
 	
 	//坦克向上移动，必须首先知道java面板里有一个坐标，以左上角为(0,0)原点，
@@ -183,13 +185,49 @@ class Hero extends Tank
 }
 
 //子弹类,以后会慢慢修改，增加功能
-class Shot
+//子弹一旦发射出来，就会按照初始的方向，直线运动
+//故子弹单独也是一个进程
+class Shot implements Runnable
 {
-	int x = 0;
-	int y = 0;
-	public Shot(int x,int y)
+	int x = 0;  //初始子弹x坐标
+	int y = 0;  //初始子弹y坐标
+	int direct =0 ; //子弹移动方向
+	int speed = 1; //子弹的移动速度
+	public Shot(int x,int y,int direct)
 	{
 		this.x = x;
 		this.y = y;
+		this.direct = direct;
+	}
+	
+	public void run()
+	{
+		try {
+			Thread.sleep(50);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//子弹一旦创建，就按照既定的方向，直线运动下去
+		while(true)
+		{
+			switch(direct)
+			{
+			case 0://上
+				y-=speed;
+				break;
+			case 1://上
+				x+=speed;
+				break;
+			case 2://上
+				y+=speed;
+				break;
+			case 3://上
+				x-=speed;
+				break;
+			}
+			//有一个问题，子弹对象何时消失退出内存呢？
+			System.out.println("X坐标是"+x+" Y坐标是"+y);
+		}
 	}
 }
