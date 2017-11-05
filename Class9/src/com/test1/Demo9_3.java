@@ -12,7 +12,7 @@ package com.test1;
 import java.awt.*;
 import javax.swing.*;
 
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionEvent;//事件对象（事件发生时，java系统传入事件处理者方法里的参数）
 import java.awt.event.ActionListener;//引入事件机制的包,一个接口ActionListener。
 
 public class Demo9_3 extends JFrame implements ActionListener{

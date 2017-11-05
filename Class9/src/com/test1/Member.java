@@ -32,7 +32,7 @@ class Tank
 	//坦克的速度（每次移动的像素数）
 	int speed = 1;
 	
-	//构造函数
+	//构造函数，初始化坦克所在的位置
 	public Tank(int x,int y)
 	{
 		this.x=x;
@@ -130,7 +130,8 @@ class Hero extends Tank
 		super(x,y);
 	}
 	
-	//坦克向上移动
+	//坦克向上移动，必须首先知道java面板里有一个坐标，以左上角为(0,0)原点，
+	//以此为基础的x，y变化（增大或减小）才能实现坦克的移动
 	public void moveUp()
 	{
 		y-=speed;

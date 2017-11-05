@@ -14,10 +14,12 @@ public class Demo10_1 {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Cat c=new Cat(10,"花花");
-		Cat d=new Cat(10,"瓜瓜");
+		Cat c=new Cat(10,"花花",2000);
+		Cat d=new Cat(10,"瓜瓜",1500);
 		
 		//Thread类，是调用start()方法开始的。固定的套路
+		//当然Cat类并没有写start方法，很明显是继承自Thread类而来的
+		//start内部调用run方法，肯定是这样的
 		c.start();
 		d.start();
 	}
@@ -29,18 +31,20 @@ class Cat extends Thread
 {
 	int times=0;
 	int n=0;
+	int rand = 0;
 	String name=null;
 	/**
 	 * 构造函数.没有void
 	 * @param n
 	 */
-	public Cat(int n,String name)
+	public Cat(int n,String name,int rand)
 	{
 		this.n=n;
 		this.name=name;
+		this.rand = rand;
 	}
 	/**
-	 * 必须重新run方法才行
+	 * 必须重写run方法才行
 	 * 该方法是每个线程对象（类）运行的方法
 	 */
 	public void run()
@@ -49,7 +53,7 @@ class Cat extends Thread
 		{
 			try {
 				//线程阻塞，单位毫秒
-				Thread.sleep(1000);
+				Thread.sleep(1000);;
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
