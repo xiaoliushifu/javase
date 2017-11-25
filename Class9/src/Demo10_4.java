@@ -87,13 +87,13 @@ class TicketWindow implements Runnable
 				e.printStackTrace();
 			}
 			synchronized(this){
-			if(num > 0) {
-				//输出线程名字
-				System.out.println(Thread.currentThread().getName()+"正在卖第"+num+"张票");
-				num--;
-			} else {
-				break;
-			}
+				if(num > 0) {
+					//输出线程名字
+					System.out.println(Thread.currentThread().getName()+"正在卖第"+num+"张票");
+					num--;
+				} else {
+					break;
+				}
 			}
 		}
 	}

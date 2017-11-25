@@ -147,6 +147,7 @@ class Hero extends Tank
 	//目前来做，坦克只有一个子弹
 	public void shotEnemy()
 	{
+		//根据坦克此时所处的方向，来实例化出子弹对象
 		switch(this.direct)
 		{
 		case 0://上（注意，x坐标是坦克的坐上角）
@@ -163,7 +164,7 @@ class Hero extends Tank
 			break;
 		}
 		vs.add(s);
-		//启动子弹线程
+		//启动子弹线程，每个子弹都是一个单独地进程
 		Thread t = new Thread(s);
 		t.start();
 	}
