@@ -107,9 +107,10 @@ class Tank
 /**
  * 敌人坦克
  * @author Administrator
+ * 敌人坦克不受键盘控制，是独立运行的个体，故每个敌人坦克都是一个线程
  *
  */
-class Enemy extends Tank
+class Enemy extends Tank implements Runnable
 {
 	//敌人坦克是否还活着
 	boolean isLive = true;
@@ -118,6 +119,79 @@ class Enemy extends Tank
 		super(x,y);
 		//方向都朝下
 		this.setDirect(2);
+	}
+	@Override
+	//敌人坦克作为一个线程，必须实现的run方法
+	public void run() {
+		// TODO Auto-generated method stub
+		while(true){
+			try {
+				//每个坦克切换运动时休息50毫秒，也就是说敌人坦克将在1秒内切换20次
+				//这样初始看起来，敌人的坦克切换方向非常快，像个无头苍蝇乱转，没有平滑移动效果
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//坦克方向移动，上右下左
+			switch(this.direct){
+				case 0:
+					//说明坦克正在向上移动。
+					//但是这样写效果有点问题，因为是移动一次，就去随机方向。在移动和切换方向之间转换非常快，
+					//故应该多移动，或者移动的时间长一些，切换方向的机会少一些，这样效果好一点
+					//坦克很有可能只移动了一步，就改变了方向，看起来的效果就是无头苍蝇不停地切换方向，移动却很少。
+					//于是让它多移动几步，并且休息一下
+					//移动多步，制造平滑效果
+					for(int i=0;i<10;i++) {
+						y-=speed;
+						try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					break;
+				case 1:
+					for(int i=0;i<20;i++) {
+						x +=speed;
+						try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					break;
+				case 2:
+					for(int i=0;i<20;i++) {
+						y +=speed;
+						try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					break;
+				case 3:
+					for(int i=0;i<10;i++) {
+						x -=speed;
+						try {
+							Thread.sleep(50);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+			}
+			//坦克随机产生新的方向
+			this.direct =(int)(Math.random()*4);
+			//判断敌人坦克是否死亡
+			if(!this.isLive){
+				break;
+			}
+		}
 	}
 }
 
