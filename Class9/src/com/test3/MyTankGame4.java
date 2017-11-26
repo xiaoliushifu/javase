@@ -55,6 +55,9 @@
  * 方案2：放在paint里，写两个循环嵌套，循环每个坦克的每个子弹。数量不够就一直产生。（继续考虑）
  * 坦克的死亡，是在画坦克时，如果坦克已经死亡就remove掉（坦克的子弹也就消失了）
  * 子弹的死亡，也是在画坦克时判断
+ * 
+ * 我的坦克被击中时，也要消失。如何做到呢？
+ * 简单，就像判断我的子弹是否击中敌人坦克一样的逻辑；也分开判断敌人每个坦克的每个子弹，是否击中我就是了
  */
 package com.test3;
 import javax.swing.*;
@@ -141,10 +144,61 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		image3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_3.gif"));
 	}
 	
+	/**
+	 * 遍历我的子弹，再遍历敌人的坦克
+	 * 从而去判断是否击中敌人坦克。
+	 */
+	public void TraverseMyShotForEnemy()
+	{
+		//在这里，时时刻刻判断，面板里的子弹是否击中了坦克
+		//遍历子弹，每个子弹再遍历敌人坦克
+		for (int i=0;i<hero.vs.size();i++) {
+			//取出子弹
+			Shot myShot = hero.vs.get(i);
+			//子弹是否有效（想到上次线程完全的问题，子弹本身就是资源）
+			if (myShot.isLive) {
+				//再循环敌人坦克
+				for (int j=0;j<ves.size();j++) {
+					//取出子弹
+					Enemy et = ves.get(j);
+					if (et.isLive) {
+						//是否击中坦克，单独写个方法
+						this.hitTank(myShot,et);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 遍历敌人的坦克，再遍历每个坦克的子弹
+	 */
+	private void traverseEnemyShotIsMe()
+	{
+		//遍历敌人坦克，再遍历该坦克的子弹
+		for (int i=0;i<ves.size();i++) {
+			//取出敌人坦克
+			Enemy e = ves.get(i);
+			//循环这个坦克的子弹
+			for(int j=0;j<e.vs.size();j++){
+				Shot eShot = e.vs.get(j);
+				//子弹是否有效（想到上次线程完全的问题，子弹本身就是资源）
+				if (eShot.isLive) {
+					if (hero.isLive) {
+						//是否击中坦克，单独写个方法
+						this.hitTank(eShot,hero);
+					}
+				}
+			}
+		}
+	}
+	
+	
 	//写一个方法，判断子弹是否击中敌人坦克
 	//原理就是，只要子弹的坐标，在敌人坦克坐标的范围内，即为击中坦克。
 	//但是，坦克始终是左上角为参考点，且坦克的坐标范围，随方向的不同，计算不同，故先需判断方向
-	public void hitTank(Shot s,Enemy et)
+	//扩展这个函数，也可以判断是否击中我的坦克，故升级第二个参数类型为Tank
+	private void hitTank(Shot s,Tank et)
 	{
 		//判断方向
 		switch(et.direct)
@@ -184,7 +238,12 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		//首先把整个面板使用默认颜色
 		g.fillRect(0, 0, 400, 300);
 		//画自己坦克，方向传入，不再是固定的0，方向是按键决定的，动态地
-		this.drawTank(hero.getX(), hero.getY(), g, hero.direct, 1);
+		//既然我的坦克可以被敌人击中，那么我的坦克活着才可以被画出来
+		if(hero.isLive) {
+			this.drawTank(hero.getX(), hero.getY(), g, hero.direct, 1);
+		}else{
+			//hero=null;
+		}
 		
 		//这里得修改了，不能只画出一个子弹去paint，而应该使用循环
 		for(int i=0;i<hero.vs.size();i++) {
@@ -392,30 +451,14 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		//重点是坦克可以发射子弹了，子弹的位置变化，击中坦克，都得实时渲染，才能看到效果。
 		while(true)
 		{
-			
 			try {
 				Thread.sleep(100);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
-			//在这里，时时刻刻判断，面板里的子弹是否击中了坦克
-			//遍历子弹，每个子弹再遍历敌人坦克
-			for (int i=0;i<hero.vs.size();i++) {
-				//取出子弹
-				Shot myShot = hero.vs.get(i);
-				//子弹是否有效（想到上次线程完全的问题，子弹本身就是资源）
-				if (myShot.isLive) {
-					//再循环敌人坦克
-					for (int j=0;j<ves.size();j++) {
-						//取出子弹
-						Enemy et = ves.get(j);
-						if (et.isLive) {
-							//是否击中坦克，单独写个方法
-							this.hitTank(myShot,et);
-						}
-					}
-				}
-			}
+			this.TraverseMyShotForEnemy();
+			//写个函数，敌人的子弹是否击中我的坦克
+			this.traverseEnemyShotIsMe();
 			//渲染
 			this.repaint();
 		}

@@ -20,6 +20,9 @@ import java.util.Vector;
 //坦克类
 class Tank
 {
+	
+	//坦克是否还有效（击中过了的坦克就是false）
+	boolean isLive = true;
 	//表示坦克横坐标
 	int x=0;
 	//纵坐标
@@ -112,9 +115,6 @@ class Tank
  */
 class Enemy extends Tank implements Runnable
 {
-	//敌人坦克是否还活着
-	boolean isLive = true;
-	
 	//敌人产生坦克的频率
 	int times=0;
 	//一个子弹，用来添加到子弹集合中
@@ -249,7 +249,6 @@ class Enemy extends Tank implements Runnable
  */
 class Hero extends Tank
 {
-	
 	//子弹也是java对象，是坦克的一个子对象
 	Shot s = null;
 	//实现子弹连发，必须使用集合类
