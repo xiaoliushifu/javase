@@ -114,6 +114,15 @@ class Enemy extends Tank implements Runnable
 {
 	//敌人坦克是否还活着
 	boolean isLive = true;
+	
+	//敌人产生坦克的频率
+	int times=0;
+	//一个子弹，用来添加到子弹集合中
+	Shot s=null;
+	
+	//实现子弹连发，必须使用集合类
+	Vector<Shot> vs = new Vector<Shot>();
+	
 	public Enemy(int x, int y)
 	{
 		super(x,y);
@@ -143,7 +152,9 @@ class Enemy extends Tank implements Runnable
 					//于是让它多移动几步，并且休息一下
 					//移动多步，制造平滑效果
 					for(int i=0;i<10;i++) {
-						y-=speed;
+						if(y>0) {
+							y-=speed;
+						}
 						try {
 							Thread.sleep(50);
 						} catch (InterruptedException e) {
@@ -153,8 +164,11 @@ class Enemy extends Tank implements Runnable
 					}
 					break;
 				case 1:
-					for(int i=0;i<20;i++) {
-						x +=speed;
+					for(int i=0;i<10;i++) {
+						//防止超过边界范围
+						if(x<400-30) {
+							x +=speed;
+						}
 						try {
 							Thread.sleep(50);
 						} catch (InterruptedException e) {
@@ -164,8 +178,10 @@ class Enemy extends Tank implements Runnable
 					}
 					break;
 				case 2:
-					for(int i=0;i<20;i++) {
-						y +=speed;
+					for(int i=0;i<10;i++) {
+						if(y<300-30) {
+							y +=speed;
+						}
 						try {
 							Thread.sleep(50);
 						} catch (InterruptedException e) {
@@ -176,7 +192,9 @@ class Enemy extends Tank implements Runnable
 					break;
 				case 3:
 					for(int i=0;i<10;i++) {
-						x -=speed;
+						if(x>0) {
+							x -=speed;
+						}
 						try {
 							Thread.sleep(50);
 						} catch (InterruptedException e) {
@@ -184,6 +202,34 @@ class Enemy extends Tank implements Runnable
 							e.printStackTrace();
 						}
 					}
+			}
+			times++;
+			if(times%2 == 0){
+				//是否给坦克加入新的子弹
+				if(isLive){
+					//3说明可以连发2个子弹
+					if(vs.size()<5){
+						//没有子弹就要重新产生子弹（根据此时坦克的方向）
+						switch(direct){
+						case 0://上（注意，x坐标是坦克的坐上角）
+							s = new Shot(x+10,y,0);
+							break;
+						case 1://右
+							s = new Shot(x+30,y+10,1);
+							break;
+						case 2://下
+							s = new Shot(x+10,y+30,2);
+							break;
+						case 3://左
+							s = new Shot(x,y+10,3);
+							break;
+						}
+						Thread ts=new Thread(s);
+						ts.start();
+						//添加到敌人的子弹集合里
+						vs.add(s);
+					}
+				}
 			}
 			//坦克随机产生新的方向
 			this.direct =(int)(Math.random()*4);
@@ -321,6 +367,10 @@ class Shot implements Runnable
 		while(true)
 		{
 			try {
+			//在敌人的坦克有多颗子弹时。注意：循环画出子弹的时机，要比渲染的频率要快。
+				//否则在渲染时，坦克尚未运动，这样即使画出了多颗子弹，子弹的坐标也是一样，也看不出子弹移动效果，
+				//看起来和一颗子弹是一样的效果。
+				//而且，子弹可以连发，但是不应该一直连发，可以让同一辆坦克的两颗子弹的间距随机起来
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
@@ -342,7 +392,7 @@ class Shot implements Runnable
 				break;
 			}
 			//有一个问题，子弹对象何时消失退出内存呢？
-			System.out.println("X坐标是"+x+" Y坐标是"+y);
+			//direct.System.out.println("X坐标是"+x+" Y坐标是"+y);
 			
 			//判断该子弹是否到达面板的边缘
 			if (x<0 || x>400 ||y<0 || y>300) {

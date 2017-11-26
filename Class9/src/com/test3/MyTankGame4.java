@@ -46,6 +46,15 @@
  * 敌人的坦克可以随意移动，实现方式就是敌人的坦克也是一个线程
  * 坦克的移动方向是随机的，坦克的移动步调可以控制，如果坦克每移动一步就切换方向，这样的效果看起来不太好；
  * 所以，敌人坦克应该每移动多步后，再给一次切换坦克方向的机会（有可能方向相同），这样敌人坦克运行起来较为平滑
+ * 
+ * 控制敌人坦克的移动范围，应该在面板里。
+ * 这个简单，控制坦克的坐标在指定的范围内才移动，否则不移动。
+ * 
+ * 敌人可以发送子弹，且子弹的数量可控。
+ * 敌人的子弹的产生也是随机的，方案1：随着坦克的移动而产生，并不是一次循环产生。
+ * 方案2：放在paint里，写两个循环嵌套，循环每个坦克的每个子弹。数量不够就一直产生。（继续考虑）
+ * 坦克的死亡，是在画坦克时，如果坦克已经死亡就remove掉（坦克的子弹也就消失了）
+ * 子弹的死亡，也是在画坦克时判断
  */
 package com.test3;
 import javax.swing.*;
@@ -116,6 +125,14 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			//每个敌人坦克，也是一个进程
 			Thread t = new Thread(enemy);
 			t.start();
+			
+			//给敌人坦克添加一颗子弹,放到它的子弹集合里
+			Shot s=new Shot(enemy.x,enemy.y,enemy.direct);
+			enemy.vs.add(s);
+			//敌人坦克也是一个线程
+			Thread ts= new Thread(s);
+			ts.start();
+			
 			//加入到敌人坦克集合中
 			ves.add(enemy);
 		}
@@ -182,7 +199,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			}
 		}
 		
-		//画出击中图片
+		//画出击中图片,即爆炸效果
 		for(int i=0;i<vbs.size();i++) {
 			Bomb b=vbs.get(i);
 			if(b.life>6){
@@ -206,9 +223,22 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			Enemy et=ves.get(i);
 			if(et.isLive) {
 				this.drawTank(et.getX(), et.getY(), g, et.direct, 0);
-			} /*else {
-				ves.remove(et);
-			}*/
+				//顺便画出它的子弹
+				for(int j=0;j<et.vs.size();j++){
+					Shot s= et.vs.get(j);
+					//如果它的子弹还有效
+					if(s.isLive) {
+						g.draw3DRect(s.x,s.y,1,1,false);
+					}else{
+						//否则就清除它的子弹
+						et.vs.remove(s);
+					}
+				}
+			} else {
+				ves.remove(et);//敌人的坦克消失
+				//System.out.println("敌人坦克数量 2="+ves.size());
+			}
+			//System.out.println("敌人坦克数量="+ves.size());
 		}
 	}
 	//画出一个坦克的方法
