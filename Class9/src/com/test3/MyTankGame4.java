@@ -35,6 +35,13 @@
  * 对象，一个是子弹，一个是敌人坦克。
  * 什么时候判断击中？或者何时调用hitTank()?。当然是无时不刻地判断了。所以，写在面板对象的run()方法里最合适。
  * 目前的笨方法，就是取出子弹，每个子弹与现有的敌军坦克遍历比较。NxM乘法原理
+ * 
+ * 当坦克被击中时，增加爆炸效果,所谓爆炸效果，就是三张（甚至多张）效果图片的切换而已（动画片就是这个原理）
+ * 坦克被击中时，就要产生一个爆炸效果对象。由于面板是一个进程，无视不刻在画出面板里的元素，所以在面板里paint方法里
+ * 遍历爆炸效果集合，每个效果对象都各自处理那三张图片的切换，切换速度要考虑好。
+ * 可以为爆炸效果定义生命值，比如初始为9，每三个生命值切换一张图片，每次生命值减一直到生命值为0，爆炸效果对象消失
+ * 爆炸效果的产生和爆炸效果的展示，不在同一个逻辑里。
+ * 目前敌人坦克有三辆，但是第一个坦克（无论哪一个是第一个）被击中的爆炸效果不太明显，随后的两个倒是很明显，不知为何
  */
 package com.test3;
 import javax.swing.*;
@@ -80,6 +87,13 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 	//面板里，定义一个坦克
 	Hero hero = null;
 	
+	//定义三张图片，三张图片组成坦克消失的爆炸效果（图片快速切换，欺骗人眼）
+	Image image1 = null;
+	Image image2 = null;
+	Image image3 = null;
+	//爆炸对象集合，每个爆炸对象各自处理那三张图片的切换
+	Vector<Bomb> vbs = new Vector<Bomb>();
+	
 	//敌人的坦克，用集合
 	Vector<Enemy> ves = new Vector<Enemy>();
 	
@@ -98,6 +112,9 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			//加入到敌人坦克集合中
 			ves.add(enemy);
 		}
+		image1 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_1.gif"));
+		image2 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_2.gif"));
+		image3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_3.gif"));
 	}
 	
 	//写一个方法，判断子弹是否击中敌人坦克
@@ -116,6 +133,9 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 					s.isLive = false;
 					//敌人坦克消失
 					et.isLive = false;
+					//击中坦克，就要产生爆炸效果,放入集合中
+					Bomb b=new Bomb(et.x,et.y);
+					vbs.add(b);
 				}
 				break;
 			case 1://左右朝向的
@@ -125,6 +145,9 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 					s.isLive = false;
 					//敌人坦克消失
 					et.isLive = false;
+					//击中坦克，就要产生爆炸效果,放入集合中
+					Bomb b=new Bomb(et.x,et.y);
+					vbs.add(b);
 				}
 		}
 	}
@@ -151,6 +174,25 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 				hero.vs.remove(myshot);
 			}
 		}
+		
+		//画出击中图片
+		for(int i=0;i<vbs.size();i++) {
+			Bomb b=vbs.get(i);
+			if(b.life>6){
+				g.drawImage(image1, b.x, b.y, 30,30,this);
+			}else if(b.life>3){
+				g.drawImage(image2, b.x, b.y, 30,30,this);
+			}else{
+				g.drawImage(image3, b.x, b.y, 30,30,this);
+			}
+			//生命力减少
+			b.lifeDown();
+			//生命力为0时，从向量中删除即可
+			if(!b.isLive){
+				vbs.remove(b);
+			}
+		}
+		
 		//循环画出敌人坦克
 		for(int i=0;i<ves.size();i++) {
 			//判断是否这个坦克还活着

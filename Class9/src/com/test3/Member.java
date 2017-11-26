@@ -193,6 +193,36 @@ class Hero extends Tank
 	
 }
 
+//炸弹类
+class Bomb
+{
+	//炸弹的坐标属性
+	int x,y;
+	//炸弹生命力
+	int life=9;
+	//炸弹是否激活 
+	boolean isLive=true;
+	public Bomb(int x,int y)
+	{
+		this.x = x;
+		this.y = y;
+	}
+	
+	//减少生命值
+	public void lifeDown()
+	{
+		if (life>0) {
+			life--;
+		} else {
+			isLive=false;
+		}
+		
+	}
+	
+}
+
+
+
 //子弹类,以后会慢慢修改，增加功能
 //子弹一旦发射出来，就会按照初始的方向，直线运动
 //故子弹单独也是一个进程
