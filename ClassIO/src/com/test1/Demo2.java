@@ -27,8 +27,10 @@ public class Demo2 {
 			//定义一个字节数组
 			byte bytes[]=new byte[1024];
 			int n=0;
-			//read会按照缓冲区的大小读取文件，知道缓冲区bytes占满。或者文件提前读取完毕，这两种情况
-			//并不会一个个字节去读，而是首先按照缓冲区的大小bytes来读
+			//read会按照缓冲区的大小读取文件：直到缓冲区bytes占满，或者文件提前读取完毕，这两种情况
+			//并不会一个个字节去读。
+			//如果缓冲区大小占满，则read停止读取，返回读取大小，进行while里的输出；然后bytes缓冲区会重新清空
+			//然后程序可以继续读取
 			while((n=fis.read(bytes)) != -1) {
 				String s=new String(bytes,0,n);
 				System.out.println(n);
