@@ -43,6 +43,8 @@
  * 爆炸效果的产生和爆炸效果的展示，不在同一个逻辑里。
  * 目前敌人坦克有三辆，但是第一个坦克（无论哪一个是第一个）被击中的爆炸效果不太明显，随后的两个倒是很明显，不知为何
  * 
+ * 学习了文件IO对象后，替换三个图片文件对象imageIO，解决了第一个坦克没有爆炸效果的漏洞
+ * 
  * 敌人的坦克可以随意移动，实现方式就是敌人的坦克也是一个线程
  * 坦克的移动方向是随机的，坦克的移动步调可以控制，如果坦克每移动一步就切换方向，这样的效果看起来不太好；
  * 所以，敌人坦克应该每移动多步后，再给一次切换坦克方向的机会（有可能方向相同），这样敌人坦克运行起来较为平滑
@@ -60,6 +62,10 @@
  * 简单，就像判断我的子弹是否击中敌人坦克一样的逻辑；也分开判断敌人每个坦克的每个子弹，是否击中我就是了
  */
 package com.test3;
+
+import javax.imageio.ImageIO;//图片使用
+import java.io.*;//图片使用
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -143,9 +149,15 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			ves.add(enemy);
 		}
 		//首先引入这三张爆炸效果图
-		image1 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_1.gif"));
-		image2 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_2.gif"));
-		image3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_3.gif"));
+		try {
+			//注意，图片文件路径不是在包src内，而是在项目Class9目录下
+			image1=ImageIO.read(new File("bomb_1.gif"));
+			image2=ImageIO.read(new File("bomb_2.gif"));
+			image3=ImageIO.read(new File("bomb_3.gif"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
