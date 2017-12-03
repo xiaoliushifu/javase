@@ -87,6 +87,8 @@ public class MyTankGame4 extends JFrame{
 		this.add(mp);
 		
 		//为当前窗体添加事件监听者，巧的是，事件监听者，也是这个窗体里的面板。
+		//任何对象都可以添加事件监听者，应该针对对象的操作特性添加对应的事件监听者
+		//面板里我的坦克的移动，发射子弹，都是通过按键来实现的，故添加（键盘）事件监听者，以监听面板对象里按键的操作
 		this.addKeyListener(mp);
 		
 		
@@ -103,7 +105,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 	//面板里，定义一个坦克
 	Hero hero = null;
 	
-	//定义三张图片，三张图片组成坦克消失的爆炸效果（图片快速切换，欺骗人眼）
+	//定义三张图片，三张图片组成坦克消失的爆炸效果（图片按照一定顺序与频率切换，欺骗人眼）
 	Image image1 = null;
 	Image image2 = null;
 	Image image3 = null;
@@ -113,6 +115,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 	//敌人的坦克，用集合
 	Vector<Enemy> ves = new Vector<Enemy>();
 	
+	//初始化时控制敌人坦克的数量
 	int enSize = 3;
 	
 	//构造方法 只有修饰符
@@ -132,13 +135,14 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			//给敌人坦克添加一颗子弹,放到它的子弹集合里
 			Shot s=new Shot(enemy.x,enemy.y,enemy.direct);
 			enemy.vs.add(s);
-			//敌人坦克也是一个线程
+			//它的子弹也是一个线程
 			Thread ts= new Thread(s);
 			ts.start();
 			
 			//加入到敌人坦克集合中
 			ves.add(enemy);
 		}
+		//首先引入这三张爆炸效果图
 		image1 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_1.gif"));
 		image2 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_2.gif"));
 		image3 = Toolkit.getDefaultToolkit().getImage(Panel.class.getResource("/bomb_3.gif"));
@@ -150,7 +154,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 	 */
 	public void TraverseMyShotForEnemy()
 	{
-		//在这里，时时刻刻判断，面板里的子弹是否击中了坦克
+		//在这里，时时刻刻判断，面板里的子弹是否击中了敌人坦克
 		//遍历子弹，每个子弹再遍历敌人坦克
 		for (int i=0;i<hero.vs.size();i++) {
 			//取出子弹
@@ -159,10 +163,10 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			if (myShot.isLive) {
 				//再循环敌人坦克
 				for (int j=0;j<ves.size();j++) {
-					//取出子弹
+					//取出一个坦克
 					Enemy et = ves.get(j);
 					if (et.isLive) {
-						//是否击中坦克，单独写个方法
+						//是否击中坦克，单独写个方法，传入子弹和坦克对象
 						this.hitTank(myShot,et);
 					}
 				}
@@ -171,7 +175,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 	}
 	
 	/**
-	 * 遍历敌人的坦克，再遍历每个坦克的子弹
+	 * 遍历敌人的坦克，再遍历每个坦克的子弹，查看我的坦克是否被击中
 	 */
 	private void traverseEnemyShotIsMe()
 	{
@@ -185,7 +189,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 				//子弹是否有效（想到上次线程完全的问题，子弹本身就是资源）
 				if (eShot.isLive) {
 					if (hero.isLive) {
-						//是否击中坦克，单独写个方法
+						//是否击中坦克，单独写个方法（修改最初判断是否击中敌人坦克的方法而来）
 						this.hitTank(eShot,hero);
 					}
 				}
@@ -245,7 +249,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			//hero=null;
 		}
 		
-		//这里得修改了，不能只画出一个子弹去paint，而应该使用循环
+		//这里得修改了，不能只画出一个子弹去paint，而应该使用循环，因为我的坦克可以发送多颗子弹
 		for(int i=0;i<hero.vs.size();i++) {
 			Shot myshot = hero.vs.get(i);
 			if(myshot != null && myshot.isLive) {
@@ -258,7 +262,8 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			}
 		}
 		
-		//画出击中图片,即爆炸效果
+		//画出击中图片,即爆炸效果，实现原理就是：一旦有坦克爆炸就实例化一个爆炸类，记住爆炸位置坐标
+		//然后在该位置上按照顺序和频率切换这三张图片而已
 		for(int i=0;i<vbs.size();i++) {
 			Bomb b=vbs.get(i);
 			if(b.life>6){
@@ -278,8 +283,8 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		
 		//循环画出敌人坦克
 		for(int i=0;i<ves.size();i++) {
-			//判断是否这个坦克还活着
 			Enemy et=ves.get(i);
+			//判断是否这个坦克还活着
 			if(et.isLive) {
 				this.drawTank(et.getX(), et.getY(), g, et.direct, 0);
 				//顺便画出它的子弹
@@ -390,8 +395,10 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 
 
 	/**
+	 * 
 	 * 以事件监听者，分别判断按键，来达到方向和速度的控制
 	 * w上	d右	s下	a左	
+	 * 这是面板作为事件监听者（按键事件）必须实现的方法（多个方法）
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -410,7 +417,7 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			this.hero.moveLeft();
 		}
 		
-		//单独拿个分支来判断子弹
+		//单独拿个分支来判断我的坦克发射子弹的按键事件处理
 		if (e.getKeyCode() == KeyEvent.VK_J) {
 			//子弹如果连续发射就太霸道了，所以我们可以只让它最多五发子弹
 			if(hero.vs.size()<=4) {
@@ -418,9 +425,9 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			}
 		}
 		
-		//在更新了面板的元素位置，大小，颜色等后，重新渲染
-		//不断地按键，不断地重新渲染(repaint()方法的底层其实还是会调用paint()，但是我们已经不能调用paint()了）
-		this.repaint();
+		//在更新了面板里的元素，元素坐标位置，大小，颜色等后，重新渲染
+		//不断地按键，不断地重新渲染(repaint()方法的底层其实还是会调用paint()，但是我们已经不能再次调用paint()）
+		//this.repaint();
 	}
 
 
@@ -437,7 +444,9 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		
 	}
 
-
+	/**
+	 * 面板作为一个进程，必须实现run方法
+	 */
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
@@ -446,9 +455,9 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		//这种渲染，只有触发了按键才能渲染，不触发就不渲染，因为当时尚不能发射子弹，仅是画出坦克，
 		//坦克可以上下左右移动，仅此而已。这些都是按键后才会进行的操作效果，不按键就不动，故重新渲染和触发按键
 		//两个逻辑在一块
-		//而这里使用进程方式让面板渲染，使之脱离了事件触发的限制
+		//而这里使用进程方式让面板自动渲染，使之脱离了事件触发的限制
 		//一旦启动面板进程，就一直渲染，无论事件是否触发。因为开发到现在，面板里已经有坦克了，
-		//重点是坦克可以发射子弹了，子弹的位置变化，击中坦克，都得实时渲染，才能看到效果。
+		//重点是坦克可以发射子弹了，子弹的位置变化，击中坦克，敌人坦克的移动，都得实时渲染，才能看到效果。
 		while(true)
 		{
 			try {

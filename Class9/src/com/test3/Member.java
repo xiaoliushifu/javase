@@ -126,7 +126,7 @@ class Enemy extends Tank implements Runnable
 	public Enemy(int x, int y)
 	{
 		super(x,y);
-		//方向都朝下
+		//初始方向都朝下
 		this.setDirect(2);
 	}
 	@Override
@@ -142,16 +142,18 @@ class Enemy extends Tank implements Runnable
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
 			//坦克方向移动，上右下左
 			switch(this.direct){
 				case 0:
 					//说明坦克正在向上移动。
 					//但是这样写效果有点问题，因为是移动一次，就去随机方向。在移动和切换方向之间转换非常快，
-					//故应该多移动，或者移动的时间长一些，切换方向的机会少一些，这样效果好一点
-					//坦克很有可能只移动了一步，就改变了方向，看起来的效果就是无头苍蝇不停地切换方向，移动却很少。
+					//故应该多移动，或者移动的时间长一些，切换方向的机会少一些，这样效果看起来好一点，平滑
+					//坦克很有可能只移动了一步，就改变了方向。看起来的效果就是无头苍蝇不停地切换方向，移动却很少，甚至不移动。
 					//于是让它多移动几步，并且休息一下
 					//移动多步，制造平滑效果
 					for(int i=0;i<10;i++) {
+						//控制坦克的移动范围在面板里
 						if(y>0) {
 							y-=speed;
 						}
@@ -179,6 +181,7 @@ class Enemy extends Tank implements Runnable
 					break;
 				case 2:
 					for(int i=0;i<10;i++) {
+						//控制坦克的移动范围在面板里
 						if(y<300-30) {
 							y +=speed;
 						}
@@ -192,6 +195,7 @@ class Enemy extends Tank implements Runnable
 					break;
 				case 3:
 					for(int i=0;i<10;i++) {
+						//控制坦克的移动范围在面板里
 						if(x>0) {
 							x -=speed;
 						}
@@ -203,12 +207,14 @@ class Enemy extends Tank implements Runnable
 						}
 					}
 			}
+			
+			/*下面的逻辑是处理敌人坦克如何产生子弹并发射，然后在渲染时才能看到效果*/
 			times++;
 			if(times%2 == 0){
 				//是否给坦克加入新的子弹
 				if(isLive){
 					//3说明可以连发2个子弹
-					if(vs.size()<5){
+					if(vs.size()<3){
 						//没有子弹就要重新产生子弹（根据此时坦克的方向）
 						switch(direct){
 						case 0://上（注意，x坐标是坦克的坐上角）
@@ -224,6 +230,7 @@ class Enemy extends Tank implements Runnable
 							s = new Shot(x,y+10,3);
 							break;
 						}
+						//敌人的每颗子弹都是单独的一个进程
 						Thread ts=new Thread(s);
 						ts.start();
 						//添加到敌人的子弹集合里
@@ -231,7 +238,7 @@ class Enemy extends Tank implements Runnable
 					}
 				}
 			}
-			//坦克随机产生新的方向
+			//坦克不断移动，新方向随机产生
 			this.direct =(int)(Math.random()*4);
 			//判断敌人坦克是否死亡
 			if(!this.isLive){
@@ -312,7 +319,13 @@ class Hero extends Tank
 	
 }
 
-//炸弹类
+/**
+ * 炸弹类，所谓爆炸类，就是执行那三张图片切换操作的一个类，它拥有着坦克爆炸时的坐标。
+ * 待有一辆坦克爆炸时，才需要实例化出来，按照一定顺序和频率，在某位置切换图片以达到爆炸效果，仅此而已。
+ * @author Administrator
+ *
+ */
+
 class Bomb
 {
 	//炸弹的坐标属性
@@ -350,8 +363,8 @@ class Shot implements Runnable
 	int x = 0;  //初始子弹x坐标
 	int y = 0;  //初始子弹y坐标
 	int direct =0 ; //子弹移动方向
-	int speed = 3; //子弹的移动速度
-	Boolean isLive = true;//子弹是否还在
+	int speed = 2; //子弹的移动速度
+	Boolean isLive = true;//子弹是否还在（击中坦克后，或者通过边界后就消失了）
 	public Shot(int x,int y,int direct)
 	{
 		this.x = x;
@@ -390,7 +403,7 @@ class Shot implements Runnable
 				x-=speed;
 				break;
 			}
-			//有一个问题，子弹对象何时消失退出内存呢？
+			//有一个问题，子弹对象何时消失退出内存呢？画子弹时判断是否有效，无效则退出内存
 			//direct.System.out.println("X坐标是"+x+" Y坐标是"+y);
 			
 			//判断该子弹是否到达面板的边缘
