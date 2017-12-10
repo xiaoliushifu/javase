@@ -63,13 +63,19 @@
  * 
  * 坦克的移动不能重叠（已实现，方法写在了敌人坦克类里了）
  * 游戏进行的时候可以暂停，可以继续
- * 线上玩家的成绩（打了多少坦克）
+ * 记录玩家的成绩（打了多少坦克）
  * 加上音效
  * 
  * 加上游戏封面，即刚打开游戏时，需要展示第几关的一个页面而已。
  * 在这里就是一个简单的panel而已。用MystartPanel类单独写即可。
  * 闪烁？就是把封面的窗体也做成线程而已。
  * 有个开始按钮，那就做出个菜单
+ * 
+ * 游戏可以暂停，可以继续。如何实现？
+ * 简单，游戏暂停（比如点击空格键），可以让坦克和子弹的移动速度为0，坦克方向不会变化。就可以了。
+ * 这就是暂停的效果，思路如此，暂不实现。
+ * 
+ * 记录玩家成绩，比如当前是第几关，还有多少坦克，已经击毙了多少坦克
  */
 package com.test4;
 
@@ -117,7 +123,7 @@ public class MyTankGame4 extends JFrame implements ActionListener{
 		this.setJMenuBar(jmb);//菜单栏添加到窗体里
 		
 		
-		this.setSize(400,300);
+		this.setSize(600,400);//窗体比面板稍大些
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}
@@ -245,6 +251,30 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		}
 	}
 	
+	
+	public void showGameInfo(Graphics g)
+	{
+		//画出提示信息坦克（该坦克不参与战斗，在窗体内，但在面板外）
+		//敌人坦克数量
+		this.drawTank(80, 310, g, 0, 0);
+		g.setColor(Color.BLACK);
+		g.drawString(Recorder.enemyNum+"", 110, 330);
+		//我的坦克生命值
+		this.drawTank(130, 310, g, 0, 1);
+		g.setColor(Color.BLACK);
+		g.drawString(Recorder.mylifeNum+"", 160, 330);
+		
+		//玩家成绩
+		g.setColor(Color.BLACK);
+		Font f=new Font("宋体",Font.BOLD,20);
+		g.setFont(f);
+		g.drawString("您的成绩是:", 410, 30);
+		
+		this.drawTank(410, 70, g, 0, 0);
+		g.setColor(Color.BLACK);
+		g.setFont(null);
+		g.drawString(Recorder.hitEnemyNum+"", 440, 90);
+	}
 	/**
 	 * 遍历我的子弹，再遍历敌人的坦克
 	 * 从而去判断是否击中敌人坦克。
@@ -312,7 +342,13 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 					s.isLive = false;
 					//敌人坦克消失
 					et.isLive = false;
-					//击中坦克，就要产生爆炸效果,放入集合中
+					
+					//敌人数量减一
+					Recorder.enemyNum--;
+					//我的成绩加一
+					Recorder.hitEnemyNum++;
+					
+					//击中坦克，就要产生爆炸效果,在当前位置实例化爆炸类，并放入集合中
 					Bomb b=new Bomb(et.x,et.y);
 					vbs.add(b);
 				}
@@ -324,6 +360,11 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 					s.isLive = false;
 					//敌人坦克消失
 					et.isLive = false;
+					//敌人数量减一
+					Recorder.enemyNum--;
+					//我的成绩加一
+					Recorder.hitEnemyNum++;
+					
 					//击中坦克，就要产生爆炸效果,放入集合中
 					Bomb b=new Bomb(et.x,et.y);
 					vbs.add(b);
@@ -338,6 +379,10 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 		super.paint(g);
 		//首先把整个面板使用默认颜色
 		g.fillRect(0, 0, 400, 300);
+		
+		//显示游戏信息
+		this.showGameInfo(g);
+		
 		//画自己坦克，方向传入，不再是固定的0，方向是按键决定的，动态地
 		//既然我的坦克可以被敌人击中，那么我的坦克活着才可以被画出来
 		if(hero.isLive) {

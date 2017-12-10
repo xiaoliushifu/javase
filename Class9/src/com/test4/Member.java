@@ -476,6 +476,26 @@ class Hero extends Tank
 }
 
 /**
+ * 记录类，记录玩家的设置和成绩
+ * 坦克数量，子弹连发数量，坦克速度，子弹速度，关数等
+ * @author Administrator
+ *
+ */
+class Recorder
+{
+	//敌人当前的数量
+	public static int enemyNum=20;
+	//我的坦克消灭的坦克数量
+	public static int hitEnemyNum=0;
+	//我的坦克可以重生几次
+	public static int mylifeNum=3;
+	
+	
+	
+}
+
+
+/**
  * 炸弹类，所谓爆炸类，就是执行那三张图片切换操作的一个类，它拥有着坦克爆炸时的坐标。
  * 待有一辆坦克爆炸时，才需要实例化出来，按照一定顺序和频率，在某位置切换图片以达到爆炸效果，仅此而已。
  * @author Administrator
