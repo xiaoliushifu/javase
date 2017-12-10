@@ -76,6 +76,9 @@
  * 这就是暂停的效果，思路如此，暂不实现。
  * 
  * 记录玩家成绩，比如当前是第几关，还有多少坦克，已经击毙了多少坦克
+ * 
+ * 把玩家历史击中的坦克数量（成绩）记录到磁盘文件，下次开始时累加
+ * 这个思路比较简单，只是把击中数使用javaIO对象保存到磁盘永久保存，待开始游戏时读取就行了。
  */
 package com.test4;
 
@@ -97,6 +100,7 @@ public class MyTankGame4 extends JFrame implements ActionListener{
 	JMenu jm1=null;
 	//菜单项
 	JMenuItem jmi=null;
+	JMenuItem jmi2=null;
 	public static void main(String[] args) {
 		//在这里写启动代码
 		MyTankGame4 mtg = new MyTankGame4();
@@ -118,7 +122,13 @@ public class MyTankGame4 extends JFrame implements ActionListener{
 		jmi = new JMenuItem("开始新游戏(N)");
 		jmi.addActionListener(this);
 		jmi.setActionCommand("newGame");//设置命令文字
+		
+		//退出游戏的按钮
+		jmi2 = new JMenuItem("退出游戏(E)");
+		jmi2.addActionListener(this);
+		jmi2.setActionCommand("exitGame");
 		jm1.add(jmi);
+		jm1.add(jmi2);
 		jmb.add(jm1);
 		this.setJMenuBar(jmb);//菜单栏添加到窗体里
 		
@@ -150,6 +160,11 @@ public class MyTankGame4 extends JFrame implements ActionListener{
 			//再次刷新一次当前窗体里的新面板
 			this.setVisible(true);
 			
+		}
+		//用户退出游戏，保存游戏信息
+		if(e.getActionCommand().equals("exitGame")){
+			Recorder.keepRecording();
+			System.exit(0);
 		}
 	}
 
@@ -213,6 +228,10 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 	//构造方法 只有修饰符
 	public MyPanel2()
 	{
+		
+		//恢复曾经击中的坦克数量
+		Recorder.getRecording();
+		
 		//初始化我的坦克，就一辆，直接new一次完事
 		hero = new Hero(60,100);
 		
@@ -294,7 +313,14 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 					Enemy et = ves.get(j);
 					if (et.isLive) {
 						//是否击中坦克，单独写个方法，传入子弹和坦克对象
-						this.hitTank(myShot,et);
+						//敌人坦克击中时，才记录统计信息
+						if(this.hitTank(myShot,et))
+						{
+							//敌人数量减一
+							Recorder.enemyNum--;
+							//我的成绩加一
+							Recorder.hitEnemyNum++;
+						}
 					}
 				}
 			}
@@ -329,8 +355,9 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 	//原理就是，只要子弹的坐标，在敌人坦克坐标的范围内，即为击中坦克。
 	//但是，坦克始终是左上角为参考点，且坦克的坐标范围，随方向的不同，计算不同，故先需判断方向
 	//扩展这个函数，也可以判断是否击中我的坦克，故升级第二个参数类型为Tank
-	private void hitTank(Shot s,Tank et)
+	private boolean hitTank(Shot s,Tank et)
 	{
+		boolean retb = false;
 		//判断方向
 		switch(et.direct)
 		{
@@ -338,16 +365,11 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			case 2:
 				if(s.x>et.x && s.x<et.x+20 && s.y>et.y && s.y<et.y+30) {
 					//击中
+					retb=true;
 					//子弹消失
 					s.isLive = false;
 					//敌人坦克消失
 					et.isLive = false;
-					
-					//敌人数量减一
-					Recorder.enemyNum--;
-					//我的成绩加一
-					Recorder.hitEnemyNum++;
-					
 					//击中坦克，就要产生爆炸效果,在当前位置实例化爆炸类，并放入集合中
 					Bomb b=new Bomb(et.x,et.y);
 					vbs.add(b);
@@ -357,19 +379,17 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 			case 3:
 				if(s.x>et.x && s.x<et.x+30 && s.y>et.y && s.y<et.y+20) {
 					//击中
+					retb=true;
+					
 					s.isLive = false;
 					//敌人坦克消失
 					et.isLive = false;
-					//敌人数量减一
-					Recorder.enemyNum--;
-					//我的成绩加一
-					Recorder.hitEnemyNum++;
-					
 					//击中坦克，就要产生爆炸效果,放入集合中
 					Bomb b=new Bomb(et.x,et.y);
 					vbs.add(b);
 				}
 		}
+		return retb;
 	}
 	
 	

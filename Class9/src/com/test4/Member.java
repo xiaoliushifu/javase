@@ -23,7 +23,7 @@ package com.test4;
 
 //多个子弹对象
 import java.util.Vector;
-
+import java.io.*;
 //坦克类
 class Tank
 {
@@ -489,6 +489,56 @@ class Recorder
 	public static int hitEnemyNum=0;
 	//我的坦克可以重生几次
 	public static int mylifeNum=3;
+	
+	public static FileWriter fw=null;
+	public static BufferedWriter bw=null;
+	private static FileReader fr=null;
+	private static BufferedReader br=null;
+	
+	public static void getRecording()
+	{
+		try {
+			fr = new FileReader("d:\\record.txt");
+			br= new BufferedReader(fr);
+			String str = br.readLine();
+			//字符串类型转换为整型
+			hitEnemyNum = Integer.parseInt(str);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				br.close();
+				fr.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void keepRecording()
+	{
+		try {
+			fw = new FileWriter("d:\\record.txt");
+			bw = new BufferedWriter(fw);
+			bw.write(hitEnemyNum+"\r\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				bw.close();
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+	}
 	
 	
 	
