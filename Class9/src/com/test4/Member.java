@@ -17,6 +17,8 @@
  *  	当前坦克朝上时：队友坦克有上下两个方向算一种情况；也有左右方向算一种情况；
  *  	根据当天坦克的左上角坐标和右上角坐标，是否在队友坦克的坐标范围内即可。
  *  当前坦克共有四种朝向，每种情况下队友都有两种情况，故4*2=8种情况
+ *  
+ *  播放声音是从外部直接拷贝来的，不是手写的
  */
 
 package com.test4;
@@ -24,6 +26,72 @@ package com.test4;
 //多个子弹对象
 import java.util.Vector;
 import java.io.*;
+
+//处理音频设备的类
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.SourceDataLine;
+
+//播放声音的类
+class AePlayWave extends Thread {
+
+	private String filename;
+	public AePlayWave(String wavfile) {
+		filename = wavfile;
+
+	}
+
+	public void run() {
+
+		File soundFile = new File(filename);
+
+		AudioInputStream audioInputStream = null;
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(soundFile);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			return;
+		}
+
+		AudioFormat format = audioInputStream.getFormat();
+		SourceDataLine auline = null;
+		DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
+
+		try {
+			auline = (SourceDataLine) AudioSystem.getLine(info);
+			auline.open(format);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+
+		auline.start();
+		int nBytesRead = 0;
+		//这是缓冲
+		byte[] abData = new byte[512];
+
+		try {
+			while (nBytesRead != -1) {
+				nBytesRead = audioInputStream.read(abData, 0, abData.length);
+				if (nBytesRead >= 0)
+					auline.write(abData, 0, nBytesRead);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			return;
+		} finally {
+			auline.drain();
+			auline.close();
+		}
+
+	}
+
+	
+}
+
+
 //坦克类
 class Tank
 {

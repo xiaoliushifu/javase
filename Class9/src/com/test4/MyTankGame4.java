@@ -90,6 +90,11 @@
  *  在面板构造方法里画出这些坦克们。
  *  注意：这里修改了面板的构造方法，加个参数以示区别是新游戏开始还是恢复上一局游戏
  *  从而区别坦克需要新画出还是根据上一局的坦克画出。
+ *  
+ *  加入游戏开始的音效
+ *  	这个需要一个声音文件（wav,mp3等）
+ *  	然后需要一个java类，可以和音频硬件设备打交道，不用手写，外部之间拷贝就好了
+ *  	直接拷贝到member中
  */
 package com.test4;
 
@@ -343,6 +348,13 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 				//ves.add(enemy);
 			}
 		}
+		
+		//播放坦克大战开始的声音
+		AePlayWave apw = new AePlayWave("d:\\111.wav");
+		Thread t=new Thread(apw);
+		t.start();
+		
+		
 		//首先引入这三张爆炸效果图
 		try {
 			//注意，图片文件路径不是在包src内，而是在项目Class9目录下
