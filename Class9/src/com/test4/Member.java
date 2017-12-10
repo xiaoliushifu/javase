@@ -539,9 +539,83 @@ class Recorder
 		
 		
 	}
+	/**
+	 * 保存敌人活着的坦克及方向和位置坐标
+	 * 待触发保存动作时，传入当时坦克向量
+	 */
+	private static Vector<Enemy> ets=null;
+	public static void keepRecordingEnemyAndPosition(Vector<Enemy> ets)
+	{
+		try {
+			fw = new FileWriter("d:\\record.txt");
+			bw = new BufferedWriter(fw);
+			bw.write(hitEnemyNum+"\r\n");
+			
+			//保存当前存活的坦克
+			for(int i=0;i<ets.size();i++){
+				Enemy e=ets.get(i);
+				if(e.isLive){
+					//保存格式就是空格分开的字符串而已
+					String pos=e.x+" "+e.y+" "+e.direct;
+					bw.write(pos+"\r\n");
+				}
+			}
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				bw.close();
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		
+	}
 	
-	
-	
+	/**
+	 * 从磁盘中读取上一局的记录，恢复到内存中，返回到MyTankGame4.java中
+	 * @return
+	 */
+	public static Vector<Enemy> getEnemyAndPosition()
+	{
+		ets=new Vector<Enemy>();
+		try {
+			fr = new FileReader("d:\\record.txt");
+			br= new BufferedReader(fr);
+			String str = br.readLine();
+			//字符串类型转换为整型
+			hitEnemyNum = Integer.parseInt(str);
+			
+			//遍历读取坦克,保存到节点中
+			while((str=br.readLine())!=null){
+				String xyd[]=str.split(" ");
+				Enemy e=new Enemy(Integer.parseInt(xyd[0]),Integer.parseInt(xyd[1]));
+				//设置恢复的坦克坐标及方向
+				e.setDirect(Integer.parseInt(xyd[2]));
+				ets.add(e);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			try {
+				br.close();
+				fr.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return ets;
+	}
+
 }
 
 

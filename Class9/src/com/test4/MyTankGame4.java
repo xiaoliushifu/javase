@@ -79,6 +79,17 @@
  * 
  * 把玩家历史击中的坦克数量（成绩）记录到磁盘文件，下次开始时累加
  * 这个思路比较简单，只是把击中数使用javaIO对象保存到磁盘永久保存，待开始游戏时读取就行了。
+ * 
+ * 
+ * 本次增加存盘退出功能，下次如果开始选择读取【上一局】，则恢复上回的状态：
+ * 	坦克数量,各自方向，位置坐标不变。暂不处理我的坦克和坦克的子弹
+ * 如何实现呢？
+ * 	添加一个按钮，当【存盘退出】时，遍历保留当前面板中有效（还没die)的坦克的坐标，方向
+ *  游戏封面【恢复上一局】按钮时，从磁盘中读取上一局的记录，实例化一个个敌人坦克并初始化
+ *  它的坐标和方向，保存到向量中返回到MyTankGame4中。
+ *  在面板构造方法里画出这些坦克们。
+ *  注意：这里修改了面板的构造方法，加个参数以示区别是新游戏开始还是恢复上一局游戏
+ *  从而区别坦克需要新画出还是根据上一局的坦克画出。
  */
 package com.test4;
 
@@ -101,6 +112,8 @@ public class MyTankGame4 extends JFrame implements ActionListener{
 	//菜单项
 	JMenuItem jmi=null;
 	JMenuItem jmi2=null;
+	JMenuItem jmi3=null;
+	JMenuItem jmi4=null;
 	public static void main(String[] args) {
 		//在这里写启动代码
 		MyTankGame4 mtg = new MyTankGame4();
@@ -127,8 +140,21 @@ public class MyTankGame4 extends JFrame implements ActionListener{
 		jmi2 = new JMenuItem("退出游戏(E)");
 		jmi2.addActionListener(this);
 		jmi2.setActionCommand("exitGame");
+		
+		//保存退出游戏的按钮
+		jmi3 = new JMenuItem("存盘退出游戏(F)");
+		jmi3.addActionListener(this);
+		jmi3.setActionCommand("saveExitGame");
+		
+		//恢复上一局游戏的按钮
+		jmi4 = new JMenuItem("恢复上一局游戏(B)");
+		jmi4.addActionListener(this);
+		jmi4.setActionCommand("BackToGame");
+		
 		jm1.add(jmi);
 		jm1.add(jmi2);
+		jm1.add(jmi3);
+		jm1.add(jmi4);
 		jmb.add(jm1);
 		this.setJMenuBar(jmb);//菜单栏添加到窗体里
 		
@@ -144,7 +170,7 @@ public class MyTankGame4 extends JFrame implements ActionListener{
 			//鉴于游戏开始也是一个面板，和封面面板重叠。故先删除封面面板
 			this.remove(msp);
 			//this.remove(mp);//游戏中也可以重新开始
-			mp = new MyPanel2();
+			mp = new MyPanel2("newGame");
 			
 			//启动游戏面板进程
 			Thread t = new Thread(mp);
@@ -165,6 +191,35 @@ public class MyTankGame4 extends JFrame implements ActionListener{
 		if(e.getActionCommand().equals("exitGame")){
 			Recorder.keepRecording();
 			System.exit(0);
+		}
+		//保存退出游戏
+		if(e.getActionCommand().equals("saveExitGame")){
+			//存盘
+			Recorder.keepRecordingEnemyAndPosition(mp.ves);
+			
+			//退出
+			System.exit(0);
+		}
+		//恢复上一局游戏
+		if(e.getActionCommand().equals("BackToGame")) {
+			this.remove(msp);
+			//这里要区别，是continue，不是newGame。从而去Recorder中读取上一局
+			//的记录来初始化敌人坦克。
+			mp = new MyPanel2("continue");
+			
+			//启动游戏面板进程
+			Thread t = new Thread(mp);
+			t.start();
+			
+			//为当前窗体添加面板
+			this.add(mp);
+			//为当前窗体添加事件监听者，巧的是，事件监听者，也是这个窗体里的面板。
+			//任何对象都可以添加事件监听者，应该针对对象的操作特性添加对应的事件监听者
+			//面板里我的坦克的移动，发射子弹，都是通过按键来实现的，故添加（键盘）事件监听者，以监听面板对象里按键的操作
+			this.addKeyListener(mp);
+			
+			//再次刷新一次当前窗体里的新面板
+			this.setVisible(true);
 		}
 	}
 
@@ -225,38 +280,68 @@ class MyPanel2 extends JPanel implements KeyListener ,Runnable
 	//初始化时控制敌人坦克的数量
 	int enSize = 6;
 	
-	//构造方法 只有修饰符
-	public MyPanel2()
+	//构造方法 增加标识，是新游戏还是恢复上一局游戏
+	public MyPanel2(String flag)
 	{
-		
 		//恢复曾经击中的坦克数量
 		Recorder.getRecording();
 		
 		//初始化我的坦克，就一辆，直接new一次完事
 		hero = new Hero(60,100);
 		
-		//敌军坦克不少，需要循环new出来，放到集合对象里
-		for(int i=0;i<enSize;i++) {
-			//创建一辆敌人坦克（面板上部，y轴固定为0，x轴往右一字排开）
-			Enemy enemy = new Enemy((i+1)*50,0);
-			//每个敌人坦克，也是一个进程
-			Thread t = new Thread(enemy);
-			t.start();
+		//画出敌人坦克时，如果ves有值（从磁盘读取出的），则根据ves画出敌人坦克
+		//否则就是新游戏，按照enSize来画坦克
+		if(flag == "newGame"){
+			//敌军坦克不少，需要循环new出来，放到集合对象里
+			for(int i=0;i<enSize;i++) {
+				//创建一辆敌人坦克（面板上部，y轴固定为0，x轴往右一字排开）
+				Enemy enemy = new Enemy((i+1)*50,0);
+				//每个敌人坦克，也是一个进程
+				Thread t = new Thread(enemy);
+				t.start();
+				
+				//加入到当前坦克的队友向量中,使得当前坦克可以判断周围队友的情况
+				//虽然第一次加时，是空坦克，但是ves是引用，故最终每个坦克都有唯一的一个引用集合
+				//包含了所有敌人的坦克，包括自己在内
+				enemy.setVes(ves);
+				
+				//给敌人坦克添加一颗子弹,放到它的子弹集合里
+				Shot s=new Shot(enemy.x,enemy.y,enemy.direct);
+				enemy.vs.add(s);
+				//它的子弹也是一个线程
+				Thread ts= new Thread(s);
+				ts.start();
+				
+				//加入到敌人坦克集合中
+				ves.add(enemy);
+			}
 			
-			//加入到当前坦克的队友向量中,使得当前坦克可以判断周围队友的情况
-			//虽然第一次加时，是空坦克，但是ves是引用，故最终每个坦克都有唯一的一个引用集合
-			//包含了所有敌人的坦克，包括自己在内
-			enemy.setVes(ves);
-			
-			//给敌人坦克添加一颗子弹,放到它的子弹集合里
-			Shot s=new Shot(enemy.x,enemy.y,enemy.direct);
-			enemy.vs.add(s);
-			//它的子弹也是一个线程
-			Thread ts= new Thread(s);
-			ts.start();
-			
-			//加入到敌人坦克集合中
-			ves.add(enemy);
+		//上一局
+		}else{
+			//上一局，就要从磁盘读取
+			ves = Recorder.getEnemyAndPosition();
+			for(int i=0;i<ves.size();i++) {
+				//创建一辆敌人坦克（面板上部，y轴固定为0，x轴往右一字排开）
+				Enemy enemy=ves.get(i);
+				//每个敌人坦克，也是一个进程
+				Thread t = new Thread(enemy);
+				t.start();
+				
+				//加入到当前坦克的队友向量中,使得当前坦克可以判断周围队友的情况
+				//虽然第一次加时，是空坦克，但是ves是引用，故最终每个坦克都有唯一的一个引用集合
+				//包含了所有敌人的坦克，包括自己在内
+				enemy.setVes(ves);
+				
+				//给敌人坦克添加一颗子弹,放到它的子弹集合里
+				Shot s=new Shot(enemy.x,enemy.y,enemy.direct);
+				enemy.vs.add(s);
+				//它的子弹也是一个线程
+				Thread ts= new Thread(s);
+				ts.start();
+				
+				//加入到敌人坦克集合中
+				//ves.add(enemy);
+			}
 		}
 		//首先引入这三张爆炸效果图
 		try {
