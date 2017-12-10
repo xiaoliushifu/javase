@@ -61,11 +61,15 @@
  * 我的坦克被击中时，也要消失。如何做到呢？
  * 简单，就像判断我的子弹是否击中敌人坦克一样的逻辑；也分开判断敌人每个坦克的每个子弹，是否击中我就是了
  * 
- * 坦克的移动不能重叠
+ * 坦克的移动不能重叠（已实现，方法写在了敌人坦克类里了）
  * 游戏进行的时候可以暂停，可以继续
  * 线上玩家的成绩（打了多少坦克）
  * 加上音效
  * 
+ * 加上游戏封面，即刚打开游戏时，需要展示第几关的一个页面而已。
+ * 在这里就是一个简单的panel而已。用MystartPanel类单独写即可。
+ * 闪烁？就是把封面的窗体也做成线程而已。
+ * 有个开始按钮，那就做出个菜单
  */
 package com.test4;
 
@@ -77,10 +81,16 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class MyTankGame4 extends JFrame{
+public class MyTankGame4 extends JFrame implements ActionListener{
 
 	MyPanel2 mp=null;
 	MyStartPanel msp=null;
+	//菜单栏
+	JMenuBar jmb=null;
+	//菜单
+	JMenu jm1=null;
+	//菜单项
+	JMenuItem jmi=null;
 	public static void main(String[] args) {
 		//在这里写启动代码
 		MyTankGame4 mtg = new MyTankGame4();
@@ -88,31 +98,53 @@ public class MyTankGame4 extends JFrame{
 	//公共类的构造函数
 	public MyTankGame4()
 	{
-		/*
-		//在构造函数里，调用其他的类代码，其他类一般都是业务代码
-		//调用自定义MyPanel2类，启动时会自动调用其paint方法
-		mp = new MyPanel2();
-		
-		//启动面板进程
-		Thread t = new Thread(mp);
-		t.start();
-		
-		//为当前窗体添加面板
-		this.add(mp);
-	*/	
+		//游戏封面
 		msp=new MyStartPanel();
 		Thread mspt= new Thread(msp);
 		mspt.start();
 		this.add(msp);
-		//为当前窗体添加事件监听者，巧的是，事件监听者，也是这个窗体里的面板。
-		//任何对象都可以添加事件监听者，应该针对对象的操作特性添加对应的事件监听者
-		//面板里我的坦克的移动，发射子弹，都是通过按键来实现的，故添加（键盘）事件监听者，以监听面板对象里按键的操作
-		//this.addKeyListener(mp);
+		
+		//游戏封面的菜单栏
+		jmb = new JMenuBar();
+		jm1 = new JMenu("游戏(G)");
+		jm1.setMnemonic('G');//快捷方式 Alt+G
+		//响应这个按钮的操作，开始游戏。故需要事件监听
+		jmi = new JMenuItem("开始新游戏(N)");
+		jmi.addActionListener(this);
+		jmi.setActionCommand("newGame");//设置命令文字
+		jm1.add(jmi);
+		jmb.add(jm1);
+		this.setJMenuBar(jmb);//菜单栏添加到窗体里
 		
 		
 		this.setSize(400,300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getActionCommand().equals("newGame")){
+			//鉴于游戏开始也是一个面板，和封面面板重叠。故先删除封面面板
+			this.remove(msp);
+			//this.remove(mp);//游戏中也可以重新开始
+			mp = new MyPanel2();
+			
+			//启动游戏面板进程
+			Thread t = new Thread(mp);
+			t.start();
+			
+			//为当前窗体添加面板
+			this.add(mp);
+			//为当前窗体添加事件监听者，巧的是，事件监听者，也是这个窗体里的面板。
+			//任何对象都可以添加事件监听者，应该针对对象的操作特性添加对应的事件监听者
+			//面板里我的坦克的移动，发射子弹，都是通过按键来实现的，故添加（键盘）事件监听者，以监听面板对象里按键的操作
+			this.addKeyListener(mp);
+			
+			//再次刷新一次当前窗体里的新面板
+			this.setVisible(true);
+			
+		}
 	}
 
 }
