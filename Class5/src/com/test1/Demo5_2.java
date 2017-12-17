@@ -19,8 +19,11 @@ public class Demo5_2 {
 		
 		//从控制台输入各个狗的信息
 		//isr好比和控制台绑定了一般
+		//学习了之后的IO才知道，这个属于字符输入流，只有它才可以绑定控制台的in，它的子类
+		//FileReader不可以。
 		InputStreamReader isr=new InputStreamReader(System.in);
 		//由isr流对象从控制台读入的数据，缓冲给br对象，br是缓冲对象
+		//为啥使用缓冲对象，其实写得多了就知道了，这是惯例写法。
 		BufferedReader br=new BufferedReader(isr);
 		for(int i=0;i<4;i++)
 		{

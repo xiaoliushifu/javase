@@ -24,4 +24,8 @@ class Dog
 	String color;
 	private int age;
 	
+	public Dog()
+	{
+		a=44;
+	}
 }

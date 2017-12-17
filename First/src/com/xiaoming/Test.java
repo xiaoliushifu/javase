@@ -18,6 +18,11 @@ public class Test {
 		//在这里，只有public修饰符修饰的a成员属性和ab1成员方法可以访问哟
 		t2.a=3;
 		t2.ab1();
+		
+		//在当前包下，不可以访问另一个包里的非public类，这里的Dog是本文件里Dog
+		//其修饰符为default
+		Dog d=new Dog();
+		System.out.println(d.toString());
 	}
 
 }

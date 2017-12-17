@@ -13,7 +13,7 @@ public class Demo5_1 {
 		/*//定义一个可以存放六个float类型的数组
 		float arr[]=new float[6];
 		
-		//使用for循环赋值
+		//直接指定数组的下标赋值
 		arr[0]=3;
 		arr[1]=5;
 		arr[2]=1;
@@ -30,10 +30,11 @@ public class Demo5_1 {
 		System.out.println("all="+all);*/
 		
 		//定义size=5的int数组
-		//先声明，再赋值
-		//int[]  arr2;  //一种声明数组的方式
-		//int  []arr2;  //又一种声明数组的方式
-		int  arr2[];    //常用的方式
+		//先声明，再赋值，java中，数组的声明有三种样式，必须出现中括号[]
+		//[]可以出现的位置有三处，
+		//int[]  arr2;  //一种声明数组的方式  1类后面
+		//int  []arr2;  //又一种声明数组的方式  2变量前
+		int  arr2[];    //常用的方式   3变量后
 		arr2=new int[5];
 		System.out.println(arr2.length);
 		
