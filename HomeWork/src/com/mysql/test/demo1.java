@@ -1,5 +1,8 @@
 package com.mysql.test;
 
+/**
+ * 需要在项目的classPath文件中，配置mysql驱动jar包的位置。
+ */
 import java.sql.*;
 public class demo1 {
 
@@ -15,10 +18,12 @@ public class demo1 {
     public static void main(String[] args) {
     	//初始化连接对象
         Connection conn = null;
-        //初始化Statement对象
+        //初始化Statement对象,是java.sql下的接口
         Statement stmt = null;
+        //预编译sql语句对象是Statement的子接口
+        PreparedStatement pstmt=null;
         try{
-            // 注册 JDBC的mysql驱动,其他驱动类似
+            // 注册 JDBC的mysql驱动,其他驱动类似。注册驱动之前，需要先配置classPath
             Class.forName("com.mysql.jdbc.Driver");
         
             // 打开链接
@@ -30,17 +35,24 @@ public class demo1 {
             System.out.println(" 实例化Statement对...");
             //用conn创建statement
             stmt = conn.createStatement();
+            
             String sql;
             sql = "SELECT id, name FROM test";
+            
+            //或者预编译
+            stmt = conn.prepareStatement(sql);
             //stmt是直接执行sql的对象
+            //rs刚取出来时，指向游标的上一行，所以必须通过next方法获得下一行
+            //否则就是空指针
             ResultSet rs = stmt.executeQuery(sql);
         
             //遍历结果集，内部用游标得到每一行的记录
             while(rs.next()){
             	//rs.next就代表指针移动了一行，rs表示当前行
-                // 在当前行通过字段检索
-            	
-                int id  = rs.getInt("id");
+                // 在当前行通过字段和列号两种方式获得字段值
+            	//int id  = rs.getInt("id");//用key,第一列的字段名称
+                int id  = rs.getInt(1);//用索引，表示当前行的第一列数据
+                
                 String name = rs.getString("name");
     
                 // 输出数据
