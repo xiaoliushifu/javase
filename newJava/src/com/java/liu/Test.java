@@ -2,7 +2,6 @@ package com.java.liu;
 import java.util.Date;
 import java.util.Scanner;
 public class Test {
-
 	static int ONE = 1;
 	
 	public static void main(String[] args) {
