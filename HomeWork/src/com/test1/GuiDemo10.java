@@ -1,7 +1,14 @@
 package com.test1;
 
 /**
- * JTable的使用
+ * 修改为小型的学生管理系统
+ * 
+ * 实现增删改查功能
+ * 
+ * 查询，就是一个按钮，绑定点击事件，触发时获得文本域的字符，去数据库查询，返回数据，重新生成JTable
+ * 
+ * 
+ * 
  * 连接数据库
  * 加载驱动
  * 建立连接
@@ -15,23 +22,18 @@ import java.util.*;
 import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
-public class GuiDemo10 extends JFrame {
+public class GuiDemo10 extends JFrame implements ActionListener{
 
-	//下面是数据库的几个信息
-	//定义连接字符串
-	static final String DB_URL = "jdbc:mysql://localhost:3306/spdb1?useSSL=false&characterEncoding=utf8";
-	//数据库用户名
-	static final String USER="root";
-	static final String PASS="";
-	Connection conn = null;
-	Statement stat = null;
-	PreparedStatement ps = null;
-	ResultSet rs = null;
-	
-	//用来存放二维数组的数据，和列名
-	Vector rowData,columnNames;
+	JPanel jp1,jp2;
+	//label标签
+	JLabel jl1;
+	//文本域
+	JTextField jtf;
+	JButton jb1,jb2,jb3,jb4;
 	JTable jt=null;
 	JScrollPane jsp=null;
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		GuiDemo10 t1=new GuiDemo10();
@@ -39,72 +41,63 @@ public class GuiDemo10 extends JFrame {
 	
 	//构造函数
 	public GuiDemo10(){
-		//初始化列名
-		columnNames = new Vector();
-		columnNames.add("学号");
-		columnNames.add("名字");
-		columnNames.add("性别");
-		columnNames.add("年龄");
-		columnNames.add("籍贯");
-		columnNames.add("系别");
 		
-		//可以嵌套多行，每行也是一个vector
-		rowData = new Vector();
+		jp1 = new JPanel();
+		jl1=new JLabel("请输入名字");
+		jtf=new JTextField(10);
+		jb1=new JButton("查询");
+		//希望被当前对象监听
+		jb1.addActionListener(this);
 		
-
-		//有关数据库的操作
-		try {
-			//加载驱动
-			Class.forName("com.mysql.jdbc.Driver");
-			//建立连接
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			//根据sql创建预编译对象
-			ps= conn.prepareStatement("select * from stus");
-			rs = ps.executeQuery();
-			//循环读取一行
-			while(rs.next()){
-				Vector hang = new Vector();
-				hang.add(rs.getInt(1));//数据库语法下，下标从1开始的
-				hang.add(rs.getString(2));
-				hang.add(rs.getString(3));
-				hang.add(rs.getShort(4));//注意范围,数据库用的是无符号一个字节
-				hang.add(rs.getString(5));
-				hang.add(rs.getString(6));
-				rowData.add(hang);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			
-		}finally{
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(ps != null) {
-					ps.close();
-				}
-				if(conn !=null){
-					conn.close();
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		//一行加入到rowData中
-		//rowData.add(hang);
-		//初始化JTable
-		jt = new JTable(rowData,columnNames);
-		//初始化JScrollPane
+		jp1.add(jl1);
+		jp1.add(jtf);
+		jp1.add(jb1);
+		
+		//第二个面板
+		jp2 =new JPanel();
+		jb2= new JButton("添加");
+		jb2.addActionListener(this);
+		jb3= new JButton("修改");
+		jb4= new JButton("删除");
+		//往面板里添加按钮
+		jp2.add(jb2);
+		jp2.add(jb3);
+		jp2.add(jb4);
+		
+		//中间部分，就是JTable
+		StuModel sm = new StuModel();
+		jt = new JTable(sm);
+		//初始化JScrollPane，需要JTable对象作为构造函数的参数
 		jsp = new JScrollPane(jt);
 		
 		//把jsp放到JFrame中
 		this.add(jsp);
+		//本身就是自上向下的布局，加个North，往最上面走
+		this.add(jp1,"North");
+		this.add(jp2,"South");
 		this.setSize(400,300);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		//查询按钮
+		if(arg0.getSource() == jb1) {
+			//事件发生是，直接在jtf对象上获得文本即可
+			String name=this.jtf.getText().trim();
+			String sql = "select * from stus where StuName='"+name+"'";
+			StuModel sm = new StuModel(sql);
+			//JTable是有数据模型的，所以这次使用set方法更新为新的数据模型即可
+			jt.setModel(sm);
+			
+		}
+		//添加按钮
+		if(arg0.getSource() == jb2) {
+			StuAddDialog sa = new StuAddDialog(this,"添加一个学生",true);
+		}
+		
 	}
 
 }
