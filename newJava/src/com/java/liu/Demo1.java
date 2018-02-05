@@ -4,6 +4,14 @@ public class Demo1 {
 	private String name = "好人";
 	protected byte age = 100;
 	public String nickName ="老张";
+	
+	/**
+	 * 子类Demo2没有构造方法时,那么实例Demo2的过程会调用父类的构造方法
+	 * 子类Demo2有自己的构造方法时，实例Demo2的过程，首先调用父类Demo1的构造方法，然后还会调用自身Demo2的构造方法
+	 */
+	public Demo1(){
+		System.out.println("I am Demo1");
+	}
 }
 
 /**
@@ -18,8 +26,13 @@ class Demo2 extends Demo1 {
 	//这种情况，就应该主动调用Demo2的main方法才行
 	public static void main(String args[]){
 		Demo2 d=new Demo2();
-		System.out.println(d.getAge());
-		System.out.println(d.getName());
+		
+		
+//		System.out.println(d.getAge());
+//		System.out.println(d.getName());
+	}
+	public Demo2(){
+		System.out.println("I am Demo2");
 	}
 	//子类虽然不能继承父类的name,但是子类完全可以自己定义一个和父类私有成员name名字一样，类型一样的成员变量
 	//来使用。虽然此name非彼name，但是又有什么限制呢？
