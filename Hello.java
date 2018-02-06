@@ -1,34 +1,35 @@
-//Ò»¸ö³ÌĞò£¬ÔÚ¿ØÖÆÌ¨ÏÔÊ¾Hello World
-//Ò»¸öjavaÎÄ¼şÖ»ÄÜÓĞÒ»¸öpublicÀà
-//Hello ÀàÃû£¬¹«¹²ÀàµÄÀàÃû±ØĞëºÍÎÄ¼şÃûÒ»ÖÂ
+//ä¸€ä¸ªç¨‹åºï¼Œåœ¨æ§åˆ¶å°æ˜¾ç¤ºHello World
+//ä¸€ä¸ªjavaæ–‡ä»¶åªèƒ½æœ‰ä¸€ä¸ªpublicç±»
+//Hello ç±»åï¼Œå…¬å…±ç±»çš„ç±»åå¿…é¡»å’Œæ–‡ä»¶åä¸€è‡´
 
 public class Hello
 {
-	//Ò»¸öÖ÷º¯Êı£¬³ÌĞòÈë¿Ú
+	//ä¸€ä¸ªä¸»å‡½æ•°ï¼Œç¨‹åºå…¥å£
 	public static void main(String args[])
 	{
-		//¿ØÖÆÌ¨Êä³ö
+		System.out.println("æˆ‘èƒ½å­¦ä¼šjava");
+		//æ§åˆ¶å°è¾“å‡º
 		//System.out.println("Hello!");
 
-/*		int a=10; //¶¨ÒåÒ»¸ö±äÁ¿
+/*		int a=10; //å®šä¹‰ä¸€ä¸ªå˜é‡
 		int b=20;
 		int result=a+b;
-		System.out.println("½á¹ûÊÇ"+result);
+		System.out.println("ç»“æœæ˜¯"+result);
 */
 		byte byte1=-128;
 
 //		char char1='u';
 //		System.out.println(char1);
 
-		int test1='a'+'b';//×ª³Éascii×Ö·û¼¯Àïa×Ö·ûµÄ±àÂëÊıÖµ£¬b×Ö·ûµÄ±àÂëÊıÖµ£¬½øĞĞÏà¼Ó¡£
-		char test2='a'+'b';//ÔÚjavaÖĞ£¬¶Ôchar½øĞĞÔËËãµÄÊ±ºò£¬Ö±½Óµ±×öascii±àÂë±íµÄ±àÂëÊıÖµÀ´¼ÆËã
-//		char test3='ÖĞ';
+		int test1='a'+'b';//è½¬æˆasciiå­—ç¬¦é›†é‡Œaå­—ç¬¦çš„ç¼–ç æ•°å€¼ï¼Œbå­—ç¬¦çš„ç¼–ç æ•°å€¼ï¼Œè¿›è¡Œç›¸åŠ ã€‚
+		char test2='a'+'b';//åœ¨javaä¸­ï¼Œå¯¹charè¿›è¡Œè¿ç®—çš„æ—¶å€™ï¼Œç›´æ¥å½“åšasciiç¼–ç è¡¨çš„ç¼–ç æ•°å€¼æ¥è®¡ç®—
+//		char test3='ä¸­';
 //		float a= 3.1f;
 //		int a=(int)1.2;
 //		int b=(int)1.9;
 		int a=1;
 		double b = 4.5;
-		a=b;
-		System.out.println("a="+a+" b="+b);
+		//a=b;
+		//System.out.println("a="+a+" b="+b);
 	}
 }
