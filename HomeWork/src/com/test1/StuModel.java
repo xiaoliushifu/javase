@@ -15,7 +15,7 @@ import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
-public class StuModel extends AbstractTableModel {
+class StuModel extends AbstractTableModel {
 
 	//下面是数据库的几个信息
 	static final String DB_URL = "jdbc:mysql://localhost:3306/spdb1?useSSL=false&characterEncoding=utf8";
