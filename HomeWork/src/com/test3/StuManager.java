@@ -21,7 +21,7 @@ import javax.swing.*;
 import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
-public class GuiDemo10 extends JFrame implements ActionListener{
+public class StuManager extends JFrame implements ActionListener{
 
 	JPanel jp1,jp2;
 	//label标签
@@ -38,21 +38,18 @@ public class GuiDemo10 extends JFrame implements ActionListener{
 	static final String USER="root";
 	static final String PASS="";
 	Connection conn = null;
-	Statement stat = null;
 	PreparedStatement ps = null;
 	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		GuiDemo10 t1=new GuiDemo10();
+		StuManager t1=new StuManager();
 	}
 	
 	//构造函数
-	public GuiDemo10(){
+	public StuManager(){
 		
 		jp1 = new JPanel();
-		//应xiaolong的需求，修改布局为左对齐
-		jp1.setLayout(new FlowLayout(FlowLayout.LEFT));
 		jl1=new JLabel("请输入名字");
 		jtf=new JTextField(10);
 		jb1=new JButton("查询");
@@ -77,7 +74,9 @@ public class GuiDemo10 extends JFrame implements ActionListener{
 		jp2.add(jb4);
 		
 		//中间部分，就是JTable
-		sm = new StuModel();
+		String[] params={"1"};
+		String sql="select * from stus where 1=?";
+		sm = new StuModel(sql,params);
 		jt = new JTable(sm);
 		//初始化JScrollPane，需要JTable对象作为构造函数的参数,可以有滚动条面板，需要另个组件或面板来融入。
 		jsp = new JScrollPane(jt);
@@ -99,8 +98,9 @@ public class GuiDemo10 extends JFrame implements ActionListener{
 		if(arg0.getSource() == jb1) {
 			//事件发生是，直接在jtf对象上获得文本即可
 			String name=this.jtf.getText().trim();
-			String sql = "select * from stus where StuName='"+name+"'";
-			sm = new StuModel(sql);
+			String sql = "select * from stus where StuName=?";
+			String[] params={name};
+			sm = new StuModel(sql,params);
 			//JTable是有数据模型的，所以这次使用set方法更新为新的数据模型即可
 			jt.setModel(sm);
 			
@@ -108,9 +108,11 @@ public class GuiDemo10 extends JFrame implements ActionListener{
 		//添加按钮
 		if(arg0.getSource() == jb2) {
 			StuAddDialog sa = new StuAddDialog(this,"添加一个学生",true);
-			//当实例化一个对话框时，程序到这就暂停了，进程转移到对话框中。“来了吗”不会打印，直到关闭对话框
-			System.out.println("来了吗");
-			sm = new StuModel();
+			
+			//添加完之后再查询出来
+			String[] params={"1"};
+			String sql="select * from stus where 1=?";
+			sm = new StuModel(sql,params);
 			jt.setModel(sm);
 		}
 		//删除按钮
@@ -125,9 +127,12 @@ public class GuiDemo10 extends JFrame implements ActionListener{
 			String StuId=sm.getValueAt(rownum,0).toString();
 			String sql = "delete from stus where StuId=?";
 			String param[]={StuId};
-			StuModel temp = new StuModel();
-			temp.UpdStu(sql, param);
-			sm = new StuModel();
+			sm = new StuModel(sql,param);
+			sm.UpdStu(sql, param);
+			//更新完之后，需重新查询一次
+			String[] strArr={"1"};
+			sql="select * from stus where 1=?";
+			sm = new StuModel(sql,strArr);
 			jt.setModel(sm);
 		}
 		//更新按钮
@@ -139,7 +144,9 @@ public class GuiDemo10 extends JFrame implements ActionListener{
 				return ;
 			}
 			StuUpdateDialog sud=new StuUpdateDialog(this,"修改记录",true,sm,rownum);
-			sm = new StuModel();
+			String[] strArr={"1"};
+			String sql="select * from stus where 1=?";
+			sm = new StuModel(sql,strArr);
 			jt.setModel(sm);
 		}
 		

@@ -5,37 +5,31 @@
  * 需要继承一个抽象类AbstractTableModel,并实现一些方法
  */
 package com.test3;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
 class StuModel extends AbstractTableModel {
 
-	//下面是数据库的几个信息
-	static final String driver="com.mysql.jdbc.Driver";
-	static final String DB_URL = "jdbc:mysql://localhost:3306/spdb1?useSSL=false&characterEncoding=utf8";
-	//数据库用户名
-	static final String USER="root";
-	static final String PASS="";
-	Connection conn = null;
-	Statement stat = null;
-	PreparedStatement ps = null;
-	ResultSet rs = null;
-
 	//用来存放二维数组的数据，和列名
 	Vector rowData,columnNames;
+	ResultSet rs= null;
+	SqlHelper db =null;
+	
+
+	//构造函数，初始化model,传递一个sql,不能加void
+	public StuModel(String sql,String[] params){
+		this.init(sql,params);
+	}
+	//构造函数，初始化model,传递一个sql,不能加void
+	public StuModel(){
+		
+	}
 		
 	//共用的初始化方法
-	public void init(String sql){
-		if(sql.equals("")) {
-			sql = "select * from stus";
-		}
+	public void init(String sql,String params[]){
 		columnNames = new Vector();
 		columnNames.add("学号");
 		columnNames.add("名字");
@@ -48,15 +42,11 @@ class StuModel extends AbstractTableModel {
 		rowData = new Vector();
 		//有关数据库的操作
 		try {
-			//加载驱动
-			Class.forName("com.mysql.jdbc.Driver");
-			//建立连接
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			//根据sql创建预编译对象
-			ps= conn.prepareStatement(sql);
-			rs = ps.executeQuery();
+			db = new SqlHelper();
+			rs = db.QueryExecute(sql, params);
 			//循环读取一行
 			while(rs.next()){
+				System.out.println("come");
 				Vector hang = new Vector();
 				hang.add(rs.getInt(1));//数据库语法下，下标从1开始的
 				hang.add(rs.getString(2));
@@ -72,61 +62,15 @@ class StuModel extends AbstractTableModel {
 		} catch (Exception e) {
 			
 		}finally{
-			try {
-				if(rs != null) {
-					rs.close();
-				}
-				if(ps != null) {
-					ps.close();
-				}
-				if(conn !=null){
-					conn.close();
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			db.close();
 		}
 	}
 		
 	//修改一个学生（增加，删除，改）
 	public boolean UpdStu(String sql,String param[]){
-		boolean b=true;
-		try{
-			Class.forName(driver);
-			conn = DriverManager.getConnection(DB_URL,USER,PASS);
-			ps= conn.prepareStatement(sql);
-			for(int i=0;i<param.length;i++){
-				ps.setString(i+1, param[i]);
-			}
-			if(ps.executeUpdate() == -1){
-				b=false;
-			}
-		}catch(Exception e){
-			b=false;
-		}finally{
-			try {
-				if(ps != null) {
-					ps.close();
-				}
-				if(conn !=null){
-					conn.close();
-				}
-			} catch (Exception e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-		}
-		return b;
-	}
-		
-	//构造函数，初始化model,传递一个sql
-	public StuModel(String sql){
-		this.init(sql);
-	}
-	
-	public StuModel(){
-		this.init("");
+		SqlHelper db = new SqlHelper();
+		db.UpdExecute(sql, param);
+		return true;
 	}
 		
 	@Override
