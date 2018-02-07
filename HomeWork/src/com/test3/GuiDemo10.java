@@ -18,7 +18,6 @@ package com.test3;
  * 	验证sql准确否
  */
 import javax.swing.*;
-import java.util.*;
 import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;

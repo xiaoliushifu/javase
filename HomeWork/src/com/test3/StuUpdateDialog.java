@@ -4,7 +4,6 @@ package com.test3;
  * 该对话框其实扮演者表单的角色，用来填写学生信息并保存之
  */
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;//编写用户表单，等页面元素的类库
 import javax.swing.JOptionPane;
 import javax.swing.JButton;//编写用户表单，等页面元素的类库
@@ -16,9 +15,6 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 class StuUpdateDialog extends JDialog implements ActionListener {
 	JPanel jp1,jp2,jp3;
 	JLabel jl1,jl2,jl3,jl4,jl5,jl6;
