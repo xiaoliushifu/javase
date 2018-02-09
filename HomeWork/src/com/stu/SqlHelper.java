@@ -1,4 +1,4 @@
-package com.test3;
+package com.stu;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

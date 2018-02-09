@@ -1,4 +1,4 @@
-package com.test3;
+package com.stu;
 
 /**
  * 修改为小型的学生管理系统

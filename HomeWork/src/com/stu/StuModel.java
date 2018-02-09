@@ -4,7 +4,7 @@
  * 不是直接查询数据库sql,而是让模型去查询sql，JTable只关系Table模型就行了。
  * 需要继承一个抽象类AbstractTableModel,并实现一些方法
  */
-package com.test3;
+package com.stu;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
