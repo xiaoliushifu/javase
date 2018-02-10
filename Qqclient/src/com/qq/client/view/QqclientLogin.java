@@ -4,9 +4,14 @@
 package com.qq.client.view;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
-public class QqclientLogin extends JFrame {
+
+import com.qq.client.model.QqClientUser;
+import com.qq.common.User;
+public class QqclientLogin extends JFrame implements ActionListener {
 
 	/**
 	 * 定义登录界面北部的组件
@@ -75,6 +80,7 @@ public class QqclientLogin extends JFrame {
 		//南部的,默认就是流式布局
 		jp1 = new JPanel();
 		jp1_jb1 = new JButton(new ImageIcon("image/denglu.gif"));
+		jp1_jb1.addActionListener(this);//登录按钮事件绑定
 		jp1_jb2 = new JButton(new ImageIcon("image/quxiao.gif"));
 		jp1_jb3 = new JButton(new ImageIcon("image/xiangdao.gif"));
 		jp1.add(jp1_jb1);
@@ -86,6 +92,27 @@ public class QqclientLogin extends JFrame {
 		this.add(jbl1,"North");
 		this.setSize(350,240);
 		this.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		if(arg0.getSource()==jp1_jb1) {
+			//教给QqClientUser去验证
+			QqClientUser qcu = new QqClientUser();
+			User u=new User();
+			u.setUserId(jp2_jtf.getText().trim());//用户编号
+			//用户密码的获得，不是getText()
+			u.setPasswd(new String(jpf.getPassword()).trim());
+			if(qcu.checkUser(u)) {
+				new QqFriendList();
+				//关闭当前的登录页面
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "QQ号或者密码错误");
+			}
+			System.out.println("登录过程结束");
+		}
 	}
 
 }
