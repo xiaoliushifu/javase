@@ -17,8 +17,16 @@ public class MyClient {
 			//下面这行代码，会立即连接指定ip：port的套接字
 			Socket s = new Socket("127.0.0.1",9999);
 			//用pw向s的输出流发送信息，true表示在调用（print,println等方法时）及时刷新缓冲区
-			PrintWriter pw = new PrintWriter(s.getOutputStream(),true);
-			pw.println("你好，我是客户端");
+			//PrintWriter pw = new PrintWriter(s.getOutputStream(),true);
+			//pw.println("你好，我是客户端");
+			
+			//对象流，专门用于在网络的双方之间交换对象信息【START】
+			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+			User u = new User();
+			u.setName("刘师傅");
+			u.setPass("123456");
+			oos.writeObject(u);
+			//对象流【END】
 			
 			//客户端读取服务端发来的数据，从外到内，同理也是从Input流开始，经过几次倒腾
 			InputStreamReader isr = new InputStreamReader(s.getInputStream());

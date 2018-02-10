@@ -136,7 +136,8 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		if(arg0.getClickCount()==2){
 			//得到该好友的编号
 			String friendNo=((JLabel) arg0.getSource()).getText();
-			System.out.println("希望和"+friendNo+"聊天");
+			//从这里调用另一个java类，完成弹出聊天窗口的功能
+			new Qqchat(friendNo);
 		}
 	}
 	@Override

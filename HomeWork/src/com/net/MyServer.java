@@ -22,11 +22,22 @@ public class MyServer {
 			
 			//连接对象读取客户端的数据，客户端发来的数据是由外到内的过程，需要Input流
 			//不是直接进来的，而是经过好几个输入流的倒腾才进来的
-			InputStreamReader isr = new InputStreamReader(s.getInputStream());
-			BufferedReader br = new BufferedReader(isr);
+			//InputStreamReader isr = new InputStreamReader(s.getInputStream());
+			//BufferedReader br = new BufferedReader(isr);
 			//最终读取客户端发来的数据
-			String info = br.readLine();
-			System.out.println("接收客户端的信息："+info);
+			//String info = br.readLine();
+			//System.out.println("接收客户端的信息："+info);
+			
+			//使用对象流方式【START】
+			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+			try {
+				User u = (User) ois.readObject();
+				System.out.println("服务端收到"+u.getName()+" "+u.getPass());
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//使用对象流方式【END】
 			
 			
 			//有来有往，下面是服务端要向客户端发送数据了，需要Output流
