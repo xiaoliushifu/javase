@@ -101,11 +101,13 @@ public class QqclientLogin extends JFrame implements ActionListener {
 			//教给QqClientUser去验证
 			QqClientUser qcu = new QqClientUser();
 			User u=new User();
-			u.setUserId(jp2_jtf.getText().trim());//用户编号
+			String userId = jp2_jtf.getText().trim();
+			u.setUserId(userId);//用户编号
 			//用户密码的获得，不是getText()
 			u.setPasswd(new String(jpf.getPassword()).trim());
 			if(qcu.checkUser(u)) {
-				new QqFriendList();
+				//传入当前登录用户的编号
+				new QqFriendList(userId);
 				//关闭当前的登录页面
 				this.dispose();
 			} else {

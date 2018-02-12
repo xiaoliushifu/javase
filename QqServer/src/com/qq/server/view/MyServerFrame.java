@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.Event.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MyServerFrame extends JFrame implements ActionListener {
 
@@ -23,6 +24,7 @@ public class MyServerFrame extends JFrame implements ActionListener {
 		jb1=new JButton("启动服务器");
 		jb1.addActionListener(this);
 		jb2=new JButton("停止服务器");
+		jb2.addActionListener(this);
 		jp.add(jb1);
 		jp.add(jb2);
 		this.add(jp);
@@ -37,6 +39,15 @@ public class MyServerFrame extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		if (arg0.getSource()==jb1) {
 			new MyServer();
+		}
+		if (arg0.getSource()==jb2) {
+			try {
+				MyServer.ss.close();
+				this.dispose();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }

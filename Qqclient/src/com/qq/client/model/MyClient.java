@@ -12,26 +12,14 @@ import java.io.*;
 
 public class MyClient {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-	}
-	
-	public MyClient() {
-		/*try {
-			Socket s = new Socket("127.0.0.1",9999);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-				
-	}
-	
+	public static Socket s;
 	//发送登录信息到服务端
 	public boolean sendLoginInfoToServer(Object o) {
 		boolean b=false;
 		try {
-			Socket s = new Socket("127.0.0.1",9999);
+			//客户端初次建立与服务端的套接字，并保存到静态变量s里
+			s = new Socket("127.0.0.1",9999);
 			//初始化对象流，输出流
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			oos.writeObject(o);

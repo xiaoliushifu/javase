@@ -29,13 +29,12 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 	//一个窗体里，需要使用卡片式布局，可以放多张卡片
 	CardLayout cl =null;
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		QqFriendList qqlist = new QqFriendList();
-	}
-	//构造方法
-	public QqFriendList(){
-		
+	//当前用户编号
+	String ownerId;
+	
+	//构造方法,传递当前用户编号，便于以后打开聊天窗口时，知道自己是谁
+	public QqFriendList(String ownerId){
+		this.ownerId=ownerId;
 //第一张卡片，好友列表
 		//第一个整体大面板，包含一个按钮,两个子面板
 		jphy1=new JPanel(new BorderLayout());
@@ -113,7 +112,8 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		
 		this.setSize(150,400);
 		this.setVisible(true);
-		this.setLocation(100, 50);
+		this.setTitle(ownerId);
+		//this.setLocation(100, 50);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	@Override
@@ -137,7 +137,11 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 			//得到该好友的编号
 			String friendNo=((JLabel) arg0.getSource()).getText();
 			//从这里调用另一个java类，完成弹出聊天窗口的功能
-			new Qqchat(friendNo);
+			//传入自己编号，还有对方的编号
+			Qqchat qc = new Qqchat(this.ownerId,friendNo);
+			//启动线程，读取服务端发来的消息
+			Thread t= new Thread(qc);
+			t.start();
 		}
 	}
 	@Override

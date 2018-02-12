@@ -10,15 +10,12 @@ import java.io.*;
 
 public class MyServer {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-	
+	//服务端管理套接字
+	public static ServerSocket ss;
 	public MyServer() {
 		try {
 			System.out.println("服务端开始监听这9999......");
-			ServerSocket ss = new ServerSocket(9999);
+			ss = new ServerSocket(9999);
 			
 			//长时间的监听，需要无线循环
 			while(true){
@@ -35,6 +32,13 @@ public class MyServer {
 					//返回一个成功登录的信息包Message
 					m.setMesType("1");
 					oos.writeObject(m);//发送对象输出流
+					
+					//登录成功，服务端就开启一个线程，该线程与这个客户端保持通讯
+					ServerToClientThread stct = new ServerToClientThread(s);
+					stct.start();//启动线程
+					//用户和套接字的映射关系，加入到服务端的hashMap中
+					ManageClientThead.addClientThread(u.getUserId(), stct);;
+					
 				} else {
 					m.setMesType("2");
 					oos.writeObject(m);
