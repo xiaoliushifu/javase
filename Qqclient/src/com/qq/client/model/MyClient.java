@@ -13,6 +13,13 @@ import java.io.*;
 public class MyClient {
 
 
+	//用静态成员变量s的优点是，可以让这个套接字在多个java文件里共享访问，非常方便。
+	//缺点是，当一个客户端和多个客户端聊天时，那么多个聊天窗口里的进程都将争抢MyClient.s
+	//比如 1和2,1和3两个聊天。1分别向他们发送消息是OK的。2的MyClient与3的MyClient也是不冲突的，
+	//2和3的进程是独立的，所以MyClient也是独立的；
+	//但是2向1或者3向1发是不行的。
+	//因为1号客户端是在一个进程下开启了两个窗口，两个窗口就是两个线程，
+	//多线程争抢1号客户端的MyClient.s就会出问题
 	public static Socket s;
 	//发送登录信息到服务端
 	public boolean sendLoginInfoToServer(Object o) {

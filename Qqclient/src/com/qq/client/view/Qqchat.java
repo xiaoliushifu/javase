@@ -61,9 +61,8 @@ public class Qqchat extends JFrame implements ActionListener,Runnable{
 			m.setSendTime(new java.util.Date().toString());//获得当前时间
 			
 			//在该页面，如何获得客户端的套接字呢？也就是在MyClient.java里的socket呢？
-			ObjectOutputStream oos;
 			try {
-				oos = new ObjectOutputStream(MyClient.s.getOutputStream());
+				ObjectOutputStream oos = new ObjectOutputStream(MyClient.s.getOutputStream());
 				oos.writeObject(m);	
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -75,10 +74,12 @@ public class Qqchat extends JFrame implements ActionListener,Runnable{
 	@Override
 	//该线程不断读取由服务端转发而来的消息
 	public void run() {
+		System.out.println(this.ownerId+"和"+this.friendId+"的套接字是"+MyClient.s.hashCode());
 		// TODO Auto-generated method stub
 		while(true) {
 			//读取服务端的消息
 			try {
+				//一对多聊天时，静态成员变量MyClient.s就会出现争抢的问题
 				ObjectInputStream ois = new ObjectInputStream(MyClient.s.getInputStream());
 				Message m = (Message) ois.readObject();
 				String info = m.getSender()+"给"+m.getGetter()+"说："+m.getCon()+"\n";
