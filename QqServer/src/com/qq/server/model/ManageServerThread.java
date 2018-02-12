@@ -1,11 +1,12 @@
 /**
- * 用来管理客户端的线程
+ * 用来管理服务端与客户端的套接字，套接字存在于服务端的线程里
+ * 该类用来管理服务端与每个客户都会启动的线程
  */
 package com.qq.server.model;
 
 import java.util.HashMap;
 
-public class ManageClientThead {
+public class ManageServerThread {
 	public static HashMap hm=new HashMap<String, ServerToClientThread>();
 	
 	//添加一个客户端进程到hm中

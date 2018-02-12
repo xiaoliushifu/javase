@@ -140,8 +140,8 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 			//传入自己编号，还有对方的编号
 			Qqchat qc = new Qqchat(this.ownerId,friendNo);
 			//启动线程，读取服务端发来的消息
-			Thread t= new Thread(qc);
-			t.start();
+			//Thread t= new Thread(qc);
+			//t.start();
 		}
 	}
 	@Override

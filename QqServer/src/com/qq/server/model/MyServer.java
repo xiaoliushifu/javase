@@ -37,7 +37,7 @@ public class MyServer {
 					ServerToClientThread stct = new ServerToClientThread(s);
 					stct.start();//启动线程
 					//用户和套接字的映射关系，加入到服务端的hashMap中
-					ManageClientThead.addClientThread(u.getUserId(), stct);;
+					ManageServerThread.addClientThread(u.getUserId(), stct);;
 					
 				} else {
 					m.setMesType("2");

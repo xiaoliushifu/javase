@@ -5,7 +5,10 @@ package com.qq.client.model;
 
 import java.util.*;
 
+import com.qq.client.tools.ClientToServerThread;
+import com.qq.client.tools.ManageClientThread;
 import com.qq.common.Message;
+import com.qq.common.User;
 
 import java.net.*;
 import java.io.*;
@@ -35,6 +38,9 @@ public class MyClient {
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 			Message ms = (Message) ois.readObject();
 			if(ms.getMesType().equals("1")) {
+				ClientToServerThread ctst = new ClientToServerThread(s);
+				ManageClientThread.addClientThread(((User)o).getUserId(), ctst);
+				ctst.start();
 				b=true;
 			}
 		} catch (Exception e) {

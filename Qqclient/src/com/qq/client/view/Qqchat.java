@@ -8,6 +8,7 @@ package com.qq.client.view;
 import javax.swing.*;
 
 import com.qq.client.model.MyClient;
+import com.qq.client.tools.ManageClientThread;
 import com.qq.common.Message;
 
 import java.awt.*;
@@ -16,7 +17,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.*;
 
-public class Qqchat extends JFrame implements ActionListener,Runnable{
+public class Qqchat extends JFrame implements ActionListener{
 
 	JTextArea jta=null;
 	JTextField jtf=null;
@@ -61,8 +62,10 @@ public class Qqchat extends JFrame implements ActionListener,Runnable{
 			m.setSendTime(new java.util.Date().toString());//获得当前时间
 			
 			//在该页面，如何获得客户端的套接字呢？也就是在MyClient.java里的socket呢？
+			//经过调整后，通过客户端线程管理器首先获得线程，进而再获得套接字
 			try {
-				ObjectOutputStream oos = new ObjectOutputStream(MyClient.s.getOutputStream());
+				ObjectOutputStream oos = new ObjectOutputStream
+						(ManageClientThread.getClientThread(this.ownerId).getS().getOutputStream());
 				oos.writeObject(m);	
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -71,9 +74,8 @@ public class Qqchat extends JFrame implements ActionListener,Runnable{
 		}
 	}
 
-	@Override
 	//该线程不断读取由服务端转发而来的消息
-	public void run() {
+	/*public void run() {
 		System.out.println(this.ownerId+"和"+this.friendId+"的套接字是"+MyClient.s.hashCode());
 		// TODO Auto-generated method stub
 		while(true) {
@@ -89,6 +91,6 @@ public class Qqchat extends JFrame implements ActionListener,Runnable{
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 
 }

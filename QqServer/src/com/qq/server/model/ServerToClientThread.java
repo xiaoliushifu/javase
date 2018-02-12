@@ -27,7 +27,7 @@ public class ServerToClientThread extends Thread {
 				System.out.println(m.getSender()+"给"+m.getGetter()+"说："+m.getCon());
 				
 				//通过客户端进程管理器，获得指定客户端的线程，进而获得该客户端的套接字
-				ServerToClientThread stct = ManageClientThead.getClientThread(m.getGetter());
+				ServerToClientThread stct = ManageServerThread.getClientThread(m.getGetter());
 				ObjectOutputStream oos = new ObjectOutputStream(stct.s.getOutputStream());
 				//把信息转发过去（这个客户端的聊天界面，得不停地接收服务端的消息才行）
 				oos.writeObject(m);
