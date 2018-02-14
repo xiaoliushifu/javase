@@ -2,6 +2,9 @@
  * 聊天界面
  * 
  * 聊天界面需要读取由服务端转发而来的消息，所以需要实现线程
+ * 由于我和张三聊天，我和李四聊天这种一对多同时聊天出现的争抢客户端套接字资源问题
+ * 所以Qqchat不能使用线程了，需要交由管理类来实现
+ * 聊天界面在打开时就加入到管理类的hashMap中
  */
 package com.qq.client.view;
 
@@ -50,6 +53,14 @@ public class Qqchat extends JFrame implements ActionListener{
 		this.setVisible(true);
 	}
 
+	/**
+	 * 在打开的聊天界面中，显示从服务器接收的聊天信息
+	 * @param m
+	 */
+	public void showMessage(Message m) {
+		String info = m.getSender()+"给"+m.getGetter()+"说："+m.getCon()+"\n";
+		this.jta.append(info);
+	}
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub

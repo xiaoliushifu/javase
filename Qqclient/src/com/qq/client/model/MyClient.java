@@ -38,6 +38,7 @@ public class MyClient {
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 			Message ms = (Message) ois.readObject();
 			if(ms.getMesType().equals("1")) {
+				//一旦登录成功，就开启一个线程，该线程被ManageClientThread管理起来
 				ClientToServerThread ctst = new ClientToServerThread(s);
 				ManageClientThread.addClientThread(((User)o).getUserId(), ctst);
 				ctst.start();

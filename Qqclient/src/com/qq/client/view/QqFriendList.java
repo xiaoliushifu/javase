@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import com.qq.client.tools.*;
 
 import javax.swing.*;
 
@@ -139,6 +140,8 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 			//从这里调用另一个java类，完成弹出聊天窗口的功能
 			//传入自己编号，还有对方的编号
 			Qqchat qc = new Qqchat(this.ownerId,friendNo);
+			//加入到管理类中
+			ManageQqChat.addQqchat(this.ownerId+" "+friendNo, qc);
 			//启动线程，读取服务端发来的消息
 			//Thread t= new Thread(qc);
 			//t.start();
