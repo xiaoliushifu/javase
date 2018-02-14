@@ -13,6 +13,7 @@ import javax.swing.*;
 import com.qq.client.model.MyClient;
 import com.qq.client.tools.ManageClientThread;
 import com.qq.common.Message;
+import com.qq.common.MessageType;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -66,6 +67,7 @@ public class Qqchat extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 		if(arg0.getSource()==jb) {
 			Message m = new Message();
+			m.setMesType(MessageType.message_comm_mes);
 			m.setSender(this.ownerId);
 			m.setGetter(this.friendId);
 			m.setCon(jtf.getText());

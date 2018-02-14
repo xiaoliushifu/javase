@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import com.qq.client.tools.*;
+import com.qq.common.Message;
 
 import javax.swing.*;
 
@@ -21,6 +22,7 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 	JPanel jphy1,jphy1_2,jphy1_3;
 	JButton jphy_jb1,jphy_jb2,jphy_jb3;
 	JScrollPane jsp1;
+	JLabel jbls[];//使用成员变量，便于后期更新好友列表
 	
 	//第二张卡片，陌生人列表
 	JPanel jpmsr1,jpmsr1_2,jpmsr1_3;
@@ -32,6 +34,20 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 	
 	//当前用户编号
 	String ownerId;
+	
+	
+	/**
+	 * 更新在线好友状态
+	 * @param m
+	 */
+	public void updatelist(Message m) {
+		String[] con = m.getCon().split(" ");
+		for(int i=0;i<con.length;i++) {
+			//把这些编号的label都置为true
+			jbls[Integer.parseInt(con[i])-1].setEnabled(true);
+		}
+	}
+	
 	
 	//构造方法,传递当前用户编号，便于以后打开聊天窗口时，知道自己是谁
 	public QqFriendList(String ownerId){
@@ -51,9 +67,13 @@ public class QqFriendList extends JFrame implements ActionListener,MouseListener
 		
 
 		//创建50个label,表示50个好友
-		JLabel jbls[]=new JLabel[50];
+		jbls=new JLabel[50];
 		for(int i=0;i<jbls.length;i++){
 			jbls[i]=new JLabel(i+1+"",new ImageIcon("image/mm.jpg"),JLabel.LEFT);
+			jbls[i].setEnabled(false);//默认都不在线
+			if(jbls[i].getText().equals(ownerId)) {
+				jbls[i].setEnabled(true);//自己在线
+			}
 			jbls[i].addMouseListener(this);//鼠标事件，高亮功能
 			jphy1_2.add(jbls[i]);//加入到面板里
 		}

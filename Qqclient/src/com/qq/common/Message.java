@@ -6,6 +6,9 @@ package com.qq.common;
 public class Message implements java.io.Serializable{
 	private String mesType;
 	private String sender;
+	private String getter;
+	private String con;
+	private String sendTime;
 	/**
 	 * @return the sender
 	 */
@@ -61,10 +64,6 @@ public class Message implements java.io.Serializable{
 	public void setSendTime(String sendTime) {
 		this.sendTime = sendTime;
 	}
-
-	private String getter;
-	private String con;
-	private String sendTime;
 
 	/**
 	 * @return the mesType

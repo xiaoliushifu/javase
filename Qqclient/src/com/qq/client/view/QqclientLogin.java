@@ -6,10 +6,17 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import javax.swing.*;
 
 import com.qq.client.model.QqClientUser;
+import com.qq.client.tools.ClientToServerThread;
+import com.qq.client.tools.ManageClientThread;
+import com.qq.client.tools.ManageFriendList;
+import com.qq.common.Message;
+import com.qq.common.MessageType;
 import com.qq.common.User;
 public class QqclientLogin extends JFrame implements ActionListener {
 
@@ -106,8 +113,24 @@ public class QqclientLogin extends JFrame implements ActionListener {
 			//用户密码的获得，不是getText()
 			u.setPasswd(new String(jpf.getPassword()).trim());
 			if(qcu.checkUser(u)) {
-				//传入当前登录用户的编号
-				new QqFriendList(userId);
+				
+				//传入当前登录用户的编号，默认只自己在线
+				QqFriendList qqlist = new QqFriendList(userId);
+				//加入到管理类中，方便后续更新好友在线状态
+				ManageFriendList.addQqFriendList(userId, qqlist);
+				//发送信息包，用来获得当前在线好友，可以写个方法包裹起来
+				try {
+					ObjectOutputStream oos = new ObjectOutputStream
+					(ManageClientThread.getClientThread(userId).getS().getOutputStream());
+					Message m=new Message();
+					m.setSender(userId);
+					m.setMesType(MessageType.message_get_onLineFriends);
+					oos.writeObject(m);
+					//由于在登录环节就加入线程，故消息的返回就转移到线程处处理，这里无需再管
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				//关闭当前的登录页面
 				this.dispose();
 			} else {
