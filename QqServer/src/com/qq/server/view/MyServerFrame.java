@@ -29,7 +29,7 @@ public class MyServerFrame extends JFrame implements ActionListener {
 		jp.add(jb2);
 		this.add(jp);
 		
-		this.setSize(500,500);
+		this.setSize(500,250);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 	}

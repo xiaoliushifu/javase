@@ -5,6 +5,10 @@
 package com.qq.server.model;
 
 import java.net.*;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import javax.naming.ldap.ManageReferralControl;
 
 import com.qq.common.Message;
 import com.qq.common.MessageType;
@@ -17,6 +21,37 @@ public class ServerToClientThread extends Thread {
 	public ServerToClientThread(Socket s) {
 		this.s = s;
 	}
+	
+	/**
+	 * 通知其他在线用户，我iam已经在线了
+	 * 需要遍历套接字发送信息
+	 * @param iam
+	 */
+	public void notifyOther(String iam) {
+		
+		Message m=new Message();
+		m.setCon(iam);
+		m.setMesType(MessageType.message_ret_onLineFriends);
+		HashMap hm=ManageServerThread.hm;
+		Iterator it = hm.keySet().iterator();
+		while(it.hasNext()) {
+			String onLineUserId = it.next().toString();
+			//不用通知自己
+			if(onLineUserId.equals(iam)) {
+				continue;
+			}
+			m.setGetter(onLineUserId);
+			try {
+				ObjectOutputStream oos = new ObjectOutputStream
+						(ManageServerThread.getClientThread(onLineUserId).s.getOutputStream());
+				oos.writeObject(m);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	//继承Thread类必须实现的方法
 	public void run() {
 		//接收客户端的消息

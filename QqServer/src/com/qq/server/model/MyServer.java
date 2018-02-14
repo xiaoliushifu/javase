@@ -35,9 +35,12 @@ public class MyServer {
 					
 					//登录成功，服务端就开启一个线程，该线程与这个客户端保持通讯
 					ServerToClientThread stct = new ServerToClientThread(s);
-					stct.start();//启动线程
 					//用户和套接字的映射关系，加入到服务端的hashMap中
 					ManageServerThread.addClientThread(u.getUserId(), stct);
+					stct.start();//启动线程
+					
+					//通知其他在线用户，我上线了
+					stct.notifyOther(u.getUserId());
 					
 				} else {
 					m.setMesType("2");
