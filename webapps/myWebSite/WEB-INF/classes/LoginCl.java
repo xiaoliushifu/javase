@@ -25,7 +25,11 @@ public class LoginCl extends HttpServlet{
             String u = req.getParameter("username");
             String p = req.getParameter("passwd");
             
-            if (p.equals("123")) {
+            //同一个包下的public类，无需import引入
+            //实例化数据库连接
+            DbConn db = new DbConn();
+            //调用方法查询数据库
+            if(db.check(u,p)) {
             	//合法,将用户信息写入session
             	//得到session类
             	HttpSession hs = req.getSession(true);
