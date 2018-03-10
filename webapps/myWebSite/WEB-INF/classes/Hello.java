@@ -22,18 +22,20 @@ public class Hello  implements Servlet
 	 */
 	public void init(ServletConfig parm1) throws ServletException {
 		// TODO: Add your code here
+		//这里的输出是在Tomcat的后台才能看到
 		System.out.println("init it");
 	}
 
 	/**
 	 * Method getServletConfig
-	 *
+	 * 暂不理会
 	 *
 	 * @return
 	 *
 	 */
 	public ServletConfig getServletConfig() {
 		// TODO: Add your code here
+		return null;
 	}
 
 	/**
@@ -51,27 +53,33 @@ public class Hello  implements Servlet
 	 */
 	public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
 		// TODO: Add your code here
-		
+		System.out.println("service it");
+		PrintWriter pw = res.getWriter();
+		pw.println("hello,world");
+			
 	}
 
 	/**
 	 * Method getServletInfo
-	 *
+	 * 暂不理会
 	 *
 	 * @return
 	 *
 	 */
 	public String getServletInfo() {
 		// TODO: Add your code here
+		return "";
 	}
 
 	/**
 	 * Method destroy
-	 *
-	 *
+	 * 销毁servlet实例（释放内存）
+	 *1 reload
+	 *2 关闭tomcat
 	 */
 	public void destroy() {
 		// TODO: Add your code here
+		System.out.println("destroy it");
 	}
 
 }

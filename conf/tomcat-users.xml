@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
+<!--åˆ‡è®°å½“å‰æ–‡ä»¶æ˜¯utf-8ç¼–ç -->
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -38,10 +39,11 @@
   <user username="both" password="<must-be-changed>" roles="tomcat,role1"/>
   <user username="role1" password="<must-be-changed>" roles="role1"/>
 -->
-  <role rolename="admin-gui"/>
-<!--ÓÐÁËËü¾Í¿ÉÒÔ¹ÜÀíÕû¸öhost-->
-<user username="admin" password="1234" roles="admin-gui"/>
+  <role rolename="manager-script"/>
+<!--æœ‰äº†å®ƒå°±å¯ä»¥ç®¡ç†æ•´ä¸ªhost-->
+<user username="tomcat" password="1234" roles="admin-gui"/>
 
-<!--ÓÐÁËËü¾Í¿ÉÒÔ¹ÜÀíappÁË-->
-<user username="admin" password="1234" roles="manager-gui"/>
+<!--æœ‰äº†å®ƒå°±å¯ä»¥ç®¡ç†appäº†-->
+
+<user username="tomcat" password="123" roles="manager-gui"/>
 </tomcat-users>

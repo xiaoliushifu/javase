@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
+<!--默认的编码是ISO--8859-1,可以修改为utf-8-->
 <!--
  Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -16,6 +17,8 @@
   limitations under the License.
 -->
 
+
+<!--这就是我的webapp应用的部署配置-->
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
@@ -28,13 +31,23 @@
      Welcome to Tomcat
   </description>
 
+	<!--
+	下面的<servlet>和<servlet-mapping>就是一个完整
+	的servlet配置
+	-->
 	<servlet>
+		<!--servlet程序名，任意-->
 		<servlet-name>hello</servlet-name>
+		<!--指明servlet的路径（包名+类名）-->
 		<servlet-class>com.liu.Hello</servlet-class>
 	</servlet>
 	<servlet-mapping>
+		<!--servlet程序名，任意-->
 		<servlet-name>hello</servlet-name>
-		<urll-pattern>/hello</url-pattern>
+		<!--浏览器访问当前servlet的url,需要加上
+		webapp文件夹的名字，这里就是myWebSite/liu
+		-->
+		<url-pattern>/liu</url-pattern>
 	</servlet-mapping>
 
 </web-app>
