@@ -1,8 +1,0 @@
-127.0.0.1 - - [10/Mar/2018:16:14:42 +0800] "GET /myWebSite/liu HTTP/1.1" 200 13
-127.0.0.1 - - [10/Mar/2018:16:14:42 +0800] "GET /favicon.ico HTTP/1.1" 200 21630
-127.0.0.1 - tomcat [10/Mar/2018:16:14:46 +0800] "POST /manager/html/reload?path=/myWebSite&org.apache.catalina.filters.CSRF_NONCE=7CC023B08C17D63F9CEBD5E9CA194934 HTTP/1.1" 403 3274
-127.0.0.1 - - [10/Mar/2018:16:14:46 +0800] "GET /favicon.ico HTTP/1.1" 200 21630
-127.0.0.1 - tomcat [10/Mar/2018:16:14:59 +0800] "GET /manager/html/ HTTP/1.1" 200 17587
-127.0.0.1 - tomcat [10/Mar/2018:16:15:03 +0800] "POST /manager/html/reload?path=/myWebSite&org.apache.catalina.filters.CSRF_NONCE=7B701CB3C8D1E20EE7F4394FC5CBEC52 HTTP/1.1" 200 17639
-127.0.0.1 - - [10/Mar/2018:16:15:15 +0800] "GET /myWebSite/liu HTTP/1.1" 200 13
-127.0.0.1 - - [10/Mar/2018:16:15:15 +0800] "GET /favicon.ico HTTP/1.1" 200 21630

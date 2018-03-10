@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--默认的编码是ISO--8859-1,可以修改为utf-8-->
+<!--默认的编码是ISO-8859-1,可以修改为utf-8   
+	注释中允许出现两个连续的横线（连字符-）
+-->
 <!--
  Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -48,6 +50,20 @@
 		webapp文件夹的名字，这里就是myWebSite/liu
 		-->
 		<url-pattern>/liu</url-pattern>
+	</servlet-mapping>
+
+	<!--又一个java文件-->
+	<servlet>
+		<servlet-name>hellogen</servlet-name>
+		<!--指明servlet的路径（包名+类名）-->
+		<servlet-class>com.liu.HelloGen</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>hellogen</servlet-name>
+		<!--浏览器访问当前servlet的url,需要加上
+		webapp文件夹的名字，这里就是myWebSite/hellogen
+		-->
+		<url-pattern>/hellogen</url-pattern>
 	</servlet-mapping>
 
 </web-app>
