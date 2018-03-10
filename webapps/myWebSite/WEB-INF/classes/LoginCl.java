@@ -9,6 +9,7 @@ package com.liu;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 
 
@@ -24,8 +25,15 @@ public class LoginCl extends HttpServlet{
             String u = req.getParameter("username");
             String p = req.getParameter("passwd");
             
-            if (u.equals("sp") && p.equals("123")) {
-            	//合法
+            if (p.equals("123")) {
+            	//合法,将用户信息写入session
+            	//得到session类
+            	HttpSession hs = req.getSession(true);
+            	//修改session的发呆时间
+            	hs.setMaxInactiveInterval(20);
+            	//写入服务端空间中
+            	hs.setAttribute("pass","ok");
+            	
             	res.sendRedirect("welcome");
             } else {
             	//不合法，跳转回去
