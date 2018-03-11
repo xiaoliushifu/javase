@@ -6,13 +6,14 @@
  * @version 1.00 2018/3/10
  */
 package com.liu;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.*;
 import java.io.*;
 import java.sql.*;
-
+import java.util.*;
 
 
 public class Welcome extends HttpServlet{
@@ -25,7 +26,7 @@ public class Welcome extends HttpServlet{
             PrintWriter pw = res.getWriter();
             pw.println("<html>");
             pw.println("<body><center>");
-            pw.println("<img src='images/ques.png' /><BR>");
+            pw.println("<img src='images/ques.png' height='100px'/><BR>");
             HttpSession hs = req.getSession(true);
             String p = (String) hs.getAttribute("pass");
             String u = (String) hs.getAttribute("name");
@@ -42,42 +43,30 @@ public class Welcome extends HttpServlet{
             	return;
             }
             //===============增加分页功能=========================================
-            String sql="";
             int pageSize=4;//每页显示几条数据
             int pageNow=1; //当前第几页
+            
             //获得参数
             String pn = req.getParameter("pageNow");
             if (pn != null) {
             	int num = Integer.parseInt(pn);
             	pageNow = num>0?num:1;
             }
-            int rowCount=0;//总共多少条记录(查库)
-            int pageCount=0;//总共多少页（通过计算得到）
-            DbConn db = new DbConn();
-            rowCount = db.count("*");
-            if(rowCount%pageSize==0) {
-            	pageCount = rowCount/pageSize;
-            } else {
-            	pageCount = rowCount/pageSize+1;
-            }
-            System.out.println("总共"+pageCount+"页");
-            ResultSet rs = db.selectAll((pageNow-1)*pageSize,pageSize);
+            UserBeanCl ubl = new UserBeanCl();
+            ArrayList al = ubl.getResultByPage(pageSize,pageNow);
             pw.println("<table border=1 ><br>");
             pw.println("<tr><th>编号</th><th>姓名</th><th>密码</th><th>年龄</th><th>操作</th></tr>");
-            while(rs.next()) {
+            for(int i=0; i<al.size(); i++){
+            	UserBean ub = (UserBean)(al.get(i));
             	pw.println("<tr>");
-            	pw.println("<td>"+rs.getInt("id")+"</td>");
-            	pw.println("<td>"+rs.getString("uname")+"</td>");
-            	pw.println("<td>"+rs.getString("pass")+"</td>");
-            	pw.println("<td>"+rs.getInt("age")+"</td>");
+            	pw.println("<td>"+ub.getId()+"</td>");
+            	pw.println("<td>"+ub.getUname()+"</td>");
+            	pw.println("<td>"+ub.getPass()+"</td>");
+            	pw.println("<td>"+ub.getAge()+"</td>");
             	pw.println("<td><a href=''>修改 | 删除</a></td>");
             	pw.println("</tr>");
             }
             pw.println("</table>");
-            //关闭结果集
-            if(rs != null) {
-            	rs.close();
-            }
             
             //上一页
             if (pageNow > 1) {
@@ -89,14 +78,13 @@ public class Welcome extends HttpServlet{
             	pw.println("<a href=welcome?pageNow="+i+">"+i+"</a>");
             }
             
-            if(pageNow < pageCount) {
+            //if(pageNow < pageCount) {
             	pw.println("<a href=welcome?pageNow="+(pageNow+1)+">下一页</a>");
-            }
+            //}
             //===============增加分页功能=========================================
             
             pw.println("</center></body>");
             pw.println("</html>");
-            
         }
         catch (Exception ex) {
             ex.printStackTrace();

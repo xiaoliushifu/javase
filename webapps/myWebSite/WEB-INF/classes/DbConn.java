@@ -26,69 +26,27 @@ public class DbConn {
     ResultSet rs=null;
     PreparedStatement stmt =null;
  
-    public DbConn() {
+ 	/**
+ 	 *得到数据库的连接
+ 	 *
+ 	 */
+    public Connection getDbConn() {
     	try{
-    		//除了把jar包拷贝到公共lib目录下之外
-    		//还得配置classPath。jdk profile下。
             Class.forName("com.mysql.jdbc.Driver");
-            this.conn = DriverManager.getConnection(DB_URL,USER,PASS);
+            conn = DriverManager.getConnection(DB_URL,USER,PASS);
         }
         catch(Exception ex){
         	ex.printStackTrace();
         }
-      
+        return conn;
     }
- 	
- 	/**
- 	 *登录验证
- 	 *
- 	 *
- 	 **/
-	public boolean check(String name,String pass) {
-		try{
-			String sql;
-		    sql = "SELECT `pass` FROM `mwdb` where `uname`='"+name+"'";
-		    stmt = this.conn.prepareStatement(sql);
-		    rs = stmt.executeQuery(sql);
-		
-		    //遍历结果集，内部用游标得到每一行的记录
-		    if(rs.next()){
-		    	String dbpass  = rs.getString("pass");
-		    	if(dbpass.equals(pass)) {
-		    		return true;
-		    	} else {
-		    		return false;
-		    	}
-		    }
-		    
-		    // 完成后关闭
-		    rs.close();//关闭结果集
-		    stmt.close();//关闭statement对象
-		    conn.close();//关闭连接
-			return false;
-		}catch(SQLException se){
-	    	se.printStackTrace();
-		}catch(Exception e){
-		    // 处理 Class.forName 错误
-		    e.printStackTrace();
-		}finally{
-		    // 关闭资源
-		    try{
-		        if(rs != null) rs.close();
-		        if(stmt!=null) stmt.close();
-		        if(conn!=null) conn.close();
-		    }catch(SQLException se2){
-		    
-		    }
-		   
-		}
-		return false;
-	}
-	
 	/**
 	 *查询数据库的数量
 	 */
 	public int count(String fields) {
+		if (conn == null) {
+			this.getDbConn();
+		}
 		String sql;
 	    sql = "SELECT count('+fields+') FROM `mwdb`";
 	    try{

@@ -26,11 +26,9 @@ public class LoginCl extends HttpServlet{
             String u = req.getParameter("username");
             String p = req.getParameter("passwd");
             
-            //同一个包下的public类，无需import引入
-            //实例化数据库连接
-            DbConn db = new DbConn();
+            UserBeanCl ubl = new UserBeanCl();
             //调用方法查询数据库
-            if(db.check(u,p)) {
+            if(ubl.check(u,p)) {
             	//合法,将用户信息写入session
             	//得到session类
             	HttpSession hs = req.getSession(true);
@@ -50,8 +48,6 @@ public class LoginCl extends HttpServlet{
             	//不合法，跳转回去
             	res.sendRedirect("login");
             }
-            
-            
         }
         catch(Exception ex) {
             ex.printStackTrace();
