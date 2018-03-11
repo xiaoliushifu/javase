@@ -71,10 +71,18 @@ public class Welcome extends HttpServlet{
             }
             pw.println("</table>");
             
+            //上一页
+            if (pageNow > 1) {
+            	pw.println("<a href=welcome?pageNow="+(pageNow-1)+">上一页</a>");
+            }
             //循环遍历出页号，供页面点击。初始连接是当前页码递增
             //链接数量与pageSize同
             for(int i=pageNow;i<=pageNow+pageSize-1;i++) {
             	pw.println("<a href=welcome?pageNow="+i+">"+i+"</a>");
+            }
+            
+            if(pageNow < pageCount) {
+            	pw.println("<a href=welcome?pageNow="+(pageNow+1)+">下一页</a>");
             }
             //===============增加分页功能=========================================
             

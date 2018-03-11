@@ -111,7 +111,7 @@ public class DbConn {
 	 */
 	public ResultSet selectAll(int offset,int limit) {
 		try{
-			String sql ="select * from mwdb limit "+offset+" ,"+limit;
+			String sql ="select * from mwdb limit "+offset+","+limit;
 			System.out.println(sql);
 			//String sql ="SELECT  * FROM `mwdb` LIMIT ? OFFSET ?";//不行
 			//String sql ="SELECT  * FROM `mwdb` LIMIT ?,?";//也不行
