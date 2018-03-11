@@ -23,10 +23,11 @@ public class Login extends HttpServlet{
             
             pw.println("<html>");
             pw.println("<body>");
-            pw.println("<h3>Login Page<h3>");
+            pw.println("<h3>登录页面</h3>");
             pw.println("<form action=loginCl method=post>");
             pw.println("用户名:<input type=text name=username><BR>");
             pw.println("密&nbsp;&nbsp;码:<input type=password name=passwd><BR>");
+            pw.println("<input type=checkbox name=keep value=ok>登录信息保存一周<BR>");
             pw.println("<input type=submit value=login><BR>");
             pw.println("</form>");
             pw.println("</body>");

@@ -21,7 +21,6 @@ public class Welcome extends HttpServlet{
     public void doGet(HttpServletRequest req,HttpServletResponse res){
         try{
         	
-        	//通过这个解决了gbk中文乱码问题,不加就乱码。但是在http响应头中没有看到Content-type
         	res.setCharacterEncoding("gbk");
             PrintWriter pw = res.getWriter();
             pw.println("<html>");
@@ -33,8 +32,13 @@ public class Welcome extends HttpServlet{
             //使用判断是否为空就行，不必严格p.equals("ok")
             if (p != null) {
                 pw.println("hello 你的用户名是："+u+"<br>");
+                
             } else {
-            	res.sendRedirect("login");
+            	//获得cookie再判断
+            	if(checkCookie(req.getCookies(),res)){
+            		return;
+            	}
+            	res.sendRedirect("login");//该句之后仍然会继续执行代码
             	return;
             }
             //===============增加分页功能=========================================
@@ -70,6 +74,10 @@ public class Welcome extends HttpServlet{
             	pw.println("</tr>");
             }
             pw.println("</table>");
+            //关闭结果集
+            if(rs != null) {
+            	rs.close();
+            }
             
             //上一页
             if (pageNow > 1) {
@@ -88,6 +96,7 @@ public class Welcome extends HttpServlet{
             
             pw.println("</center></body>");
             pw.println("</html>");
+            
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -96,6 +105,34 @@ public class Welcome extends HttpServlet{
         
     public void doPost(HttpServletRequest req,HttpServletResponse res){
         this.doGet(req,res);
+    }
+    
+    /**
+     *检测cookie
+     */
+    public boolean checkCookie(Cookie []cookie,HttpServletResponse res){
+    	String name="",pass="";
+    	boolean b=false;
+    	for(int i=0;i<cookie.length;i++){
+    		Cookie c = cookie[i];
+    		if(c.getName().equals("name")){
+    			name = c.getValue();
+    		}
+    		if(c.getName().equals("pass")){
+    			pass = c.getValue();
+    		}
+    	}
+    	try{
+	    	//不为空，则跳转到控制页去检测
+	    	if(!name.equals("") && !pass.equals("")) {
+	    		res.sendRedirect("loginCl?username="+name+"&passwd="+pass);
+	    		return true;
+	    	}
+    	}
+    	catch(IOException e){
+    		e.printStackTrace();
+    	}
+    	return b;
     }
     
 }

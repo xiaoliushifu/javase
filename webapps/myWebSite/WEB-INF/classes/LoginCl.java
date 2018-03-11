@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Cookie;
 import java.io.*;
 
 
@@ -34,11 +35,16 @@ public class LoginCl extends HttpServlet{
             	//得到session类
             	HttpSession hs = req.getSession(true);
             	//修改session的发呆时间
-            	hs.setMaxInactiveInterval(60);
+            	//hs.setMaxInactiveInterval(60);
             	//写入服务端空间中
             	hs.setAttribute("pass","ok");
             	hs.setAttribute("name",u);
-            	
+            	String k=req.getParameter("keep");
+            	if(k != null){
+            		//姓名和密码写入cookie,一周
+            		saveCookie("name",u,res);
+            		saveCookie("pass",p,res);
+            	}
             	res.sendRedirect("welcome");
             } else {
             	//不合法，跳转回去
@@ -55,6 +61,16 @@ public class LoginCl extends HttpServlet{
     
     public void doPost(HttpServletRequest req,HttpServletResponse res){
         this.doGet(req,res);
+    }
+    
+    /**
+     *向客户端注入cookie
+     */
+    public void saveCookie(String name,String value,HttpServletResponse res){
+		Cookie c= new Cookie(name,value);
+		c.setMaxAge(3600*24*7);//1周
+		c.setHttpOnly(true);
+		res.addCookie(c);
     }
     
 }
