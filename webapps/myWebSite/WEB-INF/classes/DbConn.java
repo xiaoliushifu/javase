@@ -39,6 +39,11 @@ public class DbConn {
       
     }
  	
+ 	/**
+ 	 *登录验证
+ 	 *
+ 	 *
+ 	 **/
 	public boolean check(String name,String pass) {
 		try{
 			String sql;
@@ -79,5 +84,55 @@ public class DbConn {
 		}
 		return false;
 	}
-
+	
+	/**
+	 *查询数据库的数量
+	 */
+	public int count(String fields) {
+		String sql;
+	    sql = "SELECT count('+fields+') FROM `mwdb`";
+	    try{
+		    stmt = this.conn.prepareStatement(sql);
+		    rs = stmt.executeQuery(sql);
+		
+		    //遍历结果集，内部用游标得到每一行的记录
+		    if(rs.next()){
+		    	return rs.getInt(1);
+		    }
+		    return 0;
+	    }catch(Exception e) {
+	    	e.printStackTrace();
+	    }
+		return 0;
+	}
+	
+	/**
+	 *分页查询
+	 */
+	public ResultSet selectAll(int offset,int limit) {
+		try{
+			String sql ="select * from mwdb limit "+offset+" ,"+limit;
+			System.out.println(sql);
+			//String sql ="SELECT  * FROM `mwdb` LIMIT ? OFFSET ?";//不行
+			//String sql ="SELECT  * FROM `mwdb` LIMIT ?,?";//也不行
+		    stmt = this.conn.prepareStatement(sql);
+		    //stmt.setInt(1,offset);
+		    //stmt.setInt(2,limit);
+		    return stmt.executeQuery(sql);
+		}catch(Exception e) {
+	    	e.printStackTrace();
+	    }
+	    /**finally{
+		    // 关闭资源
+		    try{
+		        if(rs != null) rs.close();
+		        if(stmt!=null) stmt.close();
+		        if(conn!=null) conn.close();
+		    }catch(SQLException se2){
+		    
+		    }
+		   
+		}*/
+		return rs;
+	}
 }

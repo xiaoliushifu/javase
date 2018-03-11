@@ -34,9 +34,10 @@ public class LoginCl extends HttpServlet{
             	//得到session类
             	HttpSession hs = req.getSession(true);
             	//修改session的发呆时间
-            	hs.setMaxInactiveInterval(20);
+            	hs.setMaxInactiveInterval(60);
             	//写入服务端空间中
             	hs.setAttribute("pass","ok");
+            	hs.setAttribute("name",u);
             	
             	res.sendRedirect("welcome");
             } else {
