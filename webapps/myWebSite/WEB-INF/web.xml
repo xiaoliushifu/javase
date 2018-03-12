@@ -113,6 +113,37 @@
 		<url-pattern>/welcome</url-pattern>
 	</servlet-mapping>
 
+
+	<!--userdel-->
+	<servlet>
+		<servlet-name>del</servlet-name>
+		<servlet-class>com.liu.UserDel</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>del</servlet-name>
+		<url-pattern>/userdel</url-pattern>
+	</servlet-mapping>
+
+	<!--error-->
+	<servlet>
+		<servlet-name>error</servlet-name>
+		<servlet-class>com.liu.Error</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>error</servlet-name>
+		<url-pattern>/error</url-pattern>
+	</servlet-mapping>
+
+	<!--ok-->
+	<servlet>
+		<servlet-name>ok</servlet-name>
+		<servlet-class>com.liu.Ok</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ok</servlet-name>
+		<url-pattern>/ok</url-pattern>
+	</servlet-mapping>
+
 	
 
 </web-app>
