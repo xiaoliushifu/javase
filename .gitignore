@@ -18,8 +18,11 @@ Thumbs.db
 # Mac DS_Store Files
 .DS_Store
 
-# java编译后的文件
+# servlet java编译后的文件
 *.class
 #忽略名字为logs的目录及其目录下的所有文件，但不忽略名字为logs文件
 logs/
+
+#jsp转换成servlet，所在的目录里的东西及class文件.这里就是work/Catalina/localhost/myJspSite
+Catalina/
 
