@@ -23,50 +23,60 @@ function check(){
 </script>
 </head>
 	<body>
-		<h3>简单的四则运算计算器</h3>
+		
+<%
+	//声明三个
+	int result,num1,num2;
+	//初始化三个
+	result=num1=num2=0;
+	
+	String s_num1 = request.getParameter("num1");
+	String s_num2 = request.getParameter("num2");
+	String opt = request.getParameter("opt");
+	
+	String add,min,pow,div;
+	add=min=pow=div="";
+	//判断有没有参数传递过来时必须使用null判断，因为s_num1有可能是空指针
+	if(s_num1 != null) {
+		
+		//转换类型 String====>int
+		num1 = Integer.parseInt(s_num1);
+		num2 = Integer.parseInt(s_num2);
+		
+		if(opt.equals("+")){
+			result = num1 + num2;
+			add="selected";
+		}else if(opt.equals("-")){
+			result = num1 - num2;
+			min="selected";
+		}else if(opt.equals("*")){
+			result = num1 * num2;
+			pow="selected";
+		}else{
+			result = num1 / num2;
+			div="selected";
+		}
+	}
+%>
+<h3>简单的四则运算计算器</h3>
 		<hr/>
-		<form  name="form1" action="interFace.jsp">
-		<label>第一个操作数</label><input type="text" name="num1" /><br>
+		<!-- form元素保持action属性为空，则默认提交到当前的url -->
+		<form  name="form1" action="">
+		<label>第一个操作数</label><input type="text" name="num1" value="<%= num1%>"/><br>
 		<select name="opt">
-			<option value="+">+</option>
-			<option value="-">-</option>
-			<option value="*">*</option>
-			<option value="/">/</option>
+			<option value="+" <%=add %> >+</option>
+			<option value="-" <%=min %> >-</option>
+			<option value="*" <%=pow %> >*</option>
+			<option value="/" <%=div %> >/</option>
 		</select><br>
-		<label>第二个操作数</label><input type="text" name="num2" /><br>
+		<label>第二个操作数</label><input type="text" name="num2" value="<%= num2%>" /><br>
 		<!-- onclick中的return，是把check()函数的返回，再次返回到dom语境中-->
 		<input type="submit" value="sub" onclick="return check();" />
 		</form>
 		<hr/>
-<%
-	//判断有没有参数传递过来
-	String s_num1 = request.getParameter("num1");
-	//必须使用null判断，因为s_num1有可能是空指针
-	if(s_num1 != null) {
-		//接收第一个参数
-		//String s_num1 = request.getParameter("num1");
-		//接收第二个参数
-		String s_num2 = request.getParameter("num2");
-		
-		//转换类型 String====>int
-		int num1 = Integer.parseInt(s_num1);
-		int num2 = Integer.parseInt(s_num2);
-		//初始化结果对象
-		int result =0;
-		//接收操作符号
-		String opt = request.getParameter("opt");
-		if(opt.equals("+")){
-			result = num1 + num2;
-		}else if(opt.equals("-")){
-			result = num1 - num2;
-		}else if(opt.equals("*")){
-			result = num1 * num2;
-		}else{
-			result = num1 / num2;
-		}
-		//计算并输出结果	
-		out.println("<h3>计算结果为"+result+"</h3>");
-	}
-%>
+
+
+
+	<h3>计算结果为<%= result %></h3>
 	</body>
 </html>
