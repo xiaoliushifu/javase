@@ -16,6 +16,7 @@ public class UserBeanCl {
     private Connection conn = null;
     private ResultSet rs=null;
     private PreparedStatement stmt =null;
+    private int pageCount=0;//因为【下一页】需要判断，所以把它带出去
     
     /**
      *获得分页数据
@@ -24,9 +25,9 @@ public class UserBeanCl {
     	ArrayList al = new ArrayList();
     	try{
 	    	int rowCount=0;//总共多少条记录(查库)
-	        int pageCount=0;//总共多少页（通过计算得到
 	        DbConn db = new DbConn();
 	        rowCount = db.count("*");
+	        //通过计算得到总共多少页（
 	        if(rowCount%pageSize==0) {
 	        	pageCount = rowCount/pageSize;
 	        } else {
@@ -98,4 +99,11 @@ public class UserBeanCl {
 	    }
 	}
     
+    /**
+     *获得页的数量，决定是否显示下一页
+     *
+     **/
+    public int getPageCount(){
+    	return this.pageCount;
+    }
 }

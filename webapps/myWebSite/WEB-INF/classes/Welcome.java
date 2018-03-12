@@ -78,9 +78,9 @@ public class Welcome extends HttpServlet{
             	pw.println("<a href=welcome?pageNow="+i+">"+i+"</a>");
             }
             
-            //if(pageNow < pageCount) {
+            if(pageNow < ubl.getPageCount()) {
             	pw.println("<a href=welcome?pageNow="+(pageNow+1)+">下一页</a>");
-            //}
+            }
             //===============增加分页功能=========================================
             
             pw.println("</center></body>");
