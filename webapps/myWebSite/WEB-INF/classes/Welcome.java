@@ -63,7 +63,7 @@ public class Welcome extends HttpServlet{
             	pw.println("<td>"+ub.getUname()+"</td>");
             	pw.println("<td>"+ub.getPass()+"</td>");
             	pw.println("<td>"+ub.getAge()+"</td>");
-            	pw.println("<td><a href=''>ÐÞ¸Ä | É¾³ý</a></td>");
+            	pw.println("<td><a href=userupdate?uid="+ub.getId()+">ÐÞ¸Ä </a>|<a href=userdel?uid="+ub.getId()+" onclick='javascript:return confirm(\"ÕæµÄÒªÉ¾³ýÂð£¿\");'>É¾³ý</a></td>");
             	pw.println("</tr>");
             }
             pw.println("</table>");

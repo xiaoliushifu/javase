@@ -99,11 +99,40 @@ public class UserBeanCl {
 	    }
 	}
     
+    
     /**
      *获得页的数量，决定是否显示下一页
-     *
+     *必须在getResultByPage成员方法后调用
      **/
     public int getPageCount(){
     	return this.pageCount;
     }
+    
+    
+    /**
+ 	 *登录验证
+ 	 **/
+	public boolean delUser(String uid) {
+		boolean b=false;
+		try{
+		    String sql = "delete FROM `mwdb` where `id`='"+uid+"'";
+		    DbConn db = new DbConn();
+		    conn = db.getDbConn();
+		    stmt = conn.prepareStatement(sql);
+		    int ret = stmt.executeUpdate();
+		    //遍历结果集，内部用游标得到每一行的记录
+		    if(ret==1){
+		    	b=true;
+			}
+		}
+		catch(Exception e){
+		    // 处理 Class.forName 错误
+		    e.printStackTrace();
+		}
+		finally{
+		    // 关闭资源
+		    this.close();
+		}
+		return b;
+	}
 }
