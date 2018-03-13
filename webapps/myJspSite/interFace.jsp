@@ -62,14 +62,14 @@ function check(){
 		<hr/>
 		<!-- form元素保持action属性为空，则默认提交到当前的url -->
 		<form  name="form1" action="">
-		<label>第一个操作数</label><input type="text" name="num1" value="<%= num1%>"/><br>
+		<label>第一个操作数</label><input type="text" size=10 name="num1" value="<%= num1%>"/><br>
 		<select name="opt">
 			<option value="+" <%=add %> >+</option>
 			<option value="-" <%=min %> >-</option>
 			<option value="*" <%=pow %> >*</option>
 			<option value="/" <%=div %> >/</option>
 		</select><br>
-		<label>第二个操作数</label><input type="text" name="num2" value="<%= num2%>" /><br>
+		<label>第二个操作数</label><input type="text" size=10 name="num2" value="<%= num2%>" /><br>
 		<!-- onclick中的return，是把check()函数的返回，再次返回到dom语境中-->
 		<input type="submit" value="sub" onclick="return check();" />
 		</form>

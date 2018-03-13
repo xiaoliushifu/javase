@@ -1,6 +1,9 @@
 # phpstorm project files
 .idea
 
+#intellig Idea建立项目后目录有这个文件
+*.iml
+
 # netbeans project files
 nbproject
 
