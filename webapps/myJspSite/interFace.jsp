@@ -1,22 +1,22 @@
-<!-- ÕâÊÇÒ»¸öJSPÊµÏÖµÄ¼ÆËãÆ÷Ğ¡ÊµÀı -->
-<%@ page contentType="text/html;charset=gb2312" %>
+<!-- è¿™æ˜¯ä¸€ä¸ªJSPå®ç°çš„è®¡ç®—å™¨å°å®ä¾‹ -->
+<%@ page contentType="text/html;charset=utf-8" %>
 <html>
 	<head>
 <script type="text/javascript">
 function check(){
-	//ÑéÖ¤¿Õ
+	//éªŒè¯ç©º
 	if (form1.num1.value=='') {
-		window.alert("num1²»ÄÜÎª¿Õ");
+		window.alert("num1ä¸èƒ½ä¸ºç©º");
 		return false;
 	}
-	//ÑéÖ¤·ÇÊı×Ö
+	//éªŒè¯éæ•°å­—
 	
-	//±ØĞëÊÇÊı×Ö£¨¿ÉÒÔÊÇĞ¡Êı£©
+	//å¿…é¡»æ˜¯æ•°å­—ï¼ˆå¯ä»¥æ˜¯å°æ•°ï¼‰
 	//if(isNaN(form1.num1.value)){
 	
-	//±ØĞëÊÇÕûÊı
+	//å¿…é¡»æ˜¯æ•´æ•°
 	if(Math.round(form1.num1.value) != form1.num1.value){
-		window.alert("num1±ØĞëÊÇÕûÊı");
+		window.alert("num1å¿…é¡»æ˜¯æ•´æ•°");
 		return false;
 	}
 }
@@ -25,9 +25,9 @@ function check(){
 	<body>
 		
 <%
-	//ÉùÃ÷Èı¸ö
+	//å£°æ˜ä¸‰ä¸ª
 	int result,num1,num2;
-	//³õÊ¼»¯Èı¸ö
+	//åˆå§‹åŒ–ä¸‰ä¸ª
 	result=num1=num2=0;
 	
 	String s_num1 = request.getParameter("num1");
@@ -36,10 +36,10 @@ function check(){
 	
 	String add,min,pow,div;
 	add=min=pow=div="";
-	//ÅĞ¶ÏÓĞÃ»ÓĞ²ÎÊı´«µİ¹ıÀ´Ê±±ØĞëÊ¹ÓÃnullÅĞ¶Ï£¬ÒòÎªs_num1ÓĞ¿ÉÄÜÊÇ¿ÕÖ¸Õë
-	if(s_num1 != null) {
+	//åˆ¤æ–­æœ‰æ²¡æœ‰å‚æ•°ä¼ é€’è¿‡æ¥æ—¶å¿…é¡»ä½¿ç”¨nullåˆ¤æ–­ï¼Œå› ä¸ºs_num1æœ‰å¯èƒ½æ˜¯ç©ºæŒ‡é’ˆ
+	if(s_num1 != null && s_num2 != null && opt !=null) {
 		
-		//×ª»»ÀàĞÍ String====>int
+		//è½¬æ¢ç±»å‹ String====>int
 		num1 = Integer.parseInt(s_num1);
 		num2 = Integer.parseInt(s_num2);
 		
@@ -58,25 +58,25 @@ function check(){
 		}
 	}
 %>
-<h3>¼òµ¥µÄËÄÔòÔËËã¼ÆËãÆ÷</h3>
+<h3>ç®€å•çš„å››åˆ™è¿ç®—è®¡ç®—å™¨</h3>
 		<hr/>
-		<!-- formÔªËØ±£³ÖactionÊôĞÔÎª¿Õ£¬ÔòÄ¬ÈÏÌá½»µ½µ±Ç°µÄurl -->
+		<!-- formå…ƒç´ ä¿æŒactionå±æ€§ä¸ºç©ºï¼Œåˆ™é»˜è®¤æäº¤åˆ°å½“å‰çš„url -->
 		<form  name="form1" action="">
-		<label>µÚÒ»¸ö²Ù×÷Êı</label><input type="text" size=10 name="num1" value="<%= num1%>"/><br>
+		<label>ç¬¬ä¸€ä¸ªæ“ä½œæ•°</label><input type="text" size=6 name="num1" value="<%= num1%>"/><br>
 		<select name="opt">
 			<option value="+" <%=add %> >+</option>
 			<option value="-" <%=min %> >-</option>
 			<option value="*" <%=pow %> >*</option>
 			<option value="/" <%=div %> >/</option>
 		</select><br>
-		<label>µÚ¶ş¸ö²Ù×÷Êı</label><input type="text" size=10 name="num2" value="<%= num2%>" /><br>
-		<!-- onclickÖĞµÄreturn£¬ÊÇ°Ñcheck()º¯ÊıµÄ·µ»Ø£¬ÔÙ´Î·µ»Øµ½domÓï¾³ÖĞ-->
+		<label>ç¬¬äºŒä¸ªæ“ä½œæ•°</label><input type="text" size=6 name="num2" value="<%= num2%>" /><br>
+		<!-- onclickä¸­çš„returnï¼Œæ˜¯æŠŠcheck()å‡½æ•°çš„è¿”å›ï¼Œå†æ¬¡è¿”å›åˆ°domè¯­å¢ƒä¸­-->
 		<input type="submit" value="sub" onclick="return check();" />
 		</form>
 		<hr/>
 
 
 
-	<h3>¼ÆËã½á¹ûÎª<%= result %></h3>
+	<h3>è®¡ç®—ç»“æœä¸º<%= result %></h3>
 	</body>
 </html>

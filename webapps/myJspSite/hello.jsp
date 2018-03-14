@@ -1,12 +1,12 @@
-<!-- 这是第一个JSP文件 -->
-<%@ page contentType="text/html;charset=gb2312"%>
+<!-- 杩欐槸绗竴涓狫SP鏂囦欢 -->
+<%@ page contentType="text/html;charset=utf-8"%>
 <html>
 <head>
 </head>
 <body>
-	<h3>JSP应用</h3>
+	<h3>JSP搴旂敤</h3>
 <% 
-	out.println("hello,世界你好!");
+	out.println("hello,涓栫晫浣犲ソ!");
 %>
 </body>
 </html>
