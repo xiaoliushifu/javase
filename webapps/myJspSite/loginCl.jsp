@@ -1,4 +1,5 @@
-<%@ page import="java.sql.*" %><%--
+<%@ page import="com.liu.*" %>
+<%--
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/3/14
@@ -12,37 +13,17 @@
 </head>
 <body>
 <%
-    //接收用户名和密码完成校验
+    //接收用户名和密码
     String u= request.getParameter("username");
     String p=request.getParameter("passwd");
 
-    /*********jdbc连接数据库的代码要会写**************************************************************************/
-    String jdbcURL="jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=utf8";
-    String  USER="root";
-    String  PASS="";
-    //加载驱动
-    Class.forName("com.mysql.jdbc.Driver");
-    //建立连接
-    Connection conn = DriverManager.getConnection(jdbcURL,USER,PASS);
-    String sql="SELECT pass FROM  mwdb where uname=?";
-    PreparedStatement pstmt = conn.prepareStatement(sql);
-    pstmt.setString(1,u);
-    ResultSet rs = pstmt.executeQuery();
-    if(rs.next()) {
-        String db_pass = rs.getString(1);
-        if(db_pass.equals(p)){
-            response.sendRedirect("wel.jsp?u="+u);
-            return;
-        }
-    }
-    response.sendRedirect("login.jsp");
-    /*if(u.equals("mingwei") && p.equals("123")){
-        //合法跳转到welcome页面
+    //实例化该对象，用它的一个方法完成验证过程
+    UserBeanCl ubl = new UserBeanCl();
+    if(ubl.checkLogin(u,p)){
         response.sendRedirect("wel.jsp?u="+u);
-    } else{
+    }else{
         response.sendRedirect("login.jsp");
-    }*/
-
+    }
 %>
 </body>
 </html>

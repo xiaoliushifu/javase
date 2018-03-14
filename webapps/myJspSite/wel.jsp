@@ -1,4 +1,5 @@
-<%@ page import="java.sql.*" %>
+<%@ page import="com.liu.*" %>
+<%@ page import="java.util.ArrayList" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -22,50 +23,23 @@
     <hr>
     <h3>用户信息列表</h3>
 <%
-    //自带分页
-    int pageSize=3;
     int pageNow=1;
 
     if(pn != null) {
         pageNow = Integer.parseInt(pn);
     }
-    int rowCount=1;
-    int pageCount=0;
 
-    //加载驱动
-    Class.forName("com.mysql.jdbc.Driver");
-    String jdbcURL="jdbc:mysql://localhost:3306/test?useSSL=false&characterEncoding=utf8";
-    String USER="root";
-    String PASS="";
-    Connection conn = DriverManager.getConnection(jdbcURL,USER,PASS);
-
-    //获得总条数，并计算页数量
-    String sql="SELECT count(1) FROM mwdb";
-    PreparedStatement stmt = conn.prepareStatement(sql);
-    ResultSet rs = stmt.executeQuery();
-    if(!rs.next()){
-        out.println("查询有误");
-    }
-    rowCount = rs.getInt(1);
-    if(rowCount%pageSize == 0){
-        pageCount = rowCount/pageSize;
-    }else{
-        pageCount = rowCount/pageSize+1;
-    }
-
-
-    //查询具体信息
-    sql="SELECT * FROM mwdb limit "+pageSize+" offset "+((pageNow-1)*pageSize);
-    stmt = conn.prepareStatement(sql);
-    rs = stmt.executeQuery();
+    UserBeanCl ubl = new UserBeanCl();
+    ArrayList al = ubl.getUserList(pageNow);
 %>
     <table width="300" border="1" valign="middle" >
         <tr><th>编号</th><th>姓名</th><th>密码</th><th>年龄</th></tr>
 <%
-    while(rs.next()){
+    for(int i=0;i<al.size();i++){
+        UserBean ub = (UserBean) al.get(i);
 %>
-        <tr><td><%= rs.getInt("id")%></td><td><%= rs.getString("uname")%></td>
-            <td><%= rs.getString("pass")%></td><td><%= rs.getInt("age")%></td>
+        <tr><td><%= ub.getId()%></td><td><%= ub.getuName()%></td>
+            <td><%= ub.getPass()%></td><td><%= ub.getAge()%></td>
         </tr>
 <%
     }
@@ -78,6 +52,7 @@
         out.println("<a href=wel.jsp?pageNow="+(pageNow-1)+">上一页</a>");
     }
 
+    int pageCount = ubl.getPageCount();
     //页号链接
     for(int i=1;i<pageCount;i++){
         out.println("<a href=wel.jsp?pageNow="+i+">"+i+"</a>");
