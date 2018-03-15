@@ -23,6 +23,7 @@ public class LoginCrontroller extends HttpServlet {
 
         //实例化该对象，用它的一个方法完成验证过程
         UserBeanCl ubl = new UserBeanCl();
+        u = new String(u.getBytes("ISO-8859-1"),"utf-8");
         System.out.print("u="+u+"p="+p);
         if(ubl.checkLogin(u,p)){
 
