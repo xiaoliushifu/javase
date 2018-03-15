@@ -41,4 +41,14 @@
         <servlet-name>loginCl</servlet-name>
         <url-pattern>/loginCl</url-pattern>
     </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>userCl</servlet-name>
+        <servlet-class>com.liu.controller.UserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userCl</servlet-name>
+        <url-pattern>/user</url-pattern>
+    </servlet-mapping>
 </web-app>

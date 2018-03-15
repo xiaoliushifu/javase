@@ -1,7 +1,5 @@
-<%@ page import="com.liu.*" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.liu.model.UserBean" %>
-<%@ page import="com.liu.model.UserBeanCl" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -15,7 +13,11 @@
     <title>欢迎页面</title>
 </head>
 <%
-    String u = request.getParameter("u");
+    String u = (String)session.getAttribute("myName");
+    if(u==null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
     String pn = request.getParameter("pageNow");
 
 %>
@@ -26,8 +28,8 @@
     <hr>
     <h3>用户信息列表</h3>
 <%
-    int pageNow=1;
 
+    int pageNow=1;
     if(pn != null) {
         pageNow = Integer.parseInt(pn);
     }
@@ -53,17 +55,17 @@
 <%
 
     if(pageNow > 1){
-        out.println("<a href=wel.jsp?pageNow="+(pageNow-1)+">上一页</a>");
+        out.println("<a href=user?pageNow="+(pageNow-1)+">上一页</a>");
     }
 
     //使用getAttribute而不是getParameter来获取从控制器转发而来的数据
     int pageCount = (Integer)request.getAttribute("pageCount");
     //页号链接
     for(int i=1;i<pageCount;i++){
-        out.println("<a href=wel.jsp?pageNow="+i+">"+i+"</a>");
+        out.println("<a href=user?pageNow="+i+">"+i+"</a>");
     }
     if(pageNow < pageCount){
-        out.println("<a href=wel.jsp?pageNow="+(pageNow+1)+">下一页</a>");
+        out.println("<a href=user?pageNow="+(pageNow+1)+">下一页</a>");
     }
 %>
     </center>

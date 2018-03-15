@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -17,13 +18,18 @@ public class LoginCrontroller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //接收用户名和密码
-        System.out.print("hello"+Math.random());
         String u= req.getParameter("username");
         String p=req.getParameter("passwd");
 
         //实例化该对象，用它的一个方法完成验证过程
         UserBeanCl ubl = new UserBeanCl();
+        System.out.print("u="+u+"p="+p);
         if(ubl.checkLogin(u,p)){
+
+            //放入session中，以备后用
+            HttpSession hs  = req.getSession();
+            hs.setAttribute("myName",u);
+            hs.setMaxInactiveInterval(30);
 
             //在跳转到wel页面之前，把分页数据传递到request对象中，这样在wel.jsp中可以直接使用
             ArrayList al = ubl.getUserList(1);
@@ -32,11 +38,8 @@ public class LoginCrontroller extends HttpServlet {
             //放到request中
             req.setAttribute("result",al);
             req.setAttribute("pageCount",pc);
-
-
-            req.getRequestDispatcher("wel.jsp?u="+u).forward(req,resp);
+            req.getRequestDispatcher("wel.jsp?pageNow=1").forward(req,resp);
         }else{
-            //response.sendRedirect("login.jsp");
             req.getRequestDispatcher("login.jsp").forward(req,resp);
         }
     }
