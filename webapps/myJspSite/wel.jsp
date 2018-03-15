@@ -17,6 +17,7 @@
 <%
     String u = request.getParameter("u");
     String pn = request.getParameter("pageNow");
+
 %>
 <body>
 <center>
@@ -31,8 +32,9 @@
         pageNow = Integer.parseInt(pn);
     }
 
-    UserBeanCl ubl = new UserBeanCl();
-    ArrayList al = ubl.getUserList(pageNow);
+    //使用getAttribute来获取从控制器转发而来的数据,不是从UserBeanCl中获取
+    ArrayList al;
+    al = (ArrayList)(request.getAttribute("result"));
 %>
     <table width="300" border="1" valign="middle" >
         <tr><th>编号</th><th>姓名</th><th>密码</th><th>年龄</th></tr>
@@ -54,7 +56,8 @@
         out.println("<a href=wel.jsp?pageNow="+(pageNow-1)+">上一页</a>");
     }
 
-    int pageCount = ubl.getPageCount();
+    //使用getAttribute而不是getParameter来获取从控制器转发而来的数据
+    int pageCount = (Integer)request.getAttribute("pageCount");
     //页号链接
     for(int i=1;i<pageCount;i++){
         out.println("<a href=wel.jsp?pageNow="+i+">"+i+"</a>");

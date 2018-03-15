@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LoginCrontroller extends HttpServlet {
 
@@ -23,9 +24,16 @@ public class LoginCrontroller extends HttpServlet {
         //实例化该对象，用它的一个方法完成验证过程
         UserBeanCl ubl = new UserBeanCl();
         if(ubl.checkLogin(u,p)){
-            //sendRedirect效率较低，生产环境不用它
-            //response.sendRedirect("wel.jsp?u="+u);
-            //直接转发，req还可以在下一页面中使用
+
+            //在跳转到wel页面之前，把分页数据传递到request对象中，这样在wel.jsp中可以直接使用
+            ArrayList al = ubl.getUserList(1);
+            int pc = ubl.getPageCount();
+
+            //放到request中
+            req.setAttribute("result",al);
+            req.setAttribute("pageCount",pc);
+
+
             req.getRequestDispatcher("wel.jsp?u="+u).forward(req,resp);
         }else{
             //response.sendRedirect("login.jsp");
