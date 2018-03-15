@@ -1,7 +1,7 @@
 /**
  * 所谓UserBean类似于Yii2里的AR
  */
-package com.liu;
+package com.liu.model;
 
 public class UserBean {
     public int getId() {

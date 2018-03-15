@@ -12,7 +12,7 @@
 </head>
 <body bgcolor="#ffb6c1">
     <center>
-    <form name="form1" action="loginCl.jsp" method="post">
+    <form name="form1" action="loginCl" method="post">
         用户名：<input type="text"  name="username"><BR>
         密&nbsp;&nbsp;码：<input type="password" name="passwd"><BR>
             <input type="submit" value="登录" />

@@ -1,5 +1,7 @@
 <%@ page import="com.liu.*" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="com.liu.model.UserBean" %>
+<%@ page import="com.liu.model.UserBeanCl" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator

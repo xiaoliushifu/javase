@@ -28,9 +28,17 @@
   version="3.0"
   metadata-complete="true">
 
-  <display-name>这是我的第一个JSP应用</display-name>
+  <display-name>JSP应用，还有纯java文件</display-name>
   <description>
-     这是我的第一个tomcat应用
   </description>
 
+    <!--loginCl-->
+    <servlet>
+        <servlet-name>loginCl</servlet-name>
+        <servlet-class>com.liu.controller.LoginCrontroller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginCl</servlet-name>
+        <url-pattern>/loginCl</url-pattern>
+    </servlet-mapping>
 </web-app>

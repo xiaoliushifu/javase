@@ -1,7 +1,7 @@
 /**
  * 把数据库的初始化加载驱动，建立连接写在这个文件里
  */
-package com.liu;
+package com.liu.model;
 
 import java.sql.*;
 

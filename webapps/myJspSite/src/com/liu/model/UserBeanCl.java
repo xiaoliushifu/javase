@@ -2,7 +2,7 @@
  * 该类是专门处理UserBean的类
  * 这里写有关逻辑代码
  */
-package com.liu;
+package com.liu.model;
 import java.sql.*;
 import java.util.ArrayList;
 

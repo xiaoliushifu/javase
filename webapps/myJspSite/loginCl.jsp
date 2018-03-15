@@ -1,4 +1,5 @@
 <%@ page import="com.liu.*" %>
+<%@ page import="com.liu.model.UserBeanCl" %>
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -13,9 +14,7 @@
 </head>
 <body>
 <%
-    //接收用户名和密码
-    String u= request.getParameter("username");
-    String p=request.getParameter("passwd");
+
 
     //实例化该对象，用它的一个方法完成验证过程
     UserBeanCl ubl = new UserBeanCl();
