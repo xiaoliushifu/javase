@@ -10,7 +10,7 @@
 <head>
     <title>登录界面</title>
 </head>
-<body bgcolor="#ffb6c1">
+<body bgcolor="#CED3FE">
     <center>
     <form name="form1" action="loginCl" method="post">
         用户名：<input type="text"  name="username"><BR>

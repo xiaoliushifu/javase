@@ -32,14 +32,16 @@ public class LoginCrontroller extends HttpServlet {
             hs.setAttribute("myName",u);
             hs.setMaxInactiveInterval(30);
 
+
+            //现在经过改进，不直接跳转到wel.jsp而是到main.jsp，所以下面的数据没必要了
             //在跳转到wel页面之前，把分页数据传递到request对象中，这样在wel.jsp中可以直接使用
-            ArrayList al = ubl.getUserList(1);
-            int pc = ubl.getPageCount();
+            //ArrayList al = ubl.getUserList(1);
+            //int pc = ubl.getPageCount();
 
             //放到request中
-            req.setAttribute("result",al);
-            req.setAttribute("pageCount",pc);
-            req.getRequestDispatcher("wel.jsp?pageNow=1").forward(req,resp);
+            //req.setAttribute("result",al);
+            //req.setAttribute("pageCount",pc);
+            req.getRequestDispatcher("main.jsp?pageNow=1").forward(req,resp);
         }else{
             req.getRequestDispatcher("login.jsp").forward(req,resp);
         }

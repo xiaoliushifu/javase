@@ -21,7 +21,7 @@
     String pn = request.getParameter("pageNow");
 
 %>
-<body>
+<body bgcolor="#CED3FE">
 <center>
     <h3>登录成功，欢迎你:<%=u%></h3>
     <a href="login.jsp">返回重新登录</a>
