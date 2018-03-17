@@ -20,3 +20,9 @@ Thumbs.db
 
 # phpunit itself is not needed
 *.class
+
+#struts的压缩包,源码包
+*.zip
+struts-2.3.34-src
+#tomcat配置文件目录，是在eclipse安装了javaee插件后，把项目加到tomcat启动tomcat才有的
+Servers

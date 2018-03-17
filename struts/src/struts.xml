@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 
+		package:表示我们的包的action可以分包管理
+		package内就可配置我们的action
+		name:包名
+		namespace 包的命名空间 默认是  /
+		Mystruts2是项目名
+		举例说明 namespace="/",那么 http://localhost:8888/Mystruts2/hello
+		
+		如果namespace="/tn",那么http://localhost:8888/Mystruts2/tn/hello
+		extends 包继承关系。默认继承struts-default包
+	 -->
+    <package name="default" namespace="/" extends="struts-default">
+    	<!-- 
+    	如何在没有联网情况下提示标签名字呢？
+    	将dtd文件定位到本地的一个同名的dtd即可，一般在源码包中
+    	 -->
+    	 <!-- 
+    	 配置action
+    	 name 自定义action名字
+    	 class 指出映射的Action类全名
+    	 将来访问就是  http://localhost:8888/Mystruts2/login
+    	 一个<action>对应一个请求
+    	  -->
+    	 <action name="login" class="com.opensymphony.xwork2.ActionSupport">
+    	 	<result name="success">/WEB-INF/pages/hello.jsp</result>
+    	 </action>
+    </package>
+
+</struts>
