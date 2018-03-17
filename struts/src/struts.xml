@@ -25,11 +25,29 @@
     	 name 自定义action名字
     	 class 指出映射的Action类全名
     	 将来访问就是  http://localhost:8888/Mystruts2/login
-    	 一个<action>对应一个请求
+    	 一个<action>对应一个请求。但是一个Action类可以有多个<action>的配置
+    	 <action>通过method属性指定Action类的方法，默认method属性的值execute.
+    	 <result>的name属性指出execute方法返回"success"字符串才算请求合法，
+    	 struts2放行。否则失败
     	  -->
-    	 <action name="login" class="com.opensymphony.xwork2.ActionSupport">
+    	 <action name="login" class="com.liu.struts.actions.LmwHelloAction">
     	 	<result name="success">/WEB-INF/pages/hello.jsp</result>
     	 </action>
+    	 
+    	 <!-- 
+    	 相同的Action 再来配置一个<action>
+    	 通过method属性指出由Action类的order方法处理该请求
+    	 该请求是http://localhost:8888/Mystruts2/order
+    	 
+    	  -->
+    	 <action name="order" method="order"  class="com.liu.struts.actions.LmwHelloAction">
+    	 <!-- 
+    	 	一个请求可以对应多个<result>，每个result指定一个jsp视图。
+    	  -->
+    	 	<result name="orderOk">/WEB-INF/pages/orderOk.jsp</result>
+    	 	<result name="orderError">/WEB-INF/pages/orderErr.jsp</result>
+    	 </action>
+    	 
     </package>
 
 </struts>
