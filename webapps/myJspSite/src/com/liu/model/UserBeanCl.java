@@ -82,6 +82,47 @@ public class UserBeanCl {
         }
         return al;
     }
+    public boolean delUser(int uid){
+        boolean b=false;
+        try{
+            conn = new Conn().getConn();
+            //获得总条数，并计算页数量
+            String sql="DELETE FROM mwdb where id=?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1,uid);
+            if(stmt.executeUpdate() == 1) b = true;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+    /**
+     * 添加用户
+     * @param name  用户名
+     * @param pass   密码
+     * @param age    年龄
+     * @return  boolean true|false
+     */
+    public boolean addUser(String name,String pass,int age){
+        boolean b=false;
+        try{
+            conn = new Conn().getConn();
+            //获得总条数，并计算页数量
+//            String sql="INSERT  into  mwdb(id,uname,pass,age) values(null,'"+name+"','"+pass+"',"+age+")";
+            String sql="INSERT  into  mwdb(id,uname,pass,age) values(null,?,?,?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1,name);
+            stmt.setString(2,pass);
+            stmt.setInt(3,age);
+            if(stmt.executeUpdate() == 1) b = true;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return b;
+    }
 
     public int getPageCount() {
         return pageCount;

@@ -39,13 +39,16 @@
     al = (ArrayList)(request.getAttribute("result"));
 %>
     <table width="300" border="1" valign="middle" >
-        <tr><th>编号</th><th>姓名</th><th>密码</th><th>年龄</th></tr>
+        <tr><th>编号</th><th>姓名</th><th>密码</th><th>年龄</th><th>操作</th></tr>
 <%
     for(int i=0;i<al.size();i++){
         UserBean ub = (UserBean) al.get(i);
 %>
         <tr><td><%= ub.getId()%></td><td><%= ub.getuName()%></td>
             <td><%= ub.getPass()%></td><td><%= ub.getAge()%></td>
+            <td><a href="" onclick="return confirm('还没有此功能呢!')">修改</a>|
+                <a href="user?flag=del&uid=<%= ub.getId()%>" onclick="return confirm('确定删除吗?');">删除</a>
+            </td>
         </tr>
 <%
     }
@@ -55,17 +58,17 @@
 <%
 
     if(pageNow > 1){
-        out.println("<a href=user?pageNow="+(pageNow-1)+">上一页</a>");
+        out.println("<a href=user?flag=admin&pageNow="+(pageNow-1)+">上一页</a>");
     }
 
     //使用getAttribute而不是getParameter来获取从控制器转发而来的数据
     int pageCount = (Integer)request.getAttribute("pageCount");
     //页号链接
     for(int i=1;i<pageCount;i++){
-        out.println("<a href=user?pageNow="+i+">"+i+"</a>");
+        out.println("<a href=user?flag=admin&pageNow="+i+">"+i+"</a>");
     }
     if(pageNow < pageCount){
-        out.println("<a href=user?pageNow="+(pageNow+1)+">下一页</a>");
+        out.println("<a href=user?flag=admin&pageNow="+(pageNow+1)+">下一页</a>");
     }
 %>
     </center>

@@ -17,9 +17,9 @@
     注意，这里不是直接写wel.jsp，因为缺少数据带过去。
     所以，应该先跳转到UserController控制器获得显示wel.jsp页必要的数据后跳转回来
     -->
-    <a href="user?pageNow=1" >管理页面</a><BR>
+    <a href="user?pageNow=1&flag=admin">管理页面</a><BR>
     <a href="" >搜索页面</a><BR>
-    <a href="" >删除页面</a><BR>
+    <a href="add.jsp" >添加用户</a><BR>
     <a href="" >页面</a><BR>
 </center>
 </body>

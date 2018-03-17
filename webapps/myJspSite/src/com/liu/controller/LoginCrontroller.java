@@ -30,7 +30,7 @@ public class LoginCrontroller extends HttpServlet {
             //放入session中，以备后用
             HttpSession hs  = req.getSession();
             hs.setAttribute("myName",u);
-            hs.setMaxInactiveInterval(30);
+            hs.setMaxInactiveInterval(60);
 
 
             //现在经过改进，不直接跳转到wel.jsp而是到main.jsp，所以下面的数据没必要了
