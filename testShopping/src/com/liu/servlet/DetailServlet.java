@@ -30,6 +30,12 @@ public class DetailServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		String type = req.getParameter("type");
+		if(type !=null && type.equals("fenye")) {
+			req.setAttribute("abc", req.getParameter("pageNow"));
+			req.getRequestDispatcher("index.jsp").forward(req, res);
+			return;
+		}
 		//获得请求的ID
 		String goodsId = req.getParameter("goodsId");
 		//查询到bean
