@@ -11,7 +11,7 @@
         <td width="89%" height="21">&nbsp;</td>
       </tr>
       <tr>
-        <td height="66" align="left" valign="top"><a href="showDetail.jsp">功夫熊猫</a></td>
+        <td height="66" align="left" valign="top"><a href="DetailServlet?goodsId=1">功夫熊猫</a></td>
       </tr>
       <tr>
         <td height="2" align="left" valign="top">价格：￥59</td>
@@ -26,7 +26,7 @@
         <td width="89%" height="21">&nbsp;</td>
       </tr>
       <tr>
-        <td height="66" align="left" valign="top"><a href="showDetail.jsp">功夫熊猫</a></td>
+        <td height="66" align="left" valign="top"><a href="DetailServlet?goodsId=2">功夫熊猫</a></td>
       </tr>
       <tr>
         <td height="2" align="left" valign="top">价格：￥59</td>
@@ -41,7 +41,7 @@
         <td width="89%" height="21">&nbsp;</td>
       </tr>
       <tr>
-        <td height="66" align="left" valign="top"><a href="showDetail.jsp">功夫熊猫</a></td>
+        <td height="66" align="left" valign="top"><a href="DetailServlet?goodsId=3">功夫熊猫</a></td>
       </tr>
       <tr>
         <td height="2" align="left" valign="top">价格：￥59</td>
@@ -61,7 +61,7 @@
         <td width="89%" height="21">&nbsp;</td>
       </tr>
       <tr>
-        <td height="66" align="left" valign="top"><a href="showDetail.jsp">功夫熊猫</a></td>
+        <td height="66" align="left" valign="top"><a href="DetailServlet?goodsId=1">功夫熊猫</a></td>
       </tr>
       <tr>
         <td height="2" align="left" valign="top">价格：￥59</td>
@@ -76,7 +76,7 @@
         <td width="89%" height="21">&nbsp;</td>
       </tr>
       <tr>
-        <td height="66" align="left" valign="top"><a href="showDetail.jsp">功夫熊猫</a></td>
+        <td height="66" align="left" valign="top"><a href="DetailServlet">功夫熊猫</a></td>
       </tr>
       <tr>
         <td height="2" align="left" valign="top">价格：￥59</td>
@@ -91,7 +91,7 @@
         <td width="89%" height="21">&nbsp;</td>
       </tr>
       <tr>
-        <td height="66" align="left" valign="top"><a href="showDetail.jsp">功夫熊猫</a></td>
+        <td height="66" align="left" valign="top"><a href="DetailServlet?goodsId=1">功夫熊猫</a></td>
       </tr>
       <tr>
         <td height="2" align="left" valign="top">价格：￥59</td>

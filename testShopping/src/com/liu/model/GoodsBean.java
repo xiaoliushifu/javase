@@ -1,6 +1,7 @@
 //这是model类  ------>Goods表
 package com.liu.model;
 
+
 public class GoodsBean {
 	private Integer goodsId ;
 	/**
