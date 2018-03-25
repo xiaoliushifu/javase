@@ -17,6 +17,11 @@
 	function returnHall(){
 		window.open("index.jsp","_self");
 	}
+	
+	//添加到购物车并跳转显示购物车信息
+	function addGoodsId(goodsId){
+		window.open("CartCl?goodsId="+goodsId,"_self");
+	}
 </script>
 </head>
 <body  margin-top="0"  background="images/bg2.jpg">
@@ -61,7 +66,7 @@
 			  <tr>
 			    <td colspan="2"><form id="form1" name="form1" method="post" action="">
 			      <label>
-			      <input name="btn1" type="button" id="btn1" value="购买" />
+			      <input name="btn1" type="button" id="btn1" onclick="addGoodsId(<%=gb.getGoodsId()%>)" value="购买" />
 			      </label>
 			      <input name="btn2" type="button" id="btn2" onclick="returnHall();" value="返回购物大厅" />
 			    </form>
