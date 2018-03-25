@@ -14,6 +14,10 @@ ArrayList<GoodsBean> al = (ArrayList<GoodsBean>)request.getAttribute("goodsInfo"
 	function returnHall(){
 		window.open("index.jsp","_self");
 	}
+	//使用js方式的跳转，是因为触发动作的表单元素是个按钮，其他则用a即可
+	function delAll(){
+		window.open("CartCl?type=delAll","_self");
+	}
 </script>
 </head>
 <body  margin-top="0"  background="images/bg2.jpg">
@@ -42,14 +46,14 @@ ArrayList<GoodsBean> al = (ArrayList<GoodsBean>)request.getAttribute("goodsInfo"
       <td width="29%"><%=gb.getGoodsName() %></td>
       <td width="21%">￥<%=gb.getGoodsPrice() %></td>
       <td width="10%"><input name="goodsNum" type="text" id="goodsNum" size="12" value="<%=gb.getGoodsNum() %>" /></td>
-      <td width="15%">删除</td>
-      <td width="16%">查看</td>
+      <td width="15%"><a href="CartCl?type=del&goodsId=<%=gb.getGoodsId()%>">删除</a></td>
+      <td width="16%"><a href="DetailServlet?type=show&goodsId=<%=gb.getGoodsId()%>">查看</a></td>
     </tr>
     <%} %>
     <tr>
       <td><div align="center"></div></td>
       <td><div align="center">
-        <input type="button" name="Submit" value="删除全部商品" />
+        <input type="button" name="Submit" onclick="delAll()" value="删除全部商品" />
       </div></td>
       <td><div align="center">
         <input type="button" name="Submit2" value="修改数量" />

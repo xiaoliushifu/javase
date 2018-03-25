@@ -20,7 +20,7 @@
 	
 	//添加到购物车并跳转显示购物车信息
 	function addGoodsId(goodsId){
-		window.open("CartCl?goodsId="+goodsId,"_self");
+		window.open("CartCl?type=add&goodsId="+goodsId,"_self");
 	}
 </script>
 </head>

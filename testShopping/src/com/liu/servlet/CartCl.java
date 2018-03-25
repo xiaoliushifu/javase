@@ -32,7 +32,7 @@ public class CartCl extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String goodsId = req.getParameter("goodsId");
-		
+		String type = req.getParameter("type");
 		//购物车要跟session关联，而不是每次都实例化。
 		//否则购买一次都是新的购物车，只显示最后一个购物车的信息
 		MycartBo mbo = (MycartBo)req.getSession().getAttribute("mycart");
@@ -40,9 +40,17 @@ public class CartCl extends HttpServlet {
 			mbo = new MycartBo();
 			req.getSession().setAttribute("mycart", mbo);
 		}
-		//默认购买数量是1，后面可修改
-		mbo.addGoods(goodsId, "1");
-		
+		//根据type判断操作类型
+		if(type.equals("del")){
+			mbo.delGoods(goodsId);
+		} else if(type.equals("add")) {
+			//默认购买数量是1，后面可修改
+			mbo.addGoods(goodsId, "1");
+		} else if(type.equals("showCart")) {
+			//无操作
+		} else if(type.equals("delAll")){
+			mbo.clear();
+		}
 		//从购物车中拿到全部商品，交到jsp视图显示
 		ArrayList al = mbo.showCart();
 		req.setAttribute("goodsInfo", al);

@@ -61,7 +61,6 @@ public class MycartBo {
 				}
 			}
 			sql +=s1;
-			System.out.println(sql);
 			conn = new ConnDb().getConn();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
