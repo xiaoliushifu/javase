@@ -2,31 +2,53 @@
 create table users(
 	userid int unsigned not null auto_increment primary key,
 	username varchar(20) not null unique,
-	truename varchar(20) not null comment'ÕæÃû',
-	passwd   varchar(20) not null comment'ÃÜÂë',
-	email    varchar(30) not null comment'ÓÊ¼ş',
-	phone    varchar(10) not null comment'ÊÖ»ú',
-	address   varchar(50) not null  comment'µØÖ·',
-	postcode  char(6) not null  comment'ÓÊ±à',
-	grade     tinyint not null default 1  comment'ÓÃ»§¼¶±ğ'
+	truename varchar(20) not null comment'çœŸå',
+	passwd   varchar(20) not null comment'å¯†ç ',
+	email    varchar(30) not null comment'é‚®ä»¶',
+	phone    varchar(10) not null comment'æ‰‹æœº',
+	address   varchar(50) not null  comment'åœ°å€',
+	postcode  char(6) not null  comment'é‚®ç¼–',
+	grade     tinyint not null default 1  comment'ç”¨æˆ·çº§åˆ«'
 )engine=innodb default charset=utf8;
 
-insert into users values(null,'liushifu','ÁõÃ÷Î°','123','334455@qq.com','1234567890','ĞÇĞÇĞ¡ÇøÎûÎûµ¥Ôª¹ş¹şÂ¥123ºÅ','10001',1);
--- ¹ÜÀíÔ±±íÔİÎŞ
+insert into users values(null,'liushifu','åˆ˜æ˜ä¼Ÿ','123','334455@qq.com','1234567890','æ˜Ÿæ˜Ÿå°åŒºå˜»å˜»å•å…ƒå“ˆå“ˆæ¥¼123å·','10001',1);
+-- ç®¡ç†å‘˜è¡¨æš‚æ— 
 
 create table goods(
    goodsId int unsigned not null auto_increment primary key,
-   goodsName varchar(20) not null comment '»õÎïÃû³Æ',
-   goodsIntro varchar(500) not null comment '½éÉÜ',
-   goodsPrice decimal(5,2) comment '¼Û¸ñ',
-   goodsNum  smallint unsigned comment 'ÊıÁ¿',
-   publisher varchar(40) comment '·¢ĞĞÉÌ',
-   photo   varchar(50) comment 'ÕÕÆ¬',
-   `type`  varchar(10) comment 'ÀàĞÍ'
+   goodsName varchar(20) not null comment 'è´§ç‰©åç§°',
+   goodsIntro varchar(500) not null comment 'ä»‹ç»',
+   goodsPrice decimal(5,2) comment 'ä»·æ ¼',
+   goodsNum  smallint unsigned comment 'æ•°é‡',
+   publisher varchar(40) comment 'å‘è¡Œå•†',
+   photo   varchar(50) comment 'ç…§ç‰‡',
+   `type`  varchar(10) comment 'ç±»å‹'
 )engine=innodb default charset=utf8;
-insert into goods values(null,'ºÚ°×É­ÁÖ','ÕâÊÇÒ»²¿ºÃÆ¬',59.99,1,'Ïã¸Û¼ÎºÌ³öÆ·','01.jpg','Ïã¸ÛµçÓ°');
-insert into goods values(null,'½ğ¼¦2','ÕâÊÇÒ»²¿ºÃÆ¬',66.88,1,'Ïã¸Û¼ÎºÌ³öÆ·','02.jpg','Ïã¸ÛµçÓ°');
-insert into goods values(null,'ö¦Å®²Ë¹İ','ÕâÊÇÒ»²¿ºÃÆ¬',30.88,1,'Ïã¸Û¼ÎºÌ³öÆ·','03.jpg','Ïã¸ÛµçÓ°');
-insert into goods values(null,'²¼ÒÂÉñÏà','ÕâÊÇÒ»²¿ºÃÆ¬',59.88,1,'Ïã¸Û¼ÎºÌ³öÆ·','04.jpg','Ïã¸ÛµçÓ°');
-insert into goods values(null,'·çÔÆ°ï','ÕâÊÇÒ»²¿ºÃÆ¬',55.88,1,'Ïã¸Û¼ÎºÌ³öÆ·','02.jpg','Ïã¸ÛµçÓ°');
-insert into goods values(null,'ºÓ±±ÊÂ¼ş','ÕâÊÇÒ»²¿ºÃÆ¬',66.88,1,'Ïã¸Û¼ÎºÌ³öÆ·','02.jpg','Ïã¸ÛµçÓ°');
+insert into goods values(null,'é»‘ç™½æ£®æ—','è¿™æ˜¯ä¸€éƒ¨å¥½ç‰‡',59.99,1,'é¦™æ¸¯å˜‰ç¦¾å‡ºå“','01.jpg','é¦™æ¸¯ç”µå½±');
+insert into goods values(null,'é‡‘é¸¡2','è¿™æ˜¯ä¸€éƒ¨å¥½ç‰‡',66.88,1,'é¦™æ¸¯å˜‰ç¦¾å‡ºå“','02.jpg','é¦™æ¸¯ç”µå½±');
+insert into goods values(null,'é“å¥³èœé¦†','è¿™æ˜¯ä¸€éƒ¨å¥½ç‰‡',30.88,1,'é¦™æ¸¯å˜‰ç¦¾å‡ºå“','03.jpg','é¦™æ¸¯ç”µå½±');
+insert into goods values(null,'å¸ƒè¡£ç¥ç›¸','è¿™æ˜¯ä¸€éƒ¨å¥½ç‰‡',59.88,1,'é¦™æ¸¯å˜‰ç¦¾å‡ºå“','04.jpg','é¦™æ¸¯ç”µå½±');
+insert into goods values(null,'é£äº‘å¸®','è¿™æ˜¯ä¸€éƒ¨å¥½ç‰‡',55.88,1,'é¦™æ¸¯å˜‰ç¦¾å‡ºå“','02.jpg','é¦™æ¸¯ç”µå½±');
+insert into goods values(null,'æ²³åŒ—äº‹ä»¶','è¿™æ˜¯ä¸€éƒ¨å¥½ç‰‡',66.88,1,'é¦™æ¸¯å˜‰ç¦¾å‡ºå“','02.jpg','é¦™æ¸¯ç”µå½±');
+
+
+-- è®¢å•è¡¨
+
+CREATE TABLE `orders` (
+  `ordersId` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `userId` int(10) unsigned NOT NULL,
+  `orderDate` datetime NOT NULL DEFAULT '2018-01-01 15:00:00',
+  `payMode` varchar(10) NOT NULL DEFAULT 'è´§åˆ°ä»˜æ¬¾' COMMENT 'ä»˜æ¬¾æ¨¡å¼ï¼šè´§åˆ°ä»˜æ¬¾  æ”¯ä»˜å®ä»˜æ¬¾',
+  `isPayed` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'æ˜¯å¦ä»˜æ¬¾ 1æœªä»˜æ¬¾  2å·²ä»˜æ¬¾',
+  `totalPrice` decimal(5,2) NOT NULL DEFAULT '0.00' COMMENT 'æ€»ä»·',
+  PRIMARY KEY (`ordersId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- è®¢å•è¯¦æƒ…è¡¨
+create  table orderDetail(
+	ordersId int unsigned not null comment 'å…³è”è®¢å•id',
+	goodsId int unsigned not null comment 'å…³è”å•†å“id',
+	nums tinyint comment 'å•†å“æ•°é‡'
+)engine=innodb charset=utf8;
+
+

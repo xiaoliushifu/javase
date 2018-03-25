@@ -18,6 +18,10 @@
 	function backToCart(){
 		window.open("CartCl?type=showCart","_self");
 	}
+	
+	function next(){
+		window.open("OrderCl?type=true","_self");
+	}
 </script>
 </head>
 <body style="margin-top:0"  background="images/bg2.jpg">
@@ -101,7 +105,7 @@
       </tr>
       <tr>
         <td align="right"><input type="submit" name="Submit32" value="上一步" />
-          <input type="submit" name="Submit33" value="下一步" /></td>
+          <input type="button" name="Submit33" onclick="next()" value="下一步" /></td>
       </tr>
     </table></td>
   </tr>
