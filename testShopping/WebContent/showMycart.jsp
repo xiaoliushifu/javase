@@ -21,7 +21,7 @@ MycartBo mbo = (MycartBo)request.getSession().getAttribute("mycart");
 	}
 </script>
 </head>
-<body  margin-top="0"  background="images/bg2.jpg">
+<body  style="margin-top:0"  background="images/bg2.jpg">
 <div align="center">
 <table width="80%" border="1" class="myfont">
   <tr>
@@ -69,7 +69,7 @@ MycartBo mbo = (MycartBo)request.getSession().getAttribute("mycart");
       <td colspan="6"><table width="100%" border="1">
         <tr>
           <td width="50%" align="left">您一共选择了￥<%=mbo.getAllPrice() %>的商品，点击<a href="index.jsp">此处</a>继续购物</td>
-          <td align="right"><a href="LoginCl">下一步</a></td>
+          <td align="right"><a href="LoginCl?type=checkLogin">下一步</a></td>
         </tr>
       </table></td>
     </tr>

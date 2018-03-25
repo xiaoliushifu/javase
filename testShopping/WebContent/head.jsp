@@ -17,7 +17,7 @@
     <td colspan="3"><table width="100%" border="1">
       <tr>
         <td width="11%">&nbsp;</td>
-        <td width="11%" class="navi">首页</td>
+        <td width="11%" class="navi"><a href="index.jsp">首页</a></td>
         <td width="11%">&nbsp;</td>
         <td width="11%" class="navi">香港电影</td>
         <td width="11%">&nbsp;</td>
