@@ -15,6 +15,14 @@ public class MycartBo {
 	private Connection conn = null;
 	private ResultSet rs = null;
 	private PreparedStatement ps = null;
+	
+	/**
+	 * 购物车里的商品总价
+	 */
+	private float allPrice=0.0f;
+	public float getAllPrice(){
+		return this.allPrice;
+	}
 
 	HashMap<String,String> hm = new HashMap<String,String>();
 		//1添加货物
@@ -64,17 +72,28 @@ public class MycartBo {
 			conn = new ConnDb().getConn();
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
+			
+			//每次显示时清空总价
+			this.allPrice=0.0f;
+			Float unit = 0.0f;
+			Byte num =0;
 			while(rs.next()){
             	GoodsBean gb = new GoodsBean();
             	gb.setGoodsId(rs.getInt("goodsId"));
 				gb.setGoodsIntro(rs.getString("goodsIntro"));
 				gb.setGoodsName(rs.getString("goodsName"));
+				num = Byte.parseByte(hm.get(rs.getString("goodsId")));
 				//rs.getString()虽然goodsId在数据库中是整型，java将会转成String
-				gb.setGoodsNum(Byte.parseByte(hm.get(rs.getString("goodsId"))));
-				gb.setGoodsPrice(rs.getFloat("goodsPrice"));
+				gb.setGoodsNum(num);
+				unit = rs.getFloat("goodsPrice");
+				gb.setGoodsPrice(unit);
 				gb.setPhoto(rs.getString("photo"));
 				gb.setPublisher(rs.getString("publisher"));
 				gb.setType(rs.getString("type"));
+				
+				//单价x数量，得到累积的总价
+				this.allPrice +=unit*num;
+				
                 al.add(gb);
             }
 		}catch(Exception e){

@@ -50,6 +50,12 @@ public class CartCl extends HttpServlet {
 			//无操作
 		} else if(type.equals("delAll")){
 			mbo.clear();
+		} else if(type.equals("updateNum")){
+			String goods[] = req.getParameterValues("goodsId");
+			String newNum[] = req.getParameterValues("newNum");
+			for(int i=0;i<goods.length;i++){
+				mbo.updateNum(goods[i],newNum[i]);
+			}
 		}
 		//从购物车中拿到全部商品，交到jsp视图显示
 		ArrayList al = mbo.showCart();

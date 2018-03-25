@@ -3,6 +3,7 @@
 <%
 //页面中得到控制层servlet的数据
 ArrayList<GoodsBean> al = (ArrayList<GoodsBean>)request.getAttribute("goodsInfo");
+MycartBo mbo = (MycartBo)request.getSession().getAttribute("mycart");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -28,6 +29,7 @@ ArrayList<GoodsBean> al = (ArrayList<GoodsBean>)request.getAttribute("goodsInfo"
     	<jsp:include page="head.jsp"></jsp:include>
     </td>
   </tr>
+  <form action="CartCl?type=updateNum" method="post">
     <tr>
       <td colspan="6" align="center">查看购物车----》登录注册----》填写购物信息----》订单完成</td>
     </tr>
@@ -45,7 +47,7 @@ ArrayList<GoodsBean> al = (ArrayList<GoodsBean>)request.getAttribute("goodsInfo"
       <td width="9%"><%=gb.getGoodsId() %></td>
       <td width="29%"><%=gb.getGoodsName() %></td>
       <td width="21%">￥<%=gb.getGoodsPrice() %></td>
-      <td width="10%"><input name="goodsNum" type="text" id="goodsNum" size="12" value="<%=gb.getGoodsNum() %>" /></td>
+      <td width="10%"><input type="hidden" name="goodsId" value="<%=gb.getGoodsId()%>"><input name="newNum" type="text" id="goodsNum" size="12" value="<%=gb.getGoodsNum() %>" /></td>
       <td width="15%"><a href="CartCl?type=del&goodsId=<%=gb.getGoodsId()%>">删除</a></td>
       <td width="16%"><a href="DetailServlet?type=show&goodsId=<%=gb.getGoodsId()%>">查看</a></td>
     </tr>
@@ -56,7 +58,7 @@ ArrayList<GoodsBean> al = (ArrayList<GoodsBean>)request.getAttribute("goodsInfo"
         <input type="button" name="Submit" onclick="delAll()" value="删除全部商品" />
       </div></td>
       <td><div align="center">
-        <input type="button" name="Submit2" value="修改数量" />
+        <input type="submit" name="Submit2" value="修改数量" />
       </div></td>
       <td colspan="3"><div align="center"></div></td>
     </tr>
@@ -66,11 +68,12 @@ ArrayList<GoodsBean> al = (ArrayList<GoodsBean>)request.getAttribute("goodsInfo"
     <tr>
       <td colspan="6"><table width="100%" border="1">
         <tr>
-          <td width="50%" align="left">您一共选择了价值xxx的商品，点击<a href="index.jsp">此处</a>继续购物</td>
+          <td width="50%" align="left">您一共选择了￥<%=mbo.getAllPrice() %>的商品，点击<a href="index.jsp">此处</a>继续购物</td>
           <td align="right">下一步</td>
         </tr>
       </table></td>
     </tr>
+    </form>
   <tr>
   	<td align="center" colspan="6">
   		<jsp:include page="tail.jsp"></jsp:include>
