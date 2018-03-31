@@ -6,6 +6,36 @@ import com.opensymphony.xwork2.ActionSupport;
 
 public class LmwHelloAction extends ActionSupport{
 
+	private String username;
+	/**
+	 * @return the username
+	 */
+	public String getUsername() {
+		return username;
+	}
+
+	/**
+	 * @param username the username to set
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	/**
+	 * @return the pwd
+	 */
+	public String getPwd() {
+		return pwd;
+	}
+
+	/**
+	 * @param pwd the pwd to set
+	 */
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+
+	private String pwd;
 	//我们重新父类的一个方法
 	//execute
 	/* (non-Javadoc)
@@ -21,13 +51,17 @@ public class LmwHelloAction extends ActionSupport{
 	
 	/**
 	 * 自定义order方法
-	 * 该方法就对应struts.xml中的一个<action method="order" xxx>
+	 * 该方法就对应struts.xml中的一个<action method="order" name="xxx">
 	 * @return String
 	 * 返回类型必须是String
 	 */
-	public String order(){
-		System.out.println("下订单成功2");
-		return "orderError";
+	public String login(){
+		System.out.println("username:"+username+" pass="+pwd);
+		if("123".equals(pwd)) {
+			return "loginOk";
+		}
+		return "loginError";
+		
 	}
 
 }

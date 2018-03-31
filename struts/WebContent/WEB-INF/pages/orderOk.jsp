@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h2>恭喜你，下单成功了</h2>
+	<h2>恭喜你，登录成功</h2><BR>
+	登录人的姓名 ${username }<BR>
+	登录人的密码 ${pwd}
+	<a href="index">返回继续登录</a>
 </body>
 </html>

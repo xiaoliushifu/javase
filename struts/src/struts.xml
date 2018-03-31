@@ -4,15 +4,20 @@
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
+	<!-- 修改default.properties的默认常量配置 -->
+	
+	<!-- 配置url的后缀。可以是.jsp,可以是.action,可以是无后缀 -->
+	<constant name="struts.action.extension" value="jsp,,action,"></constant>
+	<constant name="struts.devMode" value="true"></constant>
 	<!-- 
 		package:表示我们的包的action可以分包管理
 		package内就可配置我们的action
 		name:包名
 		namespace 包的命名空间 默认是  /
-		Mystruts2是项目名
-		举例说明 namespace="/",那么 http://localhost:8888/Mystruts2/hello
+		struts是项目名
+		举例说明 namespace="/",那么 http://localhost:8888/struts/hello
 		
-		如果namespace="/tn",那么http://localhost:8888/Mystruts2/tn/hello
+		如果namespace="/tn",那么http://localhost:8888/struts/tn/hello
 		extends 包继承关系。默认继承struts-default包
 	 -->
     <package name="default" namespace="/" extends="struts-default">
@@ -24,28 +29,27 @@
     	 配置action
     	 name 自定义action名字
     	 class 指出映射的Action类全名
-    	 将来访问就是  http://localhost:8888/Mystruts2/login
+    	 将来访问就是  http://localhost:8888/struts/index
     	 一个<action>对应一个请求。但是一个Action类可以有多个<action>的配置
     	 <action>通过method属性指定Action类的方法，默认method属性的值execute.
-    	 <result>的name属性指出execute方法返回"success"字符串才算请求合法，
-    	 struts2放行。否则失败
+    	 <result>的name属性指出execute方法返回"success"字符串才算请求合法，struts2放行。否则失败
     	  -->
-    	 <action name="login" class="com.liu.struts.actions.LmwHelloAction">
-    	 	<result name="success">/WEB-INF/pages/hello.jsp</result>
+    	 <action name="index" class="com.liu.struts.actions.LmwHelloAction">
+    	 	<result name="success">/WEB-INF/pages/login.jsp</result>
     	 </action>
     	 
     	 <!-- 
     	 相同的Action 再来配置一个<action>
-    	 通过method属性指出由Action类的order方法处理该请求
-    	 该请求是http://localhost:8888/Mystruts2/order
+    	 通过method属性指出由Action类的login方法处理该请求
+    	 该请求是http://localhost:8888/struts/login
     	 
     	  -->
-    	 <action name="order" method="order"  class="com.liu.struts.actions.LmwHelloAction">
+    	 <action name="login" method="login"  class="com.liu.struts.actions.LmwHelloAction">
     	 <!-- 
     	 	一个请求可以对应多个<result>，每个result指定一个jsp视图。
     	  -->
-    	 	<result name="orderOk">/WEB-INF/pages/orderOk.jsp</result>
-    	 	<result name="orderError">/WEB-INF/pages/orderErr.jsp</result>
+    	 	<result name="loginOk">/WEB-INF/pages/orderOk.jsp</result>
+    	 	<result name="loginError">/WEB-INF/pages/orderErr.jsp</result>
     	 </action>
     	 
     </package>
