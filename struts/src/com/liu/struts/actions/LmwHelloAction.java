@@ -2,6 +2,11 @@ package com.liu.struts.actions;
 
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ApplicationAware;
 import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.RequestAware;
@@ -106,11 +111,22 @@ public class LmwHelloAction extends ActionSupport
 		 * // 获取request域对象，有点特殊 Map<String, Object> request = (Map<String,
 		 * Object>) context.get("request"); request.put("req1", "req1 value");
 		 */
+		/*
 		// 获取域对象的方式2（实现接口的方式）实际开发中常用
 		this.application.put("app2", "app2 value");
 		this.request.put("req2", "req2 value");
 		this.session.put("ses2", "ses2 value");
-
+		*/
+		
+		//获取域对象的方式3，原生servletContext(javax.servlet.ServletContext)
+		ServletContext application = ServletActionContext.getServletContext();
+		application.setAttribute("app3", "app3 value");
+		//原生servlet的HttpServletRequest
+		HttpServletRequest request = ServletActionContext.getRequest();
+		request.setAttribute("req3", "req3 value");
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("ses3", "ses3 value");
 		System.out.println("username:" + username + " pass=" + pwd);
 		// 查看接收参数id的数据类型自动由字符串转换为整型
 		System.out.println("id=" + id + "数据类型是" + id.getClass().getName());
