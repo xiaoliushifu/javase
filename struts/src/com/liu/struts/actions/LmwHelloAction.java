@@ -2,12 +2,18 @@ package com.liu.struts.actions;
 
 import java.util.Map;
 
+import org.apache.struts2.interceptor.ApplicationAware;
+import org.apache.struts2.interceptor.ParameterAware;
+import org.apache.struts2.interceptor.RequestAware;
+import org.apache.struts2.interceptor.SessionAware;
+
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 //action需要继承一个父类ActionSupport
 
-public class LmwHelloAction extends ActionSupport {
+public class LmwHelloAction extends ActionSupport
+		implements ApplicationAware, SessionAware, RequestAware, ParameterAware {
 
 	private Integer id;
 
@@ -77,8 +83,7 @@ public class LmwHelloAction extends ActionSupport {
 	 */
 	@Override
 	public String execute() throws Exception {
-		System.out.println("hello 明伟啊");
-		return "success";
+		return SUCCESS;
 	}
 
 	/**
@@ -87,31 +92,24 @@ public class LmwHelloAction extends ActionSupport {
 	 * @return String 返回类型必须是String
 	 */
 	public String login() {
-		// Action类中获取域对象的方式1
-
-		// 首先获取ActionContext对象
-		ActionContext context = ActionContext.getContext();
-
-		// 获取application这个map对象
-		Map<String, Object> application = context.getApplication();
-		// 放入一对数据
-		application.put("app1", "app1 value");
-
-		// 获取session域对象
-		Map<String, Object> session = context.getSession();
-		session.put("ses1", "ses1 value");
-
-		// queryString参数的域对象
-		Map<String, Object> parameter = context.getParameters();
-		// java这一点不太好，好多场景下需要强制转换类型
-		String[] addresses = (String[]) parameter.get("address");
-		for (String add : addresses) {
-			System.out.println("address=" + add);
-		}
-
-		// 获取request域对象，有点特殊
-		Map<String, Object> request = (Map<String, Object>) context.get("request");
-		request.put("req1", "req1 value");
+		/*
+		 * // Action类中获取域对象的方式1 // 首先获取ActionContext对象 ActionContext context =
+		 * ActionContext.getContext(); // 获取application这个map对象 Map<String,
+		 * Object> application = context.getApplication(); // 放入一对数据
+		 * application.put("app1", "app1 value"); // 获取session域对象 Map<String,
+		 * Object> session = context.getSession(); session.put("ses1",
+		 * "ses1 value"); // queryString参数的域对象 Map<String, Object> parameter =
+		 * context.getParameters(); // java这一点不太好，好多场景下需要强制转换类型 String[]
+		 * addresses = (String[]) parameter.get("address"); for (String add :
+		 * addresses) { System.out.println("address=" + add); }
+		 * 
+		 * // 获取request域对象，有点特殊 Map<String, Object> request = (Map<String,
+		 * Object>) context.get("request"); request.put("req1", "req1 value");
+		 */
+		// 获取域对象的方式2（实现接口的方式）实际开发中常用
+		this.application.put("app2", "app2 value");
+		this.request.put("req2", "req2 value");
+		this.session.put("ses2", "ses2 value");
 
 		System.out.println("username:" + username + " pass=" + pwd);
 		// 查看接收参数id的数据类型自动由字符串转换为整型
@@ -121,6 +119,38 @@ public class LmwHelloAction extends ActionSupport {
 		}
 		return "loginError";
 
+	}
+
+	private Map<String, String[]> parameter = null;
+
+	@Override
+	public void setParameters(Map<String, String[]> arg0) {
+		// TODO Auto-generated method stub
+		parameter = arg0;
+	}
+
+	private Map<String, Object> request = null;
+
+	@Override
+	public void setRequest(Map<String, Object> arg0) {
+		// TODO Auto-generated method stub
+		request = arg0;
+	}
+
+	private Map<String, Object> session = null;
+
+	@Override
+	public void setSession(Map<String, Object> arg0) {
+		// TODO Auto-generated method stub
+		session = arg0;
+	}
+
+	private Map<String, Object> application = null;
+
+	@Override
+	public void setApplication(Map<String, Object> arg0) {
+		// TODO Auto-generated method stub
+		application = arg0;
 	}
 
 }

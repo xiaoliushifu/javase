@@ -16,5 +16,10 @@
 	application里的值：${applicationScope.app1}<BR>
 	session里的值：${sessionScope.ses1}<BR>
 	request里的值：${requestScope.req1}<BR>
+	<hr>
+	<h3>在Action类中获取不同域对象的方式2</h3>
+	application里的值：${applicationScope.app2}<BR>
+	session里的值：${sessionScope.ses2}<BR>
+	request里的值：${requestScope.req2}<BR>
 </body>
 </html>
