@@ -45,13 +45,29 @@
     	 
     	  -->
     	 <action name="login" method="login"  class="com.liu.struts.actions.LmwHelloAction">
-    	 <!-- 
-    	 	一个请求可以对应多个<result>，每个result指定一个jsp视图。
-    	  -->
     	 	<result name="loginOk">/WEB-INF/pages/orderOk.jsp</result>
     	 	<result name="loginError">/WEB-INF/pages/orderErr.jsp</result>
+    	 	<!--type跳转资源的方式
+    	 		redirect就是普通的302跳转，可以写外网域名的url，比如跳转到百度;
+    	 		但是如果写相对路径的话，这时和redirecAction是相同的
+    	 		redirectAction也是302跳转，但是只能跳转到当前域名下的某个url；
+    	 		因为struts会自动添加本地域名前缀到url之前。
+    	 		<result name="ok1" type="redirect">lmw/message</result>
+    	 	 -->
+    	 	
+    	 	<!-- 实现一个内部跳转到指定的action -->
+    	 	<result name="ok" type="chain">
+    	 		<param name="actionName">message</param>
+    	 		<param name="namespace">/lmw</param>
+    	 		<!-- 还可以指定方法 -->
+    	 		<param name="method">go</param>
+    	 	</result>
     	 </action>
     	 
     </package>
-
+    <package name="test" namespace="/lmw" extends="struts-default"> 
+    	<action name="message" method="sayHello"  class="com.liu.struts.actions.MessageAction">
+    	 	<result name="success">/WEB-INF/pages/message.jsp</result>
+    	 </action>
+    </package>
 </struts>

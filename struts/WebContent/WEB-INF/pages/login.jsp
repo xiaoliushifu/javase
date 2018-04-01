@@ -8,8 +8,7 @@
 <body>
 	<h2>哥们，请登录</h2>
 	<!-- 注意 get方法时会有乱码，post方法就没有，暂不知为何 -->
-	<form action="login?address=bj&address=hd" method="post">
-	<label>编号</label><input name="id" type="text" size="10" ><BR>
+	<form action="login" method="post">
 	<label>用户名</label><input name="username" type="text" size="10" ><BR>
 	<label>密码</label><input name="pwd" type="password" size=10 ><BR>
 	<input type="submit" value="login" />
