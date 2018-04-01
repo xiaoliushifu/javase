@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.action.extension" value="jsp,,action,"></constant>
+	<constant name="struts.devMode" value="true"></constant>
+	
+    <package name="default" namespace="/" extends="struts-default">
+    	 <action name="index" class="com.liu.struts.actions.LmwHelloAction">
+    	 	<result name="success">/WEB-INF/pages/login.jsp</result>
+    	 </action>
+    	 
+    	 <action name="login" method="login"  class="com.liu.struts.actions.LmwHelloAction">
+    	 	<result name="loginOk">/WEB-INF/pages/loginOk.jsp</result>
+    	 	<result name="loginError">/WEB-INF/pages/loginErr.jsp</result>
+    	 </action>
+    	 <!-- 注销的action -->
+    	 <action name="logout" method="logout" class="com.liu.struts.actions.LmwHelloAction">
+    	 	<result name="exit">/WEB-INF/pages/login.jsp</result>
+    	 </action>
+    </package>
+
+</struts>
