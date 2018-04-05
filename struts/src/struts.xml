@@ -21,6 +21,10 @@
 		extends 包继承关系。默认继承struts-default包
 	 -->
     <package name="default" namespace="/" extends="struts-default">
+    
+    	<action name="register" method="registerUI" class="com.liu.struts.actions.MemberAction">
+    		<result name="success">/WEB-INF/pages/registerUI.jsp</result>
+    	</action>
     	<!-- 
     	如何在没有联网情况下提示标签名字呢？
     	将dtd文件定位到本地的一个同名的dtd即可，一般在源码包中
