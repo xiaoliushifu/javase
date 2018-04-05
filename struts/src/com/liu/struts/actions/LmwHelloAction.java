@@ -58,7 +58,7 @@ public class LmwHelloAction extends ActionSupport{
 	}
 
 	/**
-	 * 自定义order方法 该方法就对应struts.xml中的一个<action method="order" name="xxx">
+	 * 自定义login方法 该方法就对应struts.xml中的一个<action method="login" name="xxx">
 	 * 
 	 * @return String 返回类型必须是String
 	 */
@@ -66,7 +66,7 @@ public class LmwHelloAction extends ActionSupport{
 		System.out.println("username:" + username + " pass=" + pwd);
 		// 查看接收参数id的数据类型自动由字符串转换为整型
 		if ("123".equals(pwd)) {
-			return "ok";
+			return "loginOk";
 		}
 		return "loginError";
 	}

@@ -45,8 +45,8 @@
     	 
     	  -->
     	 <action name="login" method="login"  class="com.liu.struts.actions.LmwHelloAction">
-    	 	<result name="loginOk">/WEB-INF/pages/orderOk.jsp</result>
-    	 	<result name="loginError">/WEB-INF/pages/orderErr.jsp</result>
+    	 	<result name="loginOk">/WEB-INF/pages/loginOK.jsp</result>
+    	 	<result name="loginError">/WEB-INF/pages/loginErr.jsp</result>
     	 	<!--type跳转资源的方式
     	 		redirect就是普通的302跳转，可以写外网域名的url，比如跳转到百度;
     	 		但是如果写相对路径的话，这时和redirecAction是相同的
