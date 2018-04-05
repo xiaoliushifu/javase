@@ -1,3 +1,5 @@
+<%@page import="com.liu.struts.bean.Sheep"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
@@ -13,9 +15,9 @@
 	登录人的密码 ${pwd}
 	<BR><a href="index">返回继续登录</a>
 	<hr>
-<%
-	request.setAttribute("grade",89);
-%>
+	<%
+		request.setAttribute("grade", 68);
+	%>
 	<h2>struts2的标签库使用</h2>
 	<h4>if--elseif--else</h4>
 	<br>学生成绩是：
@@ -28,5 +30,17 @@
 	<s:else>
 		成绩优秀
 	</s:else>
+	<%
+	ArrayList<Sheep> al = new ArrayList<Sheep>();
+	al.add(new Sheep(10,"喜羊羊"));
+	al.add(new Sheep(30,"沸羊羊"));
+	request.setAttribute("sheeplist", al);
+	%>
+	<h4>iterator标签</h4>
+	<s:iterator value="#request.sheeplist" var="oneSheep">
+	<!-- id,name对应sheep对象的成员属性 -->
+	<br>id:${id} | name:${name} |<s:property value="id"/>|<s:property value="name"/>
+	|${oneSheep}
+	</s:iterator>
 </body>
 </html>
