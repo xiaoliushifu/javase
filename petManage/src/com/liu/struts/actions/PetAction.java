@@ -9,57 +9,11 @@ import com.liu.struts.bean.Pet;
 import com.liu.struts.dao.PetDao;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 
-public class PetAction extends ActionSupport implements RequestAware{
+public class PetAction extends ActionSupport implements RequestAware,ModelDriven<Pet>{
 	
-	private Integer id;
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the nickName
-	 */
-	public String getNickName() {
-		return nickName;
-	}
-
-	/**
-	 * @param nickName the nickName to set
-	 */
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
-	}
-
-	/**
-	 * @return the resume
-	 */
-	public String getResume() {
-		return resume;
-	}
-
-	/**
-	 * @param resume the resume to set
-	 */
-	public void setResume(String resume) {
-		this.resume = resume;
-	}
-
-
-	private String  nickName;
-	private String resume;
-	
-	
+	private Pet pet = null;	
 	private PetDao petdao = new PetDao();
 	//准备使用通配符方法
 	public String list(){
@@ -75,18 +29,14 @@ public class PetAction extends ActionSupport implements RequestAware{
 	
 	//一个仅仅给出ui页面的方法（编辑页，添加页等）
 	public String updateUI(){
-		Pet pet = petdao.get(id);
-		//两种方式返回到updateUI.jsp
-			//1把pet对象压人值栈的root/对象栈顶
+		//初始时pet对象只有id参数
+		pet = petdao.get(this.pet.getId());
 		ActionContext.getContext().getValueStack().push(pet);
-		
-			//2
 		return "updateUI";
 	}
 	
 	//执行post操作的更新
 	public String update(){
-		Pet pet = new Pet(id, nickName, resume);
 		petdao.update(pet);
 		return "list2";
 	}
@@ -95,16 +45,16 @@ public class PetAction extends ActionSupport implements RequestAware{
 	 * 添加宠物的post操作
 	 * */
 	public String add(){
-		//实例化一个宠物对象
-		Pet p = new Pet(null,nickName,resume);
-		//教给dao去保存
-		petdao.save(p);
+		//实例化一个宠物对象,无需实例化赋值过程，
+		
+		//直接教给dao去保存
+		petdao.save(pet);
 		return "list2";
 	}
 	
 	//处理删除宠物
 	public String delete(){
-		petdao.delete(id);
+		petdao.delete(pet.getId());
 		return "list2";
 	}
 	
@@ -114,5 +64,17 @@ public class PetAction extends ActionSupport implements RequestAware{
 	public void setRequest(Map<String, Object> arg0) {
 		// TODO Auto-generated method stub
 		request = arg0;
+	}
+
+	/**
+	 * 方便pet对象的赋值
+	 * 我们实现modelDriven接口的方式来完成pet对象的赋值，这样这些id,nickName属性就
+	 * 不会出现在我们的Action中了
+	 * 这里仅仅是把Action类放入值栈中而已，赋值是在parameter拦截器中做的。
+	 */
+	@Override
+	public Pet getModel() {
+		pet = new Pet();
+		return pet;
 	}
 }

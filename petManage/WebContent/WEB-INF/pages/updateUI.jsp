@@ -8,6 +8,10 @@
 <title>修改宠物</title>
 </head>
 <body>
+	<h3>debug看下值栈</h3>
+	<!-- 打开调试模式，观察值栈 -->
+	<s:debug></s:debug>
+	
 	<h2>修改宠物</h2>
 	<s:form action="pet_update" method="post">
 	<s:hidden name="id"></s:hidden>
