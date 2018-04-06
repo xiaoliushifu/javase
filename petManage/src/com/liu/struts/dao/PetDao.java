@@ -21,6 +21,14 @@ public class PetDao {
 		return new ArrayList(map.values());
 	}
 	
+	public Pet get(Integer id){
+		return map.get(id);
+	}
+	
+	public void update(Pet pet){
+		map.put(pet.getId(), pet);
+	}
+	
 	public void save(Pet pet){
 		pet.setId(++petId);
 		map.put(petId, pet);

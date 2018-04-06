@@ -7,6 +7,7 @@ import org.apache.struts2.interceptor.RequestAware;
 
 import com.liu.struts.bean.Pet;
 import com.liu.struts.dao.PetDao;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class PetAction extends ActionSupport implements RequestAware{
@@ -70,6 +71,24 @@ public class PetAction extends ActionSupport implements RequestAware{
 	//一个仅仅给出ui页面的方法（编辑页，添加页等）
 	public String addUI(){
 		return "addUI";
+	}
+	
+	//一个仅仅给出ui页面的方法（编辑页，添加页等）
+	public String updateUI(){
+		Pet pet = petdao.get(id);
+		//两种方式返回到updateUI.jsp
+			//1把pet对象压人值栈的root/对象栈顶
+		ActionContext.getContext().getValueStack().push(pet);
+		
+			//2
+		return "updateUI";
+	}
+	
+	//执行post操作的更新
+	public String update(){
+		Pet pet = new Pet(id, nickName, resume);
+		petdao.update(pet);
+		return "list2";
 	}
 	
 	/*
