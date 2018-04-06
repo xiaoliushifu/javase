@@ -8,15 +8,28 @@
 	<constant name="struts.devMode" value="true"></constant>
 	
     <package name="default" namespace="/" extends="struts-default">
+    
+    	<!-- 加入自己的拦截器 -->
+    	<interceptors>
+    		<!-- name是为之命名，class指出真正拦截器类名 -->
+    		<interceptor name="lmwinterceptor" class="com.liu.struts.intercepter.Myintercepter"></interceptor>
+    	</interceptors>
+    
+    
     	<!-- 通配符方式 -->
     	<action name="index" class="com.liu.struts.actions.PetAction">
     		<result name="success">/index.jsp</result>
     	</action>
     	<action name="pet_*" method="{1}" class="com.liu.struts.actions.PetAction">
+    		<!-- 这里引用上述命名的拦截器 -->
+    		<interceptor-ref name="lmwinterceptor"></interceptor-ref>
+    		<!-- 在引入自定义的拦截器的同时，将会覆盖默认的拦截器栈，故需手动引入该组拦截器 -->
+    		<interceptor-ref name="defaultStack"></interceptor-ref>
     		<result name="{1}">/WEB-INF/pages/{1}.jsp</result>
     		<result name="{1}">/WEB-INF/pages/{1}.jsp</result>
     		<result name="list2" type="redirectAction">pet_list</result>
     		<result name="input">/WEB-INF/pages/addUI.jsp</result>
+    		<result name="errors">/WEB-INF/pages/error.jsp</result>
     	</action>
     </package>
 

@@ -17,6 +17,7 @@ public class PetAction extends ActionSupport implements RequestAware,ModelDriven
 	private PetDao petdao = new PetDao();
 	//准备使用通配符方法
 	public String list(){
+		System.out.println("list .....");
 		ArrayList<Pet> al = petdao.list();
 		request.put("petlist", al);
 		return "list";
