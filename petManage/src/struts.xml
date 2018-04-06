@@ -9,8 +9,13 @@
 	
     <package name="default" namespace="/" extends="struts-default">
     	<!-- 通配符方式 -->
+    	<action name="index" class="com.liu.struts.actions.PetAction">
+    		<result name="success">/index.jsp</result>
+    	</action>
     	<action name="pet_*" method="{1}" class="com.liu.struts.actions.PetAction">
     		<result name="{1}">/WEB-INF/pages/{1}.jsp</result>
+    		<result name="{1}">/WEB-INF/pages/{1}.jsp</result>
+    		<result name="addOK" type="redirectAction">pet_list</result>
     	</action>
     </package>
 

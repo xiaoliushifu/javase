@@ -20,4 +20,9 @@ public class PetDao {
 	public ArrayList list(){
 		return new ArrayList(map.values());
 	}
+	
+	public void save(Pet pet){
+		pet.setId(++petId);
+		map.put(petId, pet);
+	}
 }

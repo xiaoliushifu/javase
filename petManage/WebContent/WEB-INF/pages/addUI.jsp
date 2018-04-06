@@ -5,26 +5,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>宠物列表页面</title>
+<title>添加宠物</title>
 </head>
 <body>
-	<h2>宠物列表页</h2>
-	<table width="700px" border="1">
-		<tr>
-			<th>id</th>
-			<th>name</th>
-			<th>resume</th>
-			<th>action</th>
-		</tr>
-		<s:iterator value="#request.petlist">
-		<tr>
-			<th>${id} </th>
-			<th>${nickName} </th>
-			<th>${resume} </th>
-			<th><a href="#">删除</a>|<a href="#">更新</a></th>
-		</tr>
-		</s:iterator>
-	</table>
+	<h2>添加宠物</h2>
+	<s:form action="pet_add" method="post">
+	<s:textfield name="nickName" label="宠物昵称"></s:textfield>
+	<s:textfield name="resume" label="宠物介绍"></s:textfield>
+	<s:submit value="添加宠物"></s:submit>
+	</s:form>
 	<a href="index.jsp">返回管理页</a>
 </body>
 </html>

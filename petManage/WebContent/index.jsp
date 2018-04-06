@@ -8,6 +8,6 @@
 </head>
 <body>
 	<h3>首页</h3>
-	<a href="#">查看宠物</a>|<a href="#">添加宠物</a>
+	<a href="pet_list">查看宠物</a>|<a href="pet_addUI">添加宠物</a>
 </body>
 </html>
