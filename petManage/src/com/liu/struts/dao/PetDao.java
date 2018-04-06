@@ -25,4 +25,8 @@ public class PetDao {
 		pet.setId(++petId);
 		map.put(petId, pet);
 	}
+	
+	public void delete(Integer petId){
+		map.remove(petId);
+	}
 }

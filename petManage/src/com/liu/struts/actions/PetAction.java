@@ -62,9 +62,8 @@ public class PetAction extends ActionSupport implements RequestAware{
 	private PetDao petdao = new PetDao();
 	//准备使用通配符方法
 	public String list(){
-		ArrayList al = petdao.list();
+		ArrayList<Pet> al = petdao.list();
 		request.put("petlist", al);
-		System.out.println("list....()");
 		return "list";
 	}
 	
@@ -81,7 +80,13 @@ public class PetAction extends ActionSupport implements RequestAware{
 		Pet p = new Pet(null,nickName,resume);
 		//教给dao去保存
 		petdao.save(p);
-		return "addOK";
+		return "list2";
+	}
+	
+	//处理删除宠物
+	public String delete(){
+		petdao.delete(id);
+		return "list2";
 	}
 	
 	

@@ -21,7 +21,7 @@
 			<th>${id} </th>
 			<th>${nickName} </th>
 			<th>${resume} </th>
-			<th><a href="#">删除</a>|<a href="#">更新</a></th>
+			<th><a href="pet_delete?id=${id }">删除</a>|<a href="#">更新</a></th>
 		</tr>
 		</s:iterator>
 	</table>

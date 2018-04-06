@@ -15,7 +15,7 @@
     	<action name="pet_*" method="{1}" class="com.liu.struts.actions.PetAction">
     		<result name="{1}">/WEB-INF/pages/{1}.jsp</result>
     		<result name="{1}">/WEB-INF/pages/{1}.jsp</result>
-    		<result name="addOK" type="redirectAction">pet_list</result>
+    		<result name="list2" type="redirectAction">pet_list</result>
     	</action>
     </package>
 
