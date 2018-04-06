@@ -8,10 +8,16 @@
 <title>添加宠物</title>
 </head>
 <body>
+	<s:debug>
+	</s:debug>
 	<h2>添加宠物</h2>
-	<s:form action="pet_add" method="post">
-	<s:textfield name="nickName" label="宠物昵称"></s:textfield>
-	<s:textfield name="resume" label="宠物介绍"></s:textfield>
+	<s:form action="pet_add" method="post" theme="simple">
+	宠物昵称:<s:textfield name="nickName"></s:textfield>
+	<s:property value="errors.nickName[0]"></s:property><BR>
+	宠物生日:<s:textfield name="birthDay" ></s:textfield>
+	<!-- 服务端验证出错时，会把错误信息压入栈中Action对象的errors成员中 -->
+	<s:property value="errors.birthDay[0]"></s:property><BR>
+	宠物介绍:<s:textfield name="resume"></s:textfield><BR>
 	<s:submit value="添加宠物"></s:submit>
 	</s:form>
 	<a href="index.jsp">返回管理页</a>

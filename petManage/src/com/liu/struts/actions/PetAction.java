@@ -70,7 +70,9 @@ public class PetAction extends ActionSupport implements RequestAware,ModelDriven
 	 * 方便pet对象的赋值
 	 * 我们实现modelDriven接口的方式来完成pet对象的赋值，这样这些id,nickName属性就
 	 * 不会出现在我们的Action中了
-	 * 这里仅仅是把Action类放入值栈中而已，赋值是在parameter拦截器中做的。
+	 * 注意，这里仅仅是把Action类放入值栈中而已，赋值是在parameter拦截器中做的。
+	 * 该方式有个缺陷，就是所有的请求都会把pet对象压入栈顶，而在删除，查看场景下是不需要的
+	 * 所以需要根据场景判断是否返回pet对象，待优化
 	 */
 	@Override
 	public Pet getModel() {

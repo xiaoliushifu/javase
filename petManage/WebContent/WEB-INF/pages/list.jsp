@@ -13,6 +13,7 @@
 		<tr>
 			<th>id</th>
 			<th>name</th>
+			<th>birthDay</th>
 			<th>resume</th>
 			<th>action</th>
 		</tr>
@@ -20,6 +21,7 @@
 		<tr>
 			<th>${id} </th>
 			<th>${nickName} </th>
+			<th>${birthDay} </th>
 			<th>${resume} </th>
 			<th><a href="pet_delete?id=${id }">删除</a>|<a href="pet_updateUI?id=${id }">更新</a></th>
 		</tr>

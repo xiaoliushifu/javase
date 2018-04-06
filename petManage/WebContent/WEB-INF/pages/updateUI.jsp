@@ -17,6 +17,7 @@
 	<s:hidden name="id"></s:hidden>
 	<!-- 由于pet对象已经压入值栈，那么这里的name就会从对象栈顶的对象的属性中寻找nickName，resume并自动赋值 -->
 	<s:textfield name="nickName" label="宠物昵称"></s:textfield>
+	<s:textfield name="birthDay" label="宠物生日"></s:textfield>
 	<s:textarea name="resume" label="宠物介绍"></s:textarea>
 	<s:submit value="修改宠物"></s:submit>
 	</s:form>

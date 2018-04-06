@@ -1,5 +1,7 @@
 package com.liu.struts.bean;
 
+import java.time.LocalDate;
+
 public class Pet {
 	public Pet() {
 		super();
@@ -12,11 +14,12 @@ public class Pet {
 	public String toString() {
 		return "Pet [id=" + id + ", nickName=" + nickName + ", resume=" + resume + "]";
 	}
-	public Pet(Integer id, String nickName, String resume) {
+	public Pet(Integer id, String nickName, String resume, LocalDate birthDay) {
 		super();
 		this.id = id;
 		this.nickName = nickName;
 		this.resume = resume;
+		this.birthDay = birthDay;
 	}
 	private Integer id;
 	/**
@@ -57,4 +60,18 @@ public class Pet {
 	}
 	private String nickName;
 	private String resume;
+	
+	private LocalDate birthDay;
+	/**
+	 * @return the birthDay
+	 */
+	public LocalDate getBirthDay() {
+		return birthDay;
+	}
+	/**
+	 * @param birthDay the birthDay to set
+	 */
+	public void setBirthDay(LocalDate birthDay) {
+		this.birthDay = birthDay;
+	}
 }
