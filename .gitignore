@@ -1,0 +1,33 @@
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+#在Eclipse中有见到
+.metadata
+.recommenders
+# windows thumbnail cache
+Thumbs.db
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+*.class
+
+#struts的压缩包,源码包
+*.zip
+struts-2.3.34-src
+#tomcat配置文件目录，是在eclipse安装了javaee插件后，把项目加到tomcat启动tomcat才有的
+Servers
+
+#手册
+*.CHM
+*.chw
+*.chm
