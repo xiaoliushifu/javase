@@ -36,6 +36,13 @@ public class Monster {
 	public String getSkill() {
 		return skill;
 	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Monster [name=" + name + ", id=" + id + ", skill=" + skill + "]";
+	}
 	/**
 	 * @param skill the skill to set
 	 */
@@ -43,6 +50,11 @@ public class Monster {
 		this.skill = skill;
 	}
 	private Integer id;
+	public Monster(String name, Integer id, String skill) {
+		this.name = name;
+		this.id = id;
+		this.skill = skill;
+	}
 	private String skill;
 	public Monster() {
 		super();

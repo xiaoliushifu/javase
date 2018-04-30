@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 <!-- 配置第一个bean -->
@@ -9,4 +10,26 @@
 		<property name="id" value="2" />
 		<property name="skill" value="筋斗云" />
 	</bean>
+	<!-- 用构造器方式配置bean 属性索引index -->
+	<bean id="monster02" class="spring.beans.Monster">
+		<constructor-arg index="0" value="白骨精"/>
+		<constructor-arg index="1" value="0"/>
+		<constructor-arg index="2" value="变化人"/>
+	</bean>
+	<!-- 用构造器方式配置bean 属性类型type-->
+	<bean id="monster03" class="spring.beans.Monster">
+		<constructor-arg type="String" value="白骨精"/>
+		<constructor-arg type="Integer" value="1"/>
+		<constructor-arg type="String" value="编号人"/>
+	</bean>
+	
+	<!-- 使用p命名空间标签方式配置bean
+		需要引入p的schema
+		直接属性名的方式来配置
+	 -->
+	 <bean id="monster04" class="spring.beans.Monster"
+	  p:id="2"
+	  p:name="蜘蛛精"
+	  p:skill="吐丝"
+	  ></bean>
 </beans>
