@@ -26,7 +26,7 @@ public class IocTest {
 	@Test
 	public void test01() {
 		//按照bean的id获取monster对象
-		Object obj = applicationContext.getBean("monster01");
+		Object obj = applicationContext.getBean("master02");
 		System.out.println("bean"+ obj.toString());
 	}
 	/**

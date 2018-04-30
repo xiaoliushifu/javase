@@ -4,11 +4,23 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-<!-- 配置第一个bean -->
-	<bean id="monster01" class="spring.beans.Monster">
-		<property name="name" value="悟空" />
-		<property name="id" value="2" />
-		<property name="skill" value="筋斗云" />
+<!-- 配置Master的bean  -->
+	<bean id="master01" class="spring.beans.Master">
+		<property name="name" value="太上老君" />
+		<!-- ref指向其它的id -->
+		<property name="m1" ref="monster02" />
+	</bean>
+	
+	<bean id="master02" class="spring.beans.Master">
+		<property name="name" value="太上老君" />
+		<!-- 含有内部bean，也就是bean嵌套另一个bean -->
+		<property name="m1" >
+			<bean class="spring.beans.Monster">
+				<constructor-arg type="String" value="青牛怪"/>
+				<constructor-arg type="Integer" value="1"/>
+				<constructor-arg type="String" value="钢圈"/>
+			</bean>
+		</property>
 	</bean>
 	<!-- 用构造器方式配置bean 属性索引index -->
 	<bean id="monster02" class="spring.beans.Monster">
@@ -31,5 +43,6 @@
 	  p:id="2"
 	  p:name="蜘蛛精"
 	  p:skill="吐丝"
-	  ></bean>
+	  />
+	  
 </beans>
