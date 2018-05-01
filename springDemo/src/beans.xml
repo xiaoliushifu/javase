@@ -22,6 +22,19 @@
 			</bean>
 		</property>
 	</bean>
+	
+	<bean id="master03" class="spring.beans.Master">
+		<property name="name" value="杨逍" />
+		<!-- 成员属性是一个list -->
+		<property name="monsterList" >
+			<list>
+				<!-- list的元素是引用其他的bean -->
+				<ref bean="monster02" />
+				<ref bean="monster03" />
+				<ref bean="monster04" />
+			</list>
+		</property>
+	</bean>
 	<!-- 用构造器方式配置bean 属性索引index -->
 	<bean id="monster02" class="spring.beans.Monster">
 		<constructor-arg index="0" value="白骨精"/>

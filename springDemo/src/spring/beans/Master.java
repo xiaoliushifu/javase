@@ -3,9 +3,12 @@
  */
 package spring.beans;
 
+import java.util.List;
+
 public class Master {
 	private String name;
 	private Monster m1;
+	private List<Monster> monsterList;
 	/**
 	 * @return the name
 	 */
@@ -30,12 +33,24 @@ public class Master {
 	public void setM1(Monster m1) {
 		this.m1 = m1;
 	}
+	/**
+	 * @return the monsterList
+	 */
+	public List<Monster> getMonsterList() {
+		return monsterList;
+	}
+	/**
+	 * @param monsterList the monsterList to set
+	 */
+	public void setMonsterList(List<Monster> monsterList) {
+		this.monsterList = monsterList;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Master [name=" + name + ", m1=" + m1 + "]";
+		return "Master [name=" + name + ", m1=" + m1 + ", monsterList=" + monsterList + "]";
 	}
 	
 }

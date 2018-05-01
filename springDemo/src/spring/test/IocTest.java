@@ -63,5 +63,13 @@ public class IocTest {
 		Object obj = applicationContext.getBean("monster04");
 		System.out.println("bean p:"+ obj.toString());
 	}
+	//获取一个bean的java对象，p命名空间方式
+	@Test
+	public void test06() {
+		//按照bean的类名方式获取monster对象
+		Object obj = applicationContext.getBean("master03");
+		
+		System.out.println("bean list:"+ obj.toString());
+	}
 
 }
