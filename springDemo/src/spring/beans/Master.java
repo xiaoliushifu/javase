@@ -4,11 +4,12 @@
 package spring.beans;
 
 import java.util.Map;
+import java.util.Properties;
 
 public class Master {
 	private String name;
 	private Monster m1;
-	private Map<String,Monster> monsterMap;
+	private Properties pro;
 	/**
 	 * @return the name
 	 */
@@ -34,22 +35,22 @@ public class Master {
 		this.m1 = m1;
 	}
 	/**
-	 * @return the monsterMap
+	 * @return the pro
 	 */
-	public Map<String, Monster> getMonsterMap() {
-		return monsterMap;
+	public Properties getPro() {
+		return pro;
 	}
 	/**
-	 * @param monsterMap the monsterMap to set
+	 * @param pro the pro to set
 	 */
-	public void setMonsterMap(Map<String, Monster> monsterMap) {
-		this.monsterMap = monsterMap;
+	public void setPro(Properties pro) {
+		this.pro = pro;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Master [name=" + name + ", m1=" + m1 + ", monsterMap=" + monsterMap + "]";
+		return "Master [name=" + name + ", m1=" + m1 + ", pro=" + pro + "]";
 	}
 }

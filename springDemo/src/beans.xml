@@ -25,19 +25,14 @@
 	
 	<bean id="master03" class="spring.beans.Master">
 		<property name="name" value="杨逍" />
-		<!-- 成员属性是一个Map -->
-		<property name="monsterMap" >
-			<map>
-				<!-- 一个entry就是一个Map集合的键值对 -->
-				<entry>
-					<key><value>m1</value></key>
-					<ref bean="monster02"/>
-				</entry>
-				<entry>
-					<key><value>m2</value></key>
-					<ref bean="monster03"/>
-				</entry>
-			</map>
+		<!-- 成员属性是一个Properties集合
+			Properties集合是个特殊的Map，key，value都必须是字符串
+		 -->
+		<property name="pro" >
+			<props>
+				<prop key="s1">v1</prop>
+				<prop key="s2">v2</prop>
+			</props>
 		</property>
 	</bean>
 	<!-- 用构造器方式配置bean 属性索引index -->

@@ -3,6 +3,7 @@ package spring.test;
 import static org.junit.Assert.*;
 
 import java.util.Map;
+import java.util.Properties;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -66,15 +67,14 @@ public class IocTest {
 		Object obj = applicationContext.getBean("monster04");
 		System.out.println("bean p:"+ obj.toString());
 	}
-	//获取一个bean的java对象，p命名空间方式
 	@Test
 	public void test06() {
 		//按照bean的类名方式获取monster对象
 		Master obj = (Master)applicationContext.getBean("master03");
-		Map<String,Monster> map = obj.getMonsterMap();
-		//一种遍历Map集合的for方法
-		for(Map.Entry<String, Monster> entry:map.entrySet()){
-			System.out.println("key:"+ entry.getKey()+" value:"+entry.getValue());
+		 Properties p = obj.getPro();
+		//一种遍历Properties集合的for方法
+		for(String key:p.stringPropertyNames()){
+			System.out.println("key:"+ key+" value:"+p.getProperty(key));
 		}
 		
 	}
