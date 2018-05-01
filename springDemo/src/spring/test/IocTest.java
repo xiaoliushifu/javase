@@ -2,11 +2,14 @@ package spring.test;
 
 import static org.junit.Assert.*;
 
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import spring.beans.Master;
 import spring.beans.Monster;
 
 public class IocTest {
@@ -67,9 +70,13 @@ public class IocTest {
 	@Test
 	public void test06() {
 		//按照bean的类名方式获取monster对象
-		Object obj = applicationContext.getBean("master03");
+		Master obj = (Master)applicationContext.getBean("master03");
+		Map<String,Monster> map = obj.getMonsterMap();
+		//一种遍历Map集合的for方法
+		for(Map.Entry<String, Monster> entry:map.entrySet()){
+			System.out.println("key:"+ entry.getKey()+" value:"+entry.getValue());
+		}
 		
-		System.out.println("bean list:"+ obj.toString());
 	}
 
 }

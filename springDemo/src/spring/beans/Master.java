@@ -3,12 +3,12 @@
  */
 package spring.beans;
 
-import java.util.List;
+import java.util.Map;
 
 public class Master {
 	private String name;
 	private Monster m1;
-	private List<Monster> monsterList;
+	private Map<String,Monster> monsterMap;
 	/**
 	 * @return the name
 	 */
@@ -34,23 +34,22 @@ public class Master {
 		this.m1 = m1;
 	}
 	/**
-	 * @return the monsterList
+	 * @return the monsterMap
 	 */
-	public List<Monster> getMonsterList() {
-		return monsterList;
+	public Map<String, Monster> getMonsterMap() {
+		return monsterMap;
 	}
 	/**
-	 * @param monsterList the monsterList to set
+	 * @param monsterMap the monsterMap to set
 	 */
-	public void setMonsterList(List<Monster> monsterList) {
-		this.monsterList = monsterList;
+	public void setMonsterMap(Map<String, Monster> monsterMap) {
+		this.monsterMap = monsterMap;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Master [name=" + name + ", m1=" + m1 + ", monsterList=" + monsterList + "]";
+		return "Master [name=" + name + ", m1=" + m1 + ", monsterMap=" + monsterMap + "]";
 	}
-	
 }

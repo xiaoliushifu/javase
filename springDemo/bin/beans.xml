@@ -25,14 +25,19 @@
 	
 	<bean id="master03" class="spring.beans.Master">
 		<property name="name" value="杨逍" />
-		<!-- 成员属性是一个list -->
-		<property name="monsterList" >
-			<list>
-				<!-- list的元素是引用其他的bean -->
-				<ref bean="monster02" />
-				<ref bean="monster03" />
-				<ref bean="monster04" />
-			</list>
+		<!-- 成员属性是一个Map -->
+		<property name="monsterMap" >
+			<map>
+				<!-- 一个entry就是一个Map集合的键值对 -->
+				<entry>
+					<key><value>m1</value></key>
+					<ref bean="monster02"/>
+				</entry>
+				<entry>
+					<key><value>m2</value></key>
+					<ref bean="monster03"/>
+				</entry>
+			</map>
 		</property>
 	</bean>
 	<!-- 用构造器方式配置bean 属性索引index -->
