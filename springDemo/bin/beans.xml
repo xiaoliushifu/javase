@@ -22,8 +22,8 @@
 			</bean>
 		</property>
 	</bean>
-	
-	<bean id="master03" class="spring.beans.Master">
+	<!-- 增加scope配置，是多实例获得master03,而非默认的单例 -->
+	<bean id="master03" class="spring.beans.Master" scope="prototype">
 		<property name="name" value="杨逍" />
 		<!-- 成员属性是一个Properties集合
 			Properties集合是个特殊的Map，key，value都必须是字符串

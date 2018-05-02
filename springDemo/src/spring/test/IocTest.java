@@ -71,7 +71,11 @@ public class IocTest {
 	public void test06() {
 		//按照bean的类名方式获取monster对象
 		Master obj = (Master)applicationContext.getBean("master03");
-		 Properties p = obj.getPro();
+		System.out.println(obj.hashCode());
+		//再次获取一个master03，打印它的hashCode()会发现两次打印不同。
+		Master obj2 = (Master)applicationContext.getBean("master03");
+		System.out.println(obj2.hashCode());
+		Properties p = obj.getPro();
 		//一种遍历Properties集合的for方法
 		for(String key:p.stringPropertyNames()){
 			System.out.println("key:"+ key+" value:"+p.getProperty(key));
