@@ -1,8 +1,5 @@
 package spring.test;
 
-import static org.junit.Assert.*;
-
-import java.util.Map;
 import java.util.Properties;
 
 import org.junit.Before;
@@ -81,6 +78,15 @@ public class IocTest {
 			System.out.println("key:"+ key+" value:"+p.getProperty(key));
 		}
 		
+	}
+	
+
+	//创建调用构造方法，初始化调用init方法，关闭ioc容器调用destroy（未演示）
+	@Test
+	public void test07() {
+		//按照bean的类名方式获取monster对象
+		Object obj = applicationContext.getBean("cat1");
+		System.out.println("bean:"+ obj.toString());
 	}
 
 }

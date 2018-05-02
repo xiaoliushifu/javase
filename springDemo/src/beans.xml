@@ -57,5 +57,13 @@
 	  p:name="蜘蛛精"
 	  p:skill="吐丝"
 	  />
-	  
+	  <!-- 配置有生命周期的bean 
+	  	该bean有init方法，也有ico容器退出时调用的方法destory
+	  	方法名可以自定义
+	   -->
+	  <bean id="cat1" class="spring.beans.Cat" 
+	  init-method="init"
+	  destroy-method="destroy">
+	  	<property name="name" value="小花" />
+	  </bean>
 </beans>
