@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import spring.beans.Master;
 import spring.beans.Monster;
+import spring.component.MyDao;
 import spring.component.Mycomponent;
 
 public class IocTest {
@@ -93,12 +94,12 @@ public class IocTest {
 	@Test
 	public void test08() {
 		//按照bean的类名方式获取monster对象
-		Mycomponent bean = applicationContext.getBean(Mycomponent.class);
+		Object bean = applicationContext.getBean(MyDao.class);
 		//使用注解时，默认的bean名字（id)就是小写的类名mycomponent
-		Object bean2 = applicationContext.getBean("mycomponent");
+		//Object bean2 = applicationContext.getBean("mycomponent");
 		
-		System.out.println("class属性是："+ Mycomponent.class);
-		System.out.println("bean:"+ bean+"bean2 "+bean2);
+		//System.out.println("class属性是："+ Mycomponent.class);
+		System.out.println("bean:"+ bean);
 	}
 
 }

@@ -9,8 +9,13 @@
 <!-- 打开基于注解的功能  需要引入命名空间context-->
 <!-- base-package可以扫描指定java包下的类,注意语法-->
 <!-- resource-pattern支持通配符 -->
-<context:component-scan base-package="spring.component"/>
-
+<context:component-scan base-package="spring.component">
+	<!-- context:exclude-filter表示要排除哪些包不被扫描
+	type="annotation"  表示根据注解的方式来排除
+	expression=""指出要排除的注解类,全名（排除service,controller等）
+	 -->
+	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+</context:component-scan>
 <!-- 配置Master的bean  -->
 	<bean id="master01" class="spring.beans.Master">
 		<property name="name" value="太上老君" />
