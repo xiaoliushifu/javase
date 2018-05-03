@@ -94,9 +94,11 @@ public class IocTest {
 	public void test08() {
 		//按照bean的类名方式获取monster对象
 		Mycomponent bean = applicationContext.getBean(Mycomponent.class);
+		//使用注解时，默认的bean名字（id)就是小写的类名mycomponent
+		Object bean2 = applicationContext.getBean("mycomponent");
 		
 		System.out.println("class属性是："+ Mycomponent.class);
-		System.out.println("bean:"+ bean);
+		System.out.println("bean:"+ bean+"bean2 "+bean2);
 	}
 
 }
