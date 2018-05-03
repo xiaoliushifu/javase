@@ -58,7 +58,7 @@ public class Monster {
 	private String skill;
 	public Monster() {
 		super();
-		System.out.println("实例化了");
+		//System.out.println("实例化了");
 	}
 	
 	

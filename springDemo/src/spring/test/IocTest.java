@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import spring.beans.Master;
 import spring.beans.Monster;
+import spring.component.Mycomponent;
 
 public class IocTest {
 
@@ -19,7 +20,7 @@ public class IocTest {
 	 */
 	@Before
 	public void init(){
-		//一句代码，就是加载ioc容器,自动实例化配置好的bean对象
+		//一句代码，就是加载ioc容器,自动实例化配置好的bean对象（会执行构造方法）
 		applicationContext	 = new ClassPathXmlApplicationContext("beans.xml");
 	}
 	
@@ -87,6 +88,15 @@ public class IocTest {
 		//按照bean的类名方式获取monster对象
 		Object obj = applicationContext.getBean("cat1");
 		System.out.println("bean:"+ obj.toString());
+	}
+	//基于注解的方式类配置spring的bean
+	@Test
+	public void test08() {
+		//按照bean的类名方式获取monster对象
+		Mycomponent bean = applicationContext.getBean(Mycomponent.class);
+		
+		System.out.println("class属性是："+ Mycomponent.class);
+		System.out.println("bean:"+ bean);
 	}
 
 }

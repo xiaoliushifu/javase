@@ -3,7 +3,6 @@
  */
 package spring.beans;
 
-import java.util.Map;
 import java.util.Properties;
 
 public class Master {
