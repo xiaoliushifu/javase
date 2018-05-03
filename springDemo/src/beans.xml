@@ -8,7 +8,8 @@
 
 <!-- 打开基于注解的功能  需要引入命名空间context-->
 <!-- base-package可以扫描指定java包下的类,注意语法-->
-<context:component-scan base-package="spring.component" />
+<!-- resource-pattern支持通配符 -->
+<context:component-scan base-package="spring.component"  resource-pattern="*Dao.class"/>
 
 <!-- 配置Master的bean  -->
 	<bean id="master01" class="spring.beans.Master">
