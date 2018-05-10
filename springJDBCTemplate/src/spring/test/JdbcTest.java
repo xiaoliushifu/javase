@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class JdbcTest {
 
@@ -28,5 +29,15 @@ public class JdbcTest {
 		DataSource obj = applicationContext.getBean(DataSource.class);
 		System.out.println(obj.getConnection());
 		System.out.println("bean"+ obj.toString());
+	}
+	
+	@Test
+	public void test02() throws SQLException {
+		//按照bean的id获取monster对象
+		JdbcTemplate obj = applicationContext.getBean(JdbcTemplate.class);
+		//编写sql
+		String sql = "insert into  `monster` VALUES(null,'你好','说话3')";
+		//执行sql
+		obj.execute(sql);
 	}
 }
