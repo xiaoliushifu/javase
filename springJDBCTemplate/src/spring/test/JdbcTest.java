@@ -15,7 +15,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import spring.bean.Monster;
 
@@ -160,6 +162,23 @@ public class JdbcTest {
 		map.put("skill", "~大钳子嘿哈~");
 		//选择用update方法来完成【添加】操作
 		obj.update(sql, map);
+	}
+	/**
+	 * 直接以某个对象作为参数执行sql语句
+	 * 但是对象的成员名字要和具名参数一致才行
+	 */
+	@Test
+	public void test08() {
+		NamedParameterJdbcTemplate obj = applicationContext.getBean(NamedParameterJdbcTemplate.class);
+		// 编写sql,带有名字的参数
+		String sql = "INSERT INTO monster VALUES(:id,:name,:skill)";
+		
+		//实例化一个对象，该对象的成员属性名称要和具名参数完全一致才行
+		Monster m = new Monster("狐狸精",11,"美人计");
+		//对象构造参数
+		SqlParameterSource source= new BeanPropertySqlParameterSource(m);
+		//选择用update方法来完成【添加】操作
+		obj.update(sql, source);
 	}
 	
 	
