@@ -32,4 +32,11 @@
 	<!-- 引用方式使用数据源bean -->
 	<property name="dataSource" ref="dataSource"></property>
 </bean>
+
+<!-- 再配置一个NamedParameterjdbctemplate对象 
+	同样需要配置数据源
+-->
+<bean id="npjt" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+	<constructor-arg name="dataSource" ref="dataSource" />
+</bean>
 </beans>
