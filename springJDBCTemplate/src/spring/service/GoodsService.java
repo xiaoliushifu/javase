@@ -30,4 +30,21 @@ public class GoodsService {
 		//更新商品数量
 		goodsDao.updateMount(gid, goodsNum);
 	}
+	
+	/**
+	 * 使用hibernate方式里sessionFactory方式操作数据库
+	 * @param uid
+	 * @param gid
+	 * @param goodsNum
+	 */
+	@Transactional
+	public void buyGoods2(Integer uid,Integer gid,Integer goodsNum){
+		Float price = goodsDao.queryPriceById(gid);
+		//计算总价
+		Float total = goodsNum * price;
+		//更新总额
+		goodsDao.updateBalance(uid, total);
+		//更新商品数量
+		goodsDao.updateMount(gid, goodsNum);
+	}
 }

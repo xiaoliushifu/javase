@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import spring.dao.GoodsDao;
+import spring.service.GoodsService;
 
 public class springHibernate {
 
@@ -37,5 +38,14 @@ public class springHibernate {
 		
 		//更新余额
 		gd.updateBalance(1, 4.2f);
+	}
+	
+	/**
+	 * 测试下service中使用dao
+	 */
+	@Test
+	public void test02() {
+		GoodsService gs = applicationContext.getBean(GoodsService.class);
+		gs.buyGoods2(1, 1, 1);
 	}
 }

@@ -27,9 +27,9 @@ public class GoodsDao {
 	 */
 	public Session getSession(){
 		//使用事务时用这个,且必须使用事务，待使用service再用该种方式
-		//return sessionFactory.getCurrentSession();
+		return sessionFactory.getCurrentSession();
 		//使用下面这个的话，事务不起作用，测试dao的某个方法时可以使用这个
-		return sessionFactory.openSession();
+		//return sessionFactory.openSession();
 	}
 	
 	/**
