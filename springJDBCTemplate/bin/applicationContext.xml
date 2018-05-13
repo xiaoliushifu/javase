@@ -55,7 +55,7 @@
 注意class是hibernate4而非hibernate3
 该部分是spring整合hibernate
  -->
-<bean id="localSessionFactoryBean" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+<bean id="sessionFactoryBean" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 	<property name="dataSource" ref="dataSource" />
 	<!-- 引入hibernate配置文件，这也是spring整合hibernate的关键配置 -->
 	<property name="configLocation" value="classpath:hibernate.cfg.xml" />

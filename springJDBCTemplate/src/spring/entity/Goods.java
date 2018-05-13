@@ -8,13 +8,8 @@ public class Goods {
 	private Integer goodsID;
 	private String goodsName;
 	private Float price;
+	private Integer amount;
 	
-	public Goods(Integer goodsID, String goodsName, Float price) {
-		super();
-		this.goodsID = goodsID;
-		this.goodsName = goodsName;
-		this.price = price;
-	}
 	/**
 	 * @return the goodsID
 	 */
@@ -51,12 +46,35 @@ public class Goods {
 	public void setPrice(Float price) {
 		this.price = price;
 	}
+	/**
+	 * @return the amount
+	 */
+	public Integer getAmount() {
+		return amount;
+	}
+	/**
+	 * @param amount the amount to set
+	 */
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
 		return "Goods [goodsID=" + goodsID + ", goodsName=" + goodsName + ", price=" + price + "]";
+	}
+	public Goods(Integer goodsID, String goodsName, Float price, Integer amount) {
+		super();
+		this.goodsID = goodsID;
+		this.goodsName = goodsName;
+		this.price = price;
+		this.amount = amount;
+	}
+	public Goods() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 }

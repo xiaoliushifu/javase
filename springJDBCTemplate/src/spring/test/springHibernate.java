@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import spring.dao.GoodsDao;
+
 public class springHibernate {
 
 	private ApplicationContext applicationContext;
@@ -20,5 +22,20 @@ public class springHibernate {
 	@Test
 	public void test() {
 		System.out.print("创建表");
+	}
+	
+	/**
+	 * 测试下dao中使用sessionFactory并操作数据库
+	 */
+	@Test
+	public void test01() {
+		GoodsDao gd = applicationContext.getBean(GoodsDao.class);
+		Float price = gd.queryPriceById(1);
+		System.out.println(price);
+		//更新数量
+		gd.updateMount(1, 10);
+		
+		//更新余额
+		gd.updateBalance(1, 4.2f);
 	}
 }

@@ -15,5 +15,9 @@
         <property name="price" type="java.lang.Float">
             <column name="PRICE" />
         </property>
+        <!-- 添加一个商品数量的成员 -->
+        <property name="amount" type="java.lang.Integer">
+            <column name="AMOUNT" />
+        </property>
     </class>
 </hibernate-mapping>
