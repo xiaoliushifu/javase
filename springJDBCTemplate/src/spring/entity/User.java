@@ -50,4 +50,8 @@ public class User {
 		this.userName = userName;
 		this.money = money;
 	}
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }

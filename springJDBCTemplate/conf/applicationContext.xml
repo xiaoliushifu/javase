@@ -49,4 +49,15 @@
 
 <!-- 开启基于注解的声明式事务处理功能  指向事务管理器的beanID-->
 <tx:annotation-driven transaction-manager="dstm" ></tx:annotation-driven>
+
+
+<!-- 配置LocalSessionFactory接管hibernate
+注意class是hibernate4而非hibernate3
+该部分是spring整合hibernate
+ -->
+<bean id="localSessionFactoryBean" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<property name="dataSource" ref="dataSource" />
+	<!-- 引入hibernate配置文件，这也是spring整合hibernate的关键配置 -->
+	<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+</bean>
 </beans>
