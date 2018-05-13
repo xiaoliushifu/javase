@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+    	<!-- 因为spring中已配置
+    		数据源，所以hibernate中无需再配置
+    		但是还需要其它配置
+    	 -->
+    	 <property name="hibernate.show_sql">true</property>
+    	 <property name="hibernate.format_sql">true</property>
+    	 <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+    	 <!-- 有关策略 -->
+    	 <property name="hibernate.hbm2ddl.auto">update</property>
+    	 
+    	 <!-- 引入两个映射xml文件 -->
+    	 <mapping resource="spring/entity/Goods.hbm.xml"/>
+    	 <mapping resource="spring/entity/User.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>

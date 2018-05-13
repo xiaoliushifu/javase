@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2018-5-13 17:17:11 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping>
+    <class name="spring.entity.Goods" table="GOODS">
+        <id name="goodsID" type="java.lang.Integer">
+        	<!-- 这个做过修改 -->
+            <column name="GOODS_ID" />
+            <generator class="native" />
+        </id>
+        <property name="goodsName" type="java.lang.String">
+            <column name="GOODSNAME" />
+        </property>
+        <property name="price" type="java.lang.Float">
+            <column name="PRICE" />
+        </property>
+    </class>
+</hibernate-mapping>
