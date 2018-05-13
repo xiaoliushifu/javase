@@ -21,6 +21,8 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import spring.bean.Monster;
 import spring.controller.MonsterController;
+import spring.dao.GoodsDao;
+import spring.service.GoodsService;
 
 public class JdbcTest {
 
@@ -194,5 +196,10 @@ public class JdbcTest {
 		obj.save(new Monster("大虾",30,"加自控"));
 	}
 	
-
+	@Test
+	public void test10() {
+		// 按照bean的id获取monster对象
+		GoodsService obj = applicationContext.getBean(GoodsService.class);
+		obj.buyGoods(1, 1, 9);
+	}
 }
