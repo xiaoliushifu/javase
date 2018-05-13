@@ -20,6 +20,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import spring.bean.Monster;
+import spring.controller.MonsterController;
 
 public class JdbcTest {
 
@@ -180,7 +181,18 @@ public class JdbcTest {
 		//选择用update方法来完成【添加】操作
 		obj.update(sql, source);
 	}
-	
+	/**
+	 * 一个从上到下的设计
+	 * 一个从下到上的编写
+	 * 控制器---》业务层---》数据层
+	 * 每层之间的配置使用基于注解的自动配置autowired。
+	 */
+	@Test
+	public void test09() {
+		// 按照bean的id获取monster对象
+		MonsterController obj = applicationContext.getBean(MonsterController.class);
+		obj.save(new Monster("大虾",30,"加自控"));
+	}
 	
 
 }
