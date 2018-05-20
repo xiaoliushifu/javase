@@ -8,6 +8,9 @@
 </head>
 <body>
 	<h3>各路妖怪管理系统--姜子牙专用</h3>
-	<a href="mytest">点击走一下</a>
+	<img alt="来吧，主人" src="images/yg.png"/>
+	<hr/>
+	<a href="monster_list">查看所有妖怪</a>
+	<a href="monster_add">添加一个妖怪</a>
 </body>
 </html>

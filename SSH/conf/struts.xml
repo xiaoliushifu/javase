@@ -12,10 +12,10 @@
     <package name="default" namespace="/" extends="struts-default">
 		<!-- 当GoodsAction有了spring的注解controller之后，可以直接写bean名字：monsterAction 
 			基本上开发人员都会用这种方式
+			统一匹配的方式
 		-->
-		<action name="mytest" method="test" class="monsterAction">
-			<!-- 默认就是success -->
-			<result>/WEB-INF/ok.jsp</result>
+		<action name="monster_*" method="{1}" class="monsterAction">
+			<result name="monster_{1}">/WEB-INF/monster_list.jsp</result>
 			<result name="error">/WEB-INF/error.jsp</result>
 		</action>
     </package>
