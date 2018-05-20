@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h3>spring整合struts2的小应用</h3>
-	<a href="mytest">点击走一下</a>
+	<h1>成功了3:)</h1>
 </body>
 </html>

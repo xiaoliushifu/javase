@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 public class GoodsDao {
 	
 	public void save(){
-		System.out.println("save a good");
+		System.out.println("save a springStruts2 good");
 	}
 }
