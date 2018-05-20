@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+
+	<!-- struts的action配置，别忘记了 -->
+    <package name="default" namespace="/" extends="struts-default">
+    	<!-- struts2的class必须是全名 -->
+		<!-- <action name="mytest" method="test" class="spring.action.GoodsAction"> -->
+		<!-- 当GoodsAction有了spring的注解controller之后，可以直接写bean名字：goodsAction 
+			基本上开发人员都会用这种方式
+		-->
+		<action name="mytest" method="test" class="goodsAction">
+			<!-- 默认就是success -->
+			<result>/WEB-INF/ok.jsp</result>
+			<result name="error">/WEB-INF/error.jsp</result>
+		</action>
+    </package>
+
+
+</struts>

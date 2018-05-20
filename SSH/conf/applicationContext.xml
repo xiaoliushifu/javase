@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+<!-- 打开注解的扫描功能 -->
+<context:component-scan base-package="spring.**" />
+<context:property-placeholder location="classpath:jdbc.properties"/>
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" >
+	<property name="user" value="${jdbc.user}" />
+	<property name="password" value="${jdbc.pwd}" />
+	<property name="driverClass" value="${jdbc.driver}" />
+	<property name="jdbcUrl" value="${jdbc.url}" />
+</bean>
+
+<!-- 将hibernate整合到spring中  -->
+<bean id="localSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<property name="dataSource" ref="dataSource"></property>
+	<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+</bean>
+
+<!-- 配置spring提供的专门管理hibernate的事务管理器 -->
+<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	<property name="sessionFactory" ref="localSessionFactory"></property>
+</bean>
+
+<!-- 启用基于spring注解的声明式事务管理器 -->
+<tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>
