@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>成功了3:)</h1>
+	<h1>欢迎来到妖怪管理系统 :)</h1>
 </body>
 </html>

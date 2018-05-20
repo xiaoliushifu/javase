@@ -16,8 +16,12 @@ import spring.service.GoodsService;
 
 @Controller//action就是spring里的控制器
 @Scope(value="prototype")//（ioc容器中单例配置）
-public class GoodsAction extends ActionSupport{
+public class MonsterAction extends ActionSupport{
 	
+	/**
+	 * 默认序列号，是咋回事，什么逻辑？
+	 */
+	private static final long serialVersionUID = 1L;
 	@Autowired
 	private GoodsService goodsService;
 	
