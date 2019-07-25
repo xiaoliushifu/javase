@@ -107,23 +107,24 @@ public class FileUtil {
     }
 
     /**
-     * 获得一个文件名  日期+时间戳+随机+原文件名
+     * 获得一个文件名  年月日时+时间戳+随机+原文件后缀
      * @param fileName
      * @return
      */
     public static String getRandName(String fileName) {
-        //日期文件夹
+        //日期对象
         Date d = new Date();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+        //格式化对象
+        SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd/HH");
 
         // 当前时间戳
         Long stamp = System.currentTimeMillis();
 
         //随机数字
         int max=999999,min=1;
-        int ran2 = (int) (Math.random()*(max-min)+min);
+        int ran = (int) (Math.random()*(max-min)+min);
 
         //拼接返回
-        return df.format(d) + "/" + stamp + ran2 + fileName;
+        return df.format(d) + "/" + stamp + ran + getFileType(fileName);
     }
 }
