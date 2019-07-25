@@ -104,4 +104,45 @@ public final class HttpClientUtil {
         }
         return true;
     }
+
+
+    /**
+     */
+    public static String doGet(String resource) {
+        InputStream in = null;
+        try {
+            //建立url对象
+            URL url = new URL(resource);
+            //根据url对象创建连接对象
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            // 获得输入流，从外部url读入本地，这一步就会发送http请求
+            in = connection.getInputStream();
+
+            //需要一个桥梁InputStreamReader的适配到BufferedReader。
+            // 网页数据是字符，所以用Reader不用stream
+            BufferedReader br=new BufferedReader(new InputStreamReader(in));
+
+            //接收的
+            StringBuilder sb=new StringBuilder();
+            String str=null;
+            // BufferedReader到StringBuilder
+            while((str=br.readLine())!=null){
+                sb.append(str+"\n");
+            }
+            System.out.println(sb);
+            return sb.toString();
+        } catch (Exception e) {
+            log.trace("-------> download_file_failed1." + e.getMessage());
+        } finally {
+            try {
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception ex) {
+                log.trace("-------> download_file_failed2." + ex.getMessage());
+            }
+        }
+        return "";
+    }
 }

@@ -77,7 +77,7 @@ public class DownloadService {
 
     /**
      * 拼接主域名,
-     * 目前是公有空间，如果是私有空间，还需要生成token
+     * 如果是私有空间，需要生成token
      * @param fileName
      * @return
      */
